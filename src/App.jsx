@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+
 import { DashBoard } from './components/DashBoard';
 import { Bookings } from './components/Bookings';
 import { BookingDetails } from './components/BookingDetails';
@@ -7,8 +8,10 @@ import { Rooms } from './components/Rooms';
 import { Employees } from './components/Employees';
 import { Login } from './components/Login';
 import { Layout } from './components/Layout';
+
 import { PrivateRoute } from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
+
 export const App = () => {
   return (
     <AuthProvider>
