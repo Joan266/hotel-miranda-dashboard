@@ -1,0 +1,282 @@
+[
+  {
+    "id": "6234231861",
+    "first_name": "Enrique",
+    "last_name": "Diaz",
+    "order_date": "Aug 2nd 2017 09:00 AM",
+    "check_in": "Aug 2nd 2017 12:00 PM",
+    "check_out": "Aug 5th 2017 11:00 AM",
+    "room_type": "Deluxe A-02314",
+    "status": "booked"
+  },
+  {
+    "id": "7218392057",
+    "first_name": "Lucía",
+    "last_name": "García",
+    "order_date": "Jul 15th 2018 10:30 AM",
+    "check_in": "Jul 16th 2018 03:00 PM",
+    "check_out": "Jul 18th 2018 10:00 AM",
+    "room_type": "Standard B-025",
+    "status": "cancelled"
+  },
+  {
+    "id": "8345701826",
+    "first_name": "Manuel",
+    "last_name": "Martínez",
+    "order_date": "Sep 5th 2019 11:45 AM",
+    "check_in": "Sep 6th 2019 02:00 PM",
+    "check_out": "Sep 10th 2019 12:00 PM",
+    "room_type": "Deluxe C-038",
+    "status": "pending"
+  },
+  {
+    "id": "9462830154",
+    "first_name": "Sofía",
+    "last_name": "Fernández",
+    "order_date": "Apr 12th 2020 08:00 AM",
+    "check_in": "Apr 14th 2020 01:00 PM",
+    "check_out": "Apr 16th 2020 11:00 AM",
+    "room_type": "Standard A-044",
+    "status": "refund"
+  },
+  {
+    "id": "5789216340",
+    "first_name": "Diego",
+    "last_name": "López",
+    "order_date": "Feb 28th 2018 02:30 PM",
+    "check_in": "Mar 1st 2018 10:00 AM",
+    "check_out": "Mar 3rd 2018 09:00 AM",
+    "room_type": "Deluxe B-073",
+    "status": "booked"
+  },
+  {
+    "id": "3027468591",
+    "first_name": "Elena",
+    "last_name": "Rodríguez",
+    "order_date": "Oct 19th 2019 09:15 AM",
+    "check_in": "Oct 20th 2019 12:30 PM",
+    "check_out": "Oct 22nd 2019 10:00 AM",
+    "room_type": "Standard C-102",
+    "status": "cancelled"
+  },
+  {
+    "id": "5178402963",
+    "first_name": "Javier",
+    "last_name": "Gómez",
+    "order_date": "Mar 7th 2020 03:45 PM",
+    "check_in": "Mar 8th 2020 08:00 AM",
+    "check_out": "Mar 10th 2020 06:00 PM",
+    "room_type": "Deluxe A-011",
+    "status": "pending"
+  },
+  {
+    "id": "6582931045",
+    "first_name": "Carmen",
+    "last_name": "Pérez",
+    "order_date": "Jun 11th 2018 12:00 PM",
+    "check_in": "Jun 13th 2018 11:00 AM",
+    "check_out": "Jun 15th 2018 10:00 AM",
+    "room_type": "Standard B-042",
+    "status": "refund"
+  },
+  {
+    "id": "8093576214",
+    "first_name": "Alejandro",
+    "last_name": "Sanchez",
+    "order_date": "Dec 3rd 2017 11:30 AM",
+    "check_in": "Dec 4th 2017 02:00 PM",
+    "check_out": "Dec 6th 2017 12:00 PM",
+    "room_type": "Deluxe C-091",
+    "status": "booked"
+  },
+  {
+    "id": "9365714820",
+    "first_name": "Paula",
+    "last_name": "Romero",
+    "order_date": "May 24th 2019 10:00 AM",
+    "check_in": "May 25th 2019 03:30 PM",
+    "check_out": "May 27th 2019 11:00 AM",
+    "room_type": "Standard A-062",
+    "status": "cancelled"
+  },
+  {
+    "id": "2451803769",
+    "first_name": "Pablo",
+    "last_name": "Hernández",
+    "order_date": "Aug 9th 2018 01:45 PM",
+    "check_in": "Aug 10th 2018 09:00 AM",
+    "check_out": "Aug 12th 2018 07:00 PM",
+    "room_type": "Deluxe B-033",
+    "status": "pending"
+  },
+  {
+    "id": "7359461028",
+    "first_name": "Laura",
+    "last_name": "Gutiérrez",
+    "order_date": "Apr 5th 2019 09:30 AM",
+    "check_in": "Apr 7th 2019 12:00 PM",
+    "check_out": "Apr 9th 2019 10:00 AM",
+    "room_type": "Standard C-054",
+    "status": "refund"
+  },
+  {
+    "id": "1829457306",
+    "first_name": "Jorge",
+    "last_name": "Navarro",
+    "order_date": "Nov 17th 2017 10:15 AM",
+    "check_in": "Nov 18th 2017 01:30 PM",
+    "check_out": "Nov 20th 2017 11:00 AM",
+    "room_type": "Deluxe A-081",
+    "status": "booked"
+  },
+  {
+    "id": "5748926130",
+    "first_name": "Ana",
+    "last_name": "Morales",
+    "order_date": "Feb 14th 2020 04:00 PM",
+    "check_in": "Feb 16th 2020 10:00 AM",
+    "check_out": "Feb 18th 2020 08:00 AM",
+    "room_type": "Standard B-022",
+    "status": "cancelled"
+  },
+  {
+    "id": "6234231861",
+    "first_name": "Enrique",
+    "last_name": "Diaz",
+    "order_date": "Aug 2nd 2017 09:00 AM",
+    "check_in": "Aug 2nd 2017 12:00 PM",
+    "check_out": "Aug 5th 2017 11:00 AM",
+    "room_type": "Deluxe A-02314",
+    "status": "booked"
+  },
+  {
+    "id": "7218392057",
+    "first_name": "Lucía",
+    "last_name": "García",
+    "order_date": "Jul 15th 2018 10:30 AM",
+    "check_in": "Jul 16th 2018 03:00 PM",
+    "check_out": "Jul 18th 2018 10:00 AM",
+    "room_type": "Standard B-025",
+    "status": "cancelled"
+  },
+  {
+    "id": "8345701826",
+    "first_name": "Manuel",
+    "last_name": "Martínez",
+    "order_date": "Sep 5th 2019 11:45 AM",
+    "check_in": "Sep 6th 2019 02:00 PM",
+    "check_out": "Sep 10th 2019 12:00 PM",
+    "room_type": "Deluxe C-038",
+    "status": "pending"
+  },
+  {
+    "id": "9462830154",
+    "first_name": "Sofía",
+    "last_name": "Fernández",
+    "order_date": "Apr 12th 2020 08:00 AM",
+    "check_in": "Apr 14th 2020 01:00 PM",
+    "check_out": "Apr 16th 2020 11:00 AM",
+    "room_type": "Standard A-044",
+    "status": "refund"
+  },
+  {
+    "id": "5789216340",
+    "first_name": "Diego",
+    "last_name": "López",
+    "order_date": "Feb 28th 2018 02:30 PM",
+    "check_in": "Mar 1st 2018 10:00 AM",
+    "check_out": "Mar 3rd 2018 09:00 AM",
+    "room_type": "Deluxe B-073",
+    "status": "booked"
+  },
+  {
+    "id": "3027468591",
+    "first_name": "Elena",
+    "last_name": "Rodríguez",
+    "order_date": "Oct 19th 2019 09:15 AM",
+    "check_in": "Oct 20th 2019 12:30 PM",
+    "check_out": "Oct 22nd 2019 10:00 AM",
+    "room_type": "Standard C-102",
+    "status": "cancelled"
+  },
+  {
+    "id": "5178402963",
+    "first_name": "Javier",
+    "last_name": "Gómez",
+    "order_date": "Mar 7th 2020 03:45 PM",
+    "check_in": "Mar 8th 2020 08:00 AM",
+    "check_out": "Mar 10th 2020 06:00 PM",
+    "room_type": "Deluxe A-011",
+    "status": "pending"
+  },
+  {
+    "id": "6582931045",
+    "first_name": "Carmen",
+    "last_name": "Pérez",
+    "order_date": "Jun 11th 2018 12:00 PM",
+    "check_in": "Jun 13th 2018 11:00 AM",
+    "check_out": "Jun 15th 2018 10:00 AM",
+    "room_type": "Standard B-042",
+    "status": "refund"
+  },
+  {
+    "id": "8093576214",
+    "first_name": "Alejandro",
+    "last_name": "Sanchez",
+    "order_date": "Dec 3rd 2017 11:30 AM",
+    "check_in": "Dec 4th 2017 02:00 PM",
+    "check_out": "Dec 6th 2017 12:00 PM",
+    "room_type": "Deluxe C-091",
+    "status": "booked"
+  },
+  {
+    "id": "9365714820",
+    "first_name": "Paula",
+    "last_name": "Romero",
+    "order_date": "May 24th 2019 10:00 AM",
+    "check_in": "May 25th 2019 03:30 PM",
+    "check_out": "May 27th 2019 11:00 AM",
+    "room_type": "Standard A-062",
+    "status": "cancelled"
+  },
+  {
+    "id": "2451803769",
+    "first_name": "Pablo",
+    "last_name": "Hernández",
+    "order_date": "Aug 9th 2018 01:45 PM",
+    "check_in": "Aug 10th 2018 09:00 AM",
+    "check_out": "Aug 12th 2018 07:00 PM",
+    "room_type": "Deluxe B-033",
+    "status": "pending"
+  },
+  {
+    "id": "7359461028",
+    "first_name": "Laura",
+    "last_name": "Gutiérrez",
+    "order_date": "Apr 5th 2019 09:30 AM",
+    "check_in": "Apr 7th 2019 12:00 PM",
+    "check_out": "Apr 9th 2019 10:00 AM",
+    "room_type": "Standard C-054",
+    "status": "refund"
+  },
+  {
+    "id": "1829457306",
+    "first_name": "Jorge",
+    "last_name": "Navarro",
+    "order_date": "Nov 17th 2017 10:15 AM",
+    "check_in": "Nov 18th 2017 01:30 PM",
+    "check_out": "Nov 20th 2017 11:00 AM",
+    "room_type": "Deluxe A-081",
+    "status": "booked"
+  },
+  {
+    "id": "5748926130",
+    "first_name": "Ana",
+    "last_name": "Morales",
+    "order_date": "Feb 14th 2020 04:00 PM",
+    "check_in": "Feb 16th 2020 10:00 AM",
+    "check_out": "Feb 18th 2020 08:00 AM",
+    "room_type": "Standard B-022",
+    "status": "cancelled"
+  }
+]
