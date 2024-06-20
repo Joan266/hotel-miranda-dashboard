@@ -1,22 +1,18 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-
-const Layout = ({ handleLogout }) => {
-  const navigate = useNavigate();
-
+import { Outlet, Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth.jsx';
+export const Layout = () => {
+const { logout } = useAuth();
   return (
     <div>
-        <h1>My Application</h1>
       <nav>
-        <Link onClick={() => navigate('/bookings')}>Bookings</Link>
-        <Link onClick={() => navigate('/contact')}>Contact</Link>
-        <Link onClick={() => navigate('/rooms')}>Rooms</Link>
-        <Link onClick={() => navigate('/users')}>Users</Link>
-        <Link onClick={handleLogout}>Logout</Link>
+        <Link to="/">Dashboard</Link>
+        <Link to="/bookings">Bookings</Link>
+        <Link to="/reviews">Reviews</Link>
+        <Link to="/rooms">Rooms</Link>
+        <Link to="/employees">Employees</Link>
+        <div onClick={logout}>Logout</div>
       </nav>
       <Outlet />
     </div>
   );
 };
-
-export default Layout;
