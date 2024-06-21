@@ -1,9 +1,25 @@
 import bookingsData from '../data/bookings.json';
-import { Table, TableCell, TableHeader, TableRow } from '../styles/table';
-import { Container } from '../styles/common';
+import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
+  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+  import { Container, Text } from '../styles/common';
+import { useState } from 'react';
+import usePagination from '../hooks/usePagination';
 
 export const Bookings = () => {
-  const limitedData = bookingsData.slice(0, 10);
+  const pageSize = 10; 
+  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(bookingsData, pageSize);
+  const [inputPage, setInputPage] =useState(currentPage);
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value);
+    setInputPage(value);
+  };
+
+  const handleInputSubmit = (e) => {
+    if (e.key === 'Enter') {
+      if(inputPage>totalPages || inputPage === 0)return;
+      goToPage(inputPage);
+    }
+  };
   return (
     <Container>
       <Table>
@@ -18,7 +34,7 @@ export const Bookings = () => {
           </TableRow>
         </thead>
         <tbody>
-          {limitedData.map((booking, index) => (
+          {currentData().map((booking, index) => (
             <TableRow key={index}>
               <TableCell>{`${booking.first_name} ${booking.last_name}`}</TableCell>
               <TableCell>{booking.order_date}</TableCell>
@@ -30,6 +46,24 @@ export const Bookings = () => {
           ))}
         </tbody>
       </Table>
+      <PaginationContainer>
+      <Text>
+        Showing {pageSize} of {bookingsData.length} entries
+      </Text>
+      <PaginationControls>
+        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
+        <PaginationInput 
+            type="number" 
+            value={inputPage} 
+            onChange={handleInputChange} 
+            onKeyDown={handleInputSubmit} 
+            min={1}
+            max={totalPages}
+          />
+          <Text>{totalPages}</Text>
+        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
+      </PaginationControls>
+    </PaginationContainer>
     </Container>
   );
 };

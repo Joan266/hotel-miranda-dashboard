@@ -1,9 +1,24 @@
 import roomsData from '../data/rooms.json';
-import { Table, TableCell, TableHeader, TableRow } from '../styles/table';
-import { Container } from '../styles/common';
-
+import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
+  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+  import { Container, Text } from '../styles/common';
+import { useState } from 'react';
+import usePagination from '../hooks/usePagination';
 export const Rooms = () => {
-  const limitedData = roomsData.slice(0, 8);
+  const pageSize = 8; 
+  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(roomsData, pageSize);
+  const [inputPage, setInputPage] =useState(currentPage);
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value);
+    setInputPage(value);
+  };
+
+  const handleInputSubmit = (e) => {
+    if (e.key === 'Enter') {
+      if(inputPage>totalPages || inputPage === 0)return;
+      goToPage(inputPage);
+    }
+  };
   return (
     <Container>
       <Table>
@@ -18,7 +33,7 @@ export const Rooms = () => {
           </TableRow>
         </thead>
         <tbody>
-          {limitedData.map((room, index) => (
+          {currentData().map((room, index) => (
             <TableRow key={index}>
               <TableCell>{room.room_type}</TableCell>
               <TableCell>{room.bed_type}</TableCell>
@@ -30,6 +45,24 @@ export const Rooms = () => {
           ))}
         </tbody>
       </Table>
+      <PaginationContainer>
+      <Text>
+        Showing {pageSize} of {roomsData.length} entries
+      </Text>
+      <PaginationControls>
+        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
+        <PaginationInput 
+            type="number" 
+            value={inputPage} 
+            onChange={handleInputChange} 
+            onKeyDown={handleInputSubmit} 
+            min={1}
+            max={totalPages}
+          />
+          <Text>{totalPages}</Text>
+        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
+      </PaginationControls>
+    </PaginationContainer>
     </Container>
   );
 };
