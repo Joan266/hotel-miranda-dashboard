@@ -62,6 +62,7 @@ const LogoutButton = styled.div`
 const ContentContainer = styled.div`
   width:100%;
   min-height: 100%;
+  position:relative;
   background-color: ${props => props.theme.colors.lightGray};
 `;
 

@@ -10,7 +10,7 @@
     },
     "job_desk": "Handle check-in and check-out procedures, including reservations and room assignments",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Friday"],
+      "days": "Monday, Wednesday",
       "hours": "8:00 AM - 4:00 PM"
     },
     "status": false
@@ -26,7 +26,7 @@
     },
     "job_desk": "Provide information about hotel facilities, services, and local attractions",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Saturday"],
+      "days": "Tuesday, Thursday",
       "hours": "10:00 AM - 6:00 PM"
     },
     "status": true
@@ -42,7 +42,7 @@
     },
     "job_desk": "Assist guests with special requests or needs, such as arranging for childcare services",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Thursday"],
+      "days": "Monday, Wednesday",
       "hours": "12:00 PM - 8:00 PM"
     },
     "status": false
@@ -58,7 +58,7 @@
     },
     "job_desk": "Handle guest complaints, ensuring guest satisfaction and resolving any issues promptly",
     "schedule": {
-      "days": ["Sunday", "Tuesday", "Thursday"],
+      "days": "Sunday, Tuesday",
       "hours": "1:00 PM - 9:00 PM"
     },
     "status": true
@@ -74,7 +74,7 @@
     },
     "job_desk": "Coordinate housekeeping and maintenance requests from guests",
     "schedule": {
-      "days": ["Tuesday", "Friday", "Saturday"],
+      "days": "Tuesday, Friday",
       "hours": "9:00 AM - 5:00 PM"
     },
     "status": false
@@ -90,7 +90,7 @@
     },
     "job_desk": "Promote hotel services and amenities to guests",
     "schedule": {
-      "days": ["Wednesday", "Friday", "Sunday"],
+      "days": "Wednesday, Friday",
       "hours": "10:00 AM - 6:00 PM"
     },
     "status": true
@@ -106,7 +106,7 @@
     },
     "job_desk": "Assist with administrative tasks such as handling guest inquiries and reservations",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Saturday"],
+      "days": "Monday, Wednesday",
       "hours": "9:00 AM - 5:00 PM"
     },
     "status": false
@@ -122,7 +122,7 @@
     },
     "job_desk": "Ensure compliance with hotel policies and procedures",
     "schedule": {
-      "days": ["Monday", "Thursday", "Friday"],
+      "days": "Monday, Thursday",
       "hours": "8:00 AM - 4:00 PM"
     },
     "status": true
@@ -138,7 +138,7 @@
     },
     "job_desk": "Assist in organizing and coordinating events and activities for guests",
     "schedule": {
-      "days": ["Wednesday", "Thursday", "Sunday"],
+      "days": "Wednesday, Thursday",
       "hours": "10:00 AM - 6:00 PM"
     },
     "status": true
@@ -154,7 +154,7 @@
     },
     "job_desk": "Provide support and assistance to guests with disabilities",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Saturday"],
+      "days": "Tuesday, Thursday",
       "hours": "9:00 AM - 5:00 PM"
     },
     "status": false
@@ -170,7 +170,7 @@
     },
     "job_desk": "Handle guest requests for additional amenities or services",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Friday"],
+      "days": "Monday, Wednesday",
       "hours": "8:00 AM - 4:00 PM"
     },
     "status": true
@@ -186,7 +186,7 @@
     },
     "job_desk": "Assist in managing and maintaining the hotel's online presence and social media accounts",
     "schedule": {
-      "days": ["Wednesday", "Thursday", "Saturday"],
+      "days": "Wednesday, Thursday",
       "hours": "10:00 AM - 6:00 PM"
     },
     "status": true
@@ -202,7 +202,7 @@
     },
     "job_desk": "Coordinate guest transportation and shuttle services",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Sunday"],
+      "days": "Tuesday, Thursday",
       "hours": "11:00 AM - 7:00 PM"
     },
     "status": false
@@ -218,199 +218,487 @@
     },
     "job_desk": "Handle guest inquiries and provide information about hotel services and facilities",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Friday"],
-      "hours": "9:00 AM - 5:00 PM"
+      "days": "Monday, Wednesday",
+      "hours": "8:00 AM - 4:00 PM"
     },
     "status": true
   },
   {
-    "id": "9352164870",
-    "first_name": "María",
-    "last_name": "Suárez",
-    "phone_number": "+34 679 462 108",
+    "id": "9236458710",
+    "first_name": "Eva",
+    "last_name": "Santos",
+    "phone_number": "+34 679 548 317",
     "join_date": {
-      "text": "Sep 28th 2019",
-      "date": "2019-09-28T00:00:00.000Z"
+      "text": "May 18th 2019",
+      "date": "2019-05-18T00:00:00.000Z"
     },
-    "job_desk": "Assist in organizing and coordinating special events and celebrations",
+    "job_desk": "Handle guest complaints and ensure satisfactory resolution",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Saturday"],
+      "days": "Tuesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "5684321907",
+    "first_name": "Miguel",
+    "last_name": "Blanco",
+    "phone_number": "+34 612 938 475",
+    "join_date": {
+      "text": "Dec 3rd 2017",
+      "date": "2017-12-03T00:00:00.000Z"
+    },
+    "job_desk": "Ensure compliance with hotel policies and procedures",
+    "schedule": {
+      "days": "Monday, Thursday",
+      "hours": "8:00 AM - 4:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "9275648301",
+    "first_name": "Clara",
+    "last_name": "Suárez",
+    "phone_number": "+34 679 387 461",
+    "join_date": {
+      "text": "May 24th 2019",
+      "date": "2019-05-24T00:00:00.000Z"
+    },
+    "job_desk": "Assist in organizing and coordinating events and activities for guests",
+    "schedule": {
+      "days": "Wednesday, Thursday",
       "hours": "10:00 AM - 6:00 PM"
     },
     "status": true
   },
   {
-    "id": "8263497015",
-    "first_name": "Carlos",
-    "last_name": "Sánchez",
-    "phone_number": "+34 679 123 456",
+    "id": "8401762934",
+    "first_name": "Roberto",
+    "last_name": "Herrera",
+    "phone_number": "+34 645 928 374",
     "join_date": {
-      "text": "Jun 15th 2020",
-      "date": "2020-06-15T00:00:00.000Z"
+      "text": "Aug 9th 2018",
+      "date": "2018-08-09T00:00:00.000Z"
     },
-    "job_desk": "Handle guest requests and ensure prompt service",
+    "job_desk": "Provide support and assistance to guests with disabilities",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Friday"],
-      "hours": "8:00 AM - 4:00 PM"
+      "days": "Tuesday, Thursday",
+      "hours": "9:00 AM - 5:00 PM"
     },
     "status": false
   },
   {
-    "id": "4796235140",
-    "first_name": "Isabel",
-    "last_name": "González",
-    "phone_number": "+34 612 345 678",
+    "id": "7301295648",
+    "first_name": "Sara",
+    "last_name": "Molina",
+    "phone_number": "+34 612 740 596",
     "join_date": {
-      "text": "May 10th 2021",
-      "date": "2021-05-10T00:00:00.000Z"
+      "text": "Apr 5th 2019",
+      "date": "2019-04-05T00:00:00.000Z"
     },
-    "job_desk": "Provide information about local attractions and events to guests",
+    "job_desk": "Handle guest requests for additional amenities or services",
     "schedule": {
-      "days": ["Wednesday", "Thursday", "Saturday"],
-      "hours": "9:00 AM - 5:00 PM"
+      "days": "Monday, Wednesday",
+      "hours": "8:00 AM - 4:00 PM"
     },
     "status": true
   },
   {
-    "id": "3025918745",
-    "first_name": "Miguel",
-    "last_name": "Ortega",
+    "id": "1234567890",
+    "first_name": "Juan",
+    "last_name": "García",
     "phone_number": "+34 679 987 654",
     "join_date": {
-      "text": "Feb 18th 2019",
-      "date": "2019-02-18T00:00:00.000Z"
+      "text": "Jan 1st 2023",
+      "date": "2023-01-01T00:00:00.000Z"
     },
-    "job_desk": "Coordinate guest check-ins and ensure a smooth arrival experience",
+    "job_desk": "Provide guest services such as check-in, check-out, and room reservations",
     "schedule": {
-      "days": ["Monday", "Friday", "Sunday"],
-      "hours": "10:00 AM - 6:00 PM"
-    },
-    "status": false
-  },
-  {
-    "id": "1829356782",
-    "first_name": "Cristina",
-    "last_name": "Ramírez",
-    "phone_number": "+34 612 987 654",
-    "join_date": {
-      "text": "Nov 3rd 2020",
-      "date": "2020-11-03T00:00:00.000Z"
-    },
-    "job_desk": "Handle guest requests and ensure they are addressed promptly",
-    "schedule": {
-      "days": ["Tuesday", "Thursday", "Saturday"],
-      "hours": "8:00 AM - 4:00 PM"
-    },
-    "status": true
-  },
-  {
-    "id": "8740291563",
-    "first_name": "Pedro",
-    "last_name": "Gómez",
-    "phone_number": "+34 679 456 789",
-    "join_date": {
-      "text": "Dec 22nd 2018",
-      "date": "2018-12-22T00:00:00.000Z"
-    },
-    "job_desk": "Assist with guest check-outs and ensure a smooth departure experience",
-    "schedule": {
-      "days": ["Wednesday", "Friday", "Sunday"],
+      "days": "Monday, Tuesday",
       "hours": "9:00 AM - 5:00 PM"
     },
-    "status": false
-  },
-  {
-    "id": "9362574108",
-    "first_name": "Antonia",
-    "last_name": "Martínez",
-    "phone_number": "+34 612 345 678",
-    "join_date": {
-      "text": "Apr 8th 2021",
-      "date": "2021-04-08T00:00:00.000Z"
-    },
-    "job_desk": "Coordinate guest activities and ensure they have a memorable experience",
-    "schedule": {
-      "days": ["Monday", "Thursday", "Saturday"],
-      "hours": "10:00 AM - 6:00 PM"
-    },
     "status": true
   },
   {
-    "id": "1579420836",
-    "first_name": "Manuela",
-    "last_name": "López",
+    "id": "2345678901",
+    "first_name": "María",
+    "last_name": "Martínez",
     "phone_number": "+34 679 876 543",
     "join_date": {
-      "text": "Mar 5th 2020",
-      "date": "2020-03-05T00:00:00.000Z"
+      "text": "Feb 2nd 2023",
+      "date": "2023-02-02T00:00:00.000Z"
     },
-    "job_desk": "Handle guest inquiries and provide recommendations for dining and activities",
+    "job_desk": "Assist guests with inquiries, complaints, and special requests",
     "schedule": {
-      "days": ["Tuesday", "Wednesday", "Friday"],
-      "hours": "8:00 AM - 4:00 PM"
+      "days": "Wednesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
     },
     "status": false
   },
   {
-    "id": "3027591846",
-    "first_name": "Antonio",
-    "last_name": "Sánchez",
-    "phone_number": "+34 612 543 789",
+    "id": "3456789012",
+    "first_name": "Carlos",
+    "last_name": "López",
+    "phone_number": "+34 679 765 432",
     "join_date": {
-      "text": "Oct 12th 2019",
-      "date": "2019-10-12T00:00:00.000Z"
+      "text": "Mar 3rd 2023",
+      "date": "2023-03-03T00:00:00.000Z"
     },
-    "job_desk": "Ensure guest rooms are properly prepared and maintained for arrivals",
+    "job_desk": "Ensure guest satisfaction by resolving issues and concerns promptly",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Saturday"],
+      "days": "Tuesday, Friday",
       "hours": "9:00 AM - 5:00 PM"
     },
     "status": true
   },
   {
-    "id": "9823451678",
-    "first_name": "Isabel",
+    "id": "4567890123",
+    "first_name": "Ana",
     "last_name": "Gómez",
     "phone_number": "+34 679 654 321",
     "join_date": {
-      "text": "Jul 17th 2020",
-      "date": "2020-07-17T00:00:00.000Z"
+      "text": "Apr 4th 2023",
+      "date": "2023-04-04T00:00:00.000Z"
     },
-    "job_desk": "Assist with guest requests and ensure they have a comfortable stay",
+    "job_desk": "Coordinate hotel events and activities for guests",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Sunday"],
-      "hours": "10:00 AM - 6:00 PM"
+      "days": "Wednesday, Thursday",
+      "hours": "11:00 AM - 7:00 PM"
     },
     "status": false
   },
   {
-    "id": "5381902746",
-    "first_name": "Marta",
-    "last_name": "Martín",
-    "phone_number": "+34 612 876 543",
+    "id": "5678901234",
+    "first_name": "David",
+    "last_name": "Rodríguez",
+    "phone_number": "+34 679 543 210",
     "join_date": {
-      "text": "Nov 28th 2021",
-      "date": "2021-11-28T00:00:00.000Z"
+      "text": "May 5th 2023",
+      "date": "2023-05-05T00:00:00.000Z"
     },
-    "job_desk": "Handle guest inquiries and provide information about local attractions",
+    "job_desk": "Handle guest check-in and check-out processes efficiently",
     "schedule": {
-      "days": ["Monday", "Wednesday", "Friday"],
+      "days": "Monday, Wednesday",
       "hours": "8:00 AM - 4:00 PM"
     },
     "status": true
   },
   {
-    "id": "1987430562",
-    "first_name": "Santiago",
+    "id": "6789012345",
+    "first_name": "Elena",
     "last_name": "Fernández",
+    "phone_number": "+34 679 432 109",
+    "join_date": {
+      "text": "Jun 6th 2023",
+      "date": "2023-06-06T00:00:00.000Z"
+    },
+    "job_desk": "Provide information about hotel services, amenities, and local attractions",
+    "schedule": {
+      "days": "Tuesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "7890123456",
+    "first_name": "José",
+    "last_name": "Martín",
+    "phone_number": "+34 679 321 098",
+    "join_date": {
+      "text": "Jul 7th 2023",
+      "date": "2023-07-07T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with reservations and inquiries about hotel accommodations",
+    "schedule": {
+      "days": "Wednesday, Friday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "8901234567",
+    "first_name": "María",
+    "last_name": "Gutiérrez",
+    "phone_number": "+34 679 210 987",
+    "join_date": {
+      "text": "Aug 8th 2023",
+      "date": "2023-08-08T00:00:00.000Z"
+    },
+    "job_desk": "Handle guest requests and ensure they are addressed promptly",
+    "schedule": {
+      "days": "Monday, Thursday",
+      "hours": "8:00 AM - 4:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "9012345678",
+    "first_name": "Daniel",
+    "last_name": "Hernández",
+    "phone_number": "+34 679 098 765",
+    "join_date": {
+      "text": "Sep 9th 2023",
+      "date": "2023-09-09T00:00:00.000Z"
+    },
+    "job_desk": "Ensure smooth operation of front desk and guest services",
+    "schedule": {
+      "days": "Tuesday, Friday",
+      "hours": "9:00 AM - 5:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "0123456789",
+    "first_name": "Lucía",
+    "last_name": "Jiménez",
+    "phone_number": "+34 679 876 543",
+    "join_date": {
+      "text": "Oct 10th 2023",
+      "date": "2023-10-10T00:00:00.000Z"
+    },
+    "job_desk": "Provide excellent customer service to hotel guests",
+    "schedule": {
+      "days": "Wednesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "2345678901",
+    "first_name": "Marcos",
+    "last_name": "Vidal",
+    "phone_number": "+34 679 654 321",
+    "join_date": {
+      "text": "Nov 11th 2023",
+      "date": "2023-11-11T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with check-in, check-out, and other front desk tasks",
+    "schedule": {
+      "days": "Monday, Tuesday",
+      "hours": "9:00 AM - 5:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "3456789012",
+    "first_name": "Sara",
+    "last_name": "Navarro",
+    "phone_number": "+34 679 543 210",
+    "join_date": {
+      "text": "Dec 12th 2023",
+      "date": "2023-12-12T00:00:00.000Z"
+    },
+    "job_desk": "Coordinate and manage guest services to ensure satisfaction",
+    "schedule": {
+      "days": "Wednesday, Thursday",
+      "hours": "11:00 AM - 7:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "4567890123",
+    "first_name": "Diego",
+    "last_name": "Gómez",
+    "phone_number": "+34 679 432 109",
+    "join_date": {
+      "text": "Jan 13th 2024",
+      "date": "2024-01-13T00:00:00.000Z"
+    },
+    "job_desk": "Handle guest check-in and check-out processes efficiently",
+    "schedule": {
+      "days": "Monday, Wednesday",
+      "hours": "8:00 AM - 4:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "5678901234",
+    "first_name": "Emma",
+    "last_name": "Fernández",
+    "phone_number": "+34 679 321 098",
+    "join_date": {
+      "text": "Feb 14th 2024",
+      "date": "2024-02-14T00:00:00.000Z"
+    },
+    "job_desk": "Provide information about hotel services, amenities, and local attractions",
+    "schedule": {
+      "days": "Tuesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "6789012345",
+    "first_name": "Hugo",
+    "last_name": "Martín",
+    "phone_number": "+34 679 876 543",
+    "join_date": {
+      "text": "Mar 15th 2024",
+      "date": "2024-03-15T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with reservations and inquiries about hotel accommodations",
+    "schedule": {
+      "days": "Wednesday, Friday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "7890123456",
+    "first_name": "Lara",
+    "last_name": "Hernández",
+    "phone_number": "+34 679 098 765",
+    "join_date": {
+      "text": "Apr 16th 2024",
+      "date": "2024-04-16T00:00:00.000Z"
+    },
+    "job_desk": "Ensure smooth operation of front desk and guest services",
+    "schedule": {
+      "days": "Tuesday, Friday",
+      "hours": "9:00 AM - 5:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "9012345678",
+    "first_name": "Marta",
+    "last_name": "Jiménez",
     "phone_number": "+34 679 765 432",
     "join_date": {
-      "text": "Jun 3rd 2021",
-      "date": "2021-06-03T00:00:00.000Z"
+      "text": "May 17th 2024",
+      "date": "2024-05-17T00:00:00.000Z"
     },
-    "job_desk": "Coordinate guest transportation and ensure timely arrivals",
+    "job_desk": "Provide excellent customer service to hotel guests",
     "schedule": {
-      "days": ["Tuesday", "Thursday", "Saturday"],
+      "days": "Wednesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "0123456789",
+    "first_name": "Pedro",
+    "last_name": "Vidal",
+    "phone_number": "+34 679 432 109",
+    "join_date": {
+      "text": "Jun 18th 2024",
+      "date": "2024-06-18T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with check-in, check-out, and other front desk tasks",
+    "schedule": {
+      "days": "Monday, Tuesday",
+      "hours": "9:00 AM - 5:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "2345678901",
+    "first_name": "Sergio",
+    "last_name": "Navarro",
+    "phone_number": "+34 679 543 210",
+    "join_date": {
+      "text": "Jul 19th 2024",
+      "date": "2024-07-19T00:00:00.000Z"
+    },
+    "job_desk": "Coordinate and manage guest services to ensure satisfaction",
+    "schedule": {
+      "days": "Wednesday, Thursday",
+      "hours": "11:00 AM - 7:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "4567890123",
+    "first_name": "Marina",
+    "last_name": "Gómez",
+    "phone_number": "+34 679 432 109",
+    "join_date": {
+      "text": "Aug 20th 2024",
+      "date": "2024-08-20T00:00:00.000Z"
+    },
+    "job_desk": "Handle guest check-in and check-out processes efficiently",
+    "schedule": {
+      "days": "Monday, Wednesday",
+      "hours": "8:00 AM - 4:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "5678901234",
+    "first_name": "Natalia",
+    "last_name": "Fernández",
+    "phone_number": "+34 679 321 098",
+    "join_date": {
+      "text": "Sep 21st 2024",
+      "date": "2024-09-21T00:00:00.000Z"
+    },
+    "job_desk": "Provide information about hotel services, amenities, and local attractions",
+    "schedule": {
+      "days": "Tuesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "6789012345",
+    "first_name": "Óscar",
+    "last_name": "Martín",
+    "phone_number": "+34 679 876 543",
+    "join_date": {
+      "text": "Oct 22nd 2024",
+      "date": "2024-10-22T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with reservations and inquiries about hotel accommodations",
+    "schedule": {
+      "days": "Wednesday, Friday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "7890123456",
+    "first_name": "Rocío",
+    "last_name": "Hernández",
+    "phone_number": "+34 679 098 765",
+    "join_date": {
+      "text": "Nov 23rd 2024",
+      "date": "2024-11-23T00:00:00.000Z"
+    },
+    "job_desk": "Ensure smooth operation of front desk and guest services",
+    "schedule": {
+      "days": "Tuesday, Friday",
+      "hours": "9:00 AM - 5:00 PM"
+    },
+    "status": true
+  },
+  {
+    "id": "9012345678",
+    "first_name": "Víctor",
+    "last_name": "Jiménez",
+    "phone_number": "+34 679 765 432",
+    "join_date": {
+      "text": "Dec 24th 2024",
+      "date": "2024-12-24T00:00:00.000Z"
+    },
+    "job_desk": "Provide excellent customer service to hotel guests",
+    "schedule": {
+      "days": "Wednesday, Thursday",
+      "hours": "10:00 AM - 6:00 PM"
+    },
+    "status": false
+  },
+  {
+    "id": "0123456789",
+    "first_name": "Javier",
+    "last_name": "Vidal",
+    "phone_number": "+34 679 432 109",
+    "join_date": {
+      "text": "Jan 25th 2025",
+      "date": "2025-01-25T00:00:00.000Z"
+    },
+    "job_desk": "Assist guests with check-in, check-out, and other front desk tasks",
+    "schedule": {
+      "days": "Monday, Tuesday",
       "hours": "9:00 AM - 5:00 PM"
     },
     "status": true
