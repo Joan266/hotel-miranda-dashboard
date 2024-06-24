@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   padding: 1em;
   overflow-y:auto;
-  max-height:70%
+  max-height: calc(100vh - 5em);
 `;
 
 const Title = styled.h1`
@@ -12,10 +12,15 @@ const Title = styled.h1`
   margin-left:1.5em;
 `;
 
-const Text = styled.h1`
-  font-size: 0.75rem;
+const Text = styled.div`
+  font-size: 0.7rem;
   font-weight:500;
   color: ${props => props.theme.colors.mediumBlack};
 `;
+const SmallText = styled.div`
+  font-size: 0.65rem;
+  font-weight:400;
+  color: ${props => props.theme.colors.gray};
+`;
 
-export { Container, Title, Text }
+export { Container, Title, Text, SmallText }

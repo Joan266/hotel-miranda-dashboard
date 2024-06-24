@@ -1,6 +1,6 @@
 import employeesData from '../data/employees.json';
-import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+// import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
+//   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, Text } from '../styles/common';
 import { useState } from 'react';
 import usePagination from '../hooks/usePagination';
@@ -22,7 +22,7 @@ export const Employees = () => {
   };
   return (
     <Container>
-      <Table>
+      {/* <Table>
         <thead>
           <TableRow>
             <TableHeader>Name</TableHeader>
@@ -43,7 +43,7 @@ export const Employees = () => {
             </TableRow>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
       <PaginationContainer>
       <Text>
         Showing {pageSize} of {employeesData.length} entries

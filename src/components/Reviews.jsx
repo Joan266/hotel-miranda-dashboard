@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reviewsData from '../data/reviews.json';
-import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+// import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
+//   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
 import { Container, Text } from '../styles/common';
 import usePagination from '../hooks/usePagination';
 
@@ -22,7 +22,7 @@ export const Reviews = () => {
   };
   return (
     <Container>
-    <Table>
+    {/* <Table>
       <thead>
         <TableRow>
           <TableHeader>Order Id</TableHeader>
@@ -43,7 +43,7 @@ export const Reviews = () => {
           </TableRow>
         ))}
       </tbody>
-    </Table>
+    </Table> */}
     <PaginationContainer>
       <Text>
         Showing {pageSize} of {reviewsData.length} entries

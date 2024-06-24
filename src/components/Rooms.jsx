@@ -1,6 +1,6 @@
 import roomsData from '../data/rooms.json';
-import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+// import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, PaginationContainer,
+//   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, Text } from '../styles/common';
 import { useState } from 'react';
 import usePagination from '../hooks/usePagination';
@@ -21,30 +21,30 @@ export const Rooms = () => {
   };
   return (
     <Container>
-      <Table>
+      {/* <Table>
         <thead>
           <TableRow>
-            <TableHeader>Room Name</TableHeader>
-            <TableHeader>Bed Type</TableHeader>
-            <TableHeader>Room Floor</TableHeader>
-            <TableHeader>Facilities</TableHeader>
-            <TableHeader>Rate</TableHeader>
-            <TableHeader>Status</TableHeader>
+            <TableHeaderCell>Room Name</TableHeaderCell>
+            <TableHeaderCell>Bed Type</TableHeaderCell>
+            <TableHeaderCell>Room Floor</TableHeaderCell>
+            <TableHeaderCell>Facilities</TableHeaderCell>
+            <TableHeaderCell>Rate</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
           </TableRow>
         </thead>
         <tbody>
           {currentData().map((room, index) => (
             <TableRow key={index}>
-              <TableCell>{room.room_type}</TableCell>
+              <TableCell><span>#{room.id}</span><span>{room.room_type}</span></TableCell>
               <TableCell>{room.bed_type}</TableCell>
-              <TableCell>{`Floor ${room.floor_room}`}</TableCell>
+              <TableCell>Floor ${room.floor_room}</TableCell>
               <TableCell>{room.facilities.map((item, index) => index !== 0 ? `, ${item}` : item)}</TableCell>
               <TableCell>{room.rate}</TableCell>
               <TableCell>{room.status}</TableCell>
             </TableRow>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
       <PaginationContainer>
       <Text>
         Showing {pageSize} of {roomsData.length} entries
