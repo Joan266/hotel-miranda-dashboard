@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import bookingsData from '../data/bookings.json';
+import bookingsData from '../../data/bookings.json';
 
 const request = {
   data: bookingsData,
