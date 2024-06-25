@@ -1,5 +1,5 @@
 import bookingsData from '../data/bookings.json';
-import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, PaginationContainer,
+import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, Text, SmallText } from '../styles/common';
 import { useState } from 'react';
@@ -35,22 +35,7 @@ const getStatusBackgroundcolor = (status) => {
   }
 };
 
-const CellContainer = styled.div`
-  display: flex;
-  width:100%;
-  height:100%
-`;
-const ProfileImgContainer = styled.div`
-  height: 40px;
-  min-width: 40px;
-  background-color: ${props => props.theme.colors.lightGray};
-  border-radius: 0.3em;
-  margin-right:0.5em;
-  img {
-    width:100%;
-    height:100%;  
-  }
-`
+
 const StatusButton = styled.div`
   border:none;
   display:flex;
@@ -81,7 +66,7 @@ export const Bookings = () => {
 
   return (
     <Container>
-      <Table columnscount={6}>
+      <Table columnscount={6} >
         <TableHeaderRow>
           <TableHeaderCell>Guest</TableHeaderCell>
           <TableHeaderCell>Order Date</TableHeaderCell>
@@ -92,7 +77,7 @@ export const Bookings = () => {
         </TableHeaderRow>
         {currentData().map((booking, index) => (
           <TableRow key={index}>
-            <TableCell>
+            <TableCell height={"5em"}>
               <CellContainer>
                 <ProfileImgContainer>
                 </ProfileImgContainer>

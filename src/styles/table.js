@@ -43,12 +43,12 @@ const TableRow = styled.div`
 
     &::before {
       top: -10px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 100%);
     }
 
     &::after {
       bottom: -10px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 100%);
     }
   }
   &:hover > div {
@@ -58,15 +58,29 @@ const TableRow = styled.div`
     }
   }
 `;
-
+const CellContainer = styled.div`
+  display: flex;
+  width:100%;
+  height:100%
+`;
 const TableCell = styled.div`
   text-align: left;
   width: 100%;
   padding: 1em;
-  height: 4em;
+  height: ${props => props.height};
   border-bottom: 1px solid ${props => props.theme.colors.lightGray}; 
 `;
-
+const ProfileImgContainer = styled.div`
+  height: 60px;
+  min-width: 60px;
+  background-color: ${props => props.theme.colors.lightGray};
+  border-radius: 0.3em;
+  margin-right:1em;
+  img {
+    width:100%;
+    height:100%;  
+  }
+`
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -99,4 +113,4 @@ const PaginationButton = styled.button`
   }
 `;
 
-export { Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,PaginationContainer,PaginationButton,PaginationControls,PaginationInput };
+export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,PaginationControls,PaginationInput };

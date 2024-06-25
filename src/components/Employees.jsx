@@ -1,10 +1,14 @@
 import employeesData from '../data/employees.json';
-// import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
-//   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
-  import { Container, Text } from '../styles/common';
+import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,
+  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+  import { Container, Text, SmallText } from '../styles/common';
 import { useState } from 'react';
 import usePagination from '../hooks/usePagination';
+import styled from 'styled-components';
 
+const IsTextActive = styled.div`
+  color: ${props => props.status ? "#5AD07A" : "#E23428"};
+`
 export const Employees = () => {
   const pageSize = 8; 
   const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(employeesData, pageSize);
@@ -22,28 +26,33 @@ export const Employees = () => {
   };
   return (
     <Container>
-      {/* <Table>
-        <thead>
-          <TableRow>
-            <TableHeader>Name</TableHeader>
-            <TableHeader>Job Desk</TableHeader>
-            <TableHeader>Schedule</TableHeader>
-            <TableHeader>Contact</TableHeader>
-            <TableHeader>Status</TableHeader>
+      <Table columnscount={5}>
+        <TableHeaderRow>
+          <TableHeaderCell>Name</TableHeaderCell>
+          <TableHeaderCell>Job Desk</TableHeaderCell>
+          <TableHeaderCell>Schedule</TableHeaderCell>
+          <TableHeaderCell>Contact</TableHeaderCell>
+          <TableHeaderCell>Status</TableHeaderCell>
+        </TableHeaderRow>
+        {currentData().map((employee, index) => (
+          <TableRow key={index}>
+            <TableCell height={"5.5em"}>
+              <CellContainer>
+                <ProfileImgContainer></ProfileImgContainer> 
+                <div>
+                  <Text><strong>{employee.first_name} {employee.last_name}</strong></Text>
+                  <SmallText>#{employee.id}</SmallText>
+                  <Text>Joined on {employee.join_date.text}</Text>
+                </div>
+              </CellContainer>
+            </TableCell>
+            <TableCell><Text>{employee.job_desk}</Text></TableCell>
+            <TableCell><Text>{employee.schedule.days}</Text> <SmallText>{employee.schedule.hours}</SmallText></TableCell>
+            <TableCell><Text>{employee.phone_number}</Text></TableCell>
+            <TableCell><Text><IsTextActive status={employee.status}>{employee.status ? "ACTIVE" : "INACTIVE"}</IsTextActive></Text></TableCell>
           </TableRow>
-        </thead>
-        <tbody>
-          {currentData().map((employee, index) => (
-            <TableRow key={index}>
-              <TableCell>{`${employee.first_name} ${employee.last_name}`}</TableCell>
-              <TableCell>{employee.job_desk}</TableCell>
-              <TableCell>{`${employee.schedule.days} ${employee.schedule.hours}`}</TableCell>
-              <TableCell>{employee.phone_number}</TableCell>
-              <TableCell>{employee.status ? "ACTIVE" : "INACTIVE"}</TableCell>
-            </TableRow>
-          ))}
-        </tbody>
-      </Table> */}
+        ))}
+      </Table>
       <PaginationContainer>
       <Text>
         Showing {pageSize} of {employeesData.length} entries
