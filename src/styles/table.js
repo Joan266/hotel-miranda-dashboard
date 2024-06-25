@@ -6,7 +6,7 @@ const Table = styled.div`
   margin-top: 1em;
   border-radius: 0.5em;
   background-color: ${props => props.theme.colors.white};
-  grid-template-columns: repeat(${props => props.columnscount}, auto);
+  grid-template-columns: repeat(${props => props.$columnscount}, auto);
   gap:0;
 `;
 
