@@ -2,6 +2,14 @@ import { useState } from 'react';
 
 const usePagination = (data, itemsPerPage) => {
   const [currentPage, setCurrentPage] = useState(1);
+  if(!data)return {
+    currentPage:null,
+    currentData:null,
+    goToPage:null,
+    goToNextPage:null,
+    goToPrevPage:null,
+    totalPages:null,
+  };
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 

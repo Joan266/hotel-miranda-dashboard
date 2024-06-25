@@ -1,46 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FetchBookingThunk } from "./bookingThunk";
+import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './bookingThunks';
 
 const BookingSlice = createSlice({
   name: 'booking',
   initialState: {
     status: "idle",
-    rooms: [],
+    items: [],
+    single: null,
     error: null,
-    room: {
-      id:Number,
-      first_name:String,
-      last_name:String,
-      room_id:Number,
-      order_date: Date,
-      check_in: Date,
-      check_out: Date,
-      status: String,
-    }
-  },
-  reducers: {
-    addBooking(state, action) {
-      const { first_name, last_name, room_id, order_date, check_in, check_out } = action.payload;
- 
-
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(FetchBookingThunk.pending, (state, action) => {
-        state.status = 'pending'
-    })
-    .addCase(FetchBookingThunk.fulfilled, (state, action) => {
-      const { data } = action.payload;
-      state.status = "fulfilled";
-      state.data = [...state.data, data] 
-  
-    })
-    .addCase(FetchBookingThunk.rejected, (state, action) => {
-      state.status = 'rejected'
-      state.error = action.error
-    })
-}
-})
+    builder
+      .addCase(ReadOneThunk.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(ReadOneThunk.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.single = action.payload;
+        state.error = null;
+      })
+      .addCase(ReadOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message;
+      })
+      .addCase(ReadAllThunk.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(ReadAllThunk.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.items = action.payload;
+        state.error = null;
+      })
+      .addCase(ReadAllThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message;
+      })
+      .addCase(CreateOneThunk.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(CreateOneThunk.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.items = action.payload;
+        state.error = null;
+      })
+      .addCase(CreateOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message;
+      })
+      .addCase(DeleteOneThunk.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(DeleteOneThunk.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.items = action.payload;
+        state.error = null;
+      })
+      .addCase(DeleteOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message;
+      });
+  }
+});
 
-export const {  } = BookingSlice.actions;
 export const BookingSliceReducer = BookingSlice.reducer;

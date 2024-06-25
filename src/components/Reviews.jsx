@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import reviewsData from '../data/reviews.json';
-import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,
+import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow,  PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
 import { Container, Text } from '../styles/common';
 import usePagination from '../hooks/usePagination';
