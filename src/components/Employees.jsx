@@ -5,6 +5,7 @@ import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRo
 import { useState } from 'react';
 import usePagination from '../hooks/usePagination';
 import styled from 'styled-components';
+import clientDefault from '../assets/img/client_default.webp';
 
 const IsTextActive = styled.div`
   color: ${props => props.status ? "#5AD07A" : "#E23428"};
@@ -38,7 +39,14 @@ export const Employees = () => {
           <TableRow key={index}>
             <TableCell height={"5.5em"}>
               <CellContainer>
-                <ProfileImgContainer></ProfileImgContainer> 
+                <ProfileImgContainer>
+                  <img 
+                      src={ employee.img
+                        ? "" 
+                        : clientDefault} 
+                      alt="employee" 
+                  />
+                </ProfileImgContainer> 
                 <div>
                   <Text><strong>{employee.first_name} {employee.last_name}</strong></Text>
                   <SmallText>#{employee.id}</SmallText>
@@ -46,7 +54,7 @@ export const Employees = () => {
                 </div>
               </CellContainer>
             </TableCell>
-            <TableCell><Text>{employee.job_desk}</Text></TableCell>
+            <TableCell><Text maxwidth={"350px"}>{employee.job_desk}</Text></TableCell>
             <TableCell><Text>{employee.schedule.days}</Text> <SmallText>{employee.schedule.hours}</SmallText></TableCell>
             <TableCell><Text>{employee.phone_number}</Text></TableCell>
             <TableCell><Text><IsTextActive status={employee.status}>{employee.status ? "ACTIVE" : "INACTIVE"}</IsTextActive></Text></TableCell>

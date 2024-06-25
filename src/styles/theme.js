@@ -1,4 +1,3 @@
-// theme.js
 export const theme = {
   fontFamily: "'Poppins', sans-serif",
   colors: {

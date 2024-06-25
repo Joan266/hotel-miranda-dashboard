@@ -5,6 +5,7 @@ import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContain
 import { useState } from 'react';
 import usePagination from '../hooks/usePagination';
 import styled from 'styled-components';
+import clientDefault from '../assets/img/client_default.webp';
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -80,6 +81,12 @@ export const Bookings = () => {
             <TableCell height={"5em"}>
               <CellContainer>
                 <ProfileImgContainer>
+                  <img 
+                        src={ booking.img
+                          ? "" 
+                          : clientDefault} 
+                        alt="employee" 
+                  />
                 </ProfileImgContainer>
                 <div>
                   <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>

@@ -6,7 +6,7 @@ const Table = styled.div`
   margin-top: 1em;
   border-radius: 0.5em;
   background-color: ${props => props.theme.colors.white};
-  grid-template-columns: repeat(${props => props.columnscount}, minmax(200px, 1fr));
+  grid-template-columns: repeat(${props => props.columnscount}, auto);
   gap:0;
 `;
 
@@ -66,6 +66,7 @@ const CellContainer = styled.div`
 const TableCell = styled.div`
   text-align: left;
   width: 100%;
+  min-width: fit-content;
   padding: 1em;
   height: ${props => props.height};
   border-bottom: 1px solid ${props => props.theme.colors.lightGray}; 
@@ -76,9 +77,11 @@ const ProfileImgContainer = styled.div`
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 0.3em;
   margin-right:1em;
+  overflow:hidden;
   img {
     width:100%;
     height:100%;  
+    cover:fit-content;
   }
 `
 const PaginationContainer = styled.div`

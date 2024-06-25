@@ -16,6 +16,7 @@ const Text = styled.div`
   font-size: 0.7rem;
   font-weight:500;
   color: ${props => props.theme.colors.mediumBlack};
+  max-width: ${props => props.maxwidth ? props.maxwidth : "none"};
 `;
 const SmallText = styled.div`
   font-size: 0.65rem;
