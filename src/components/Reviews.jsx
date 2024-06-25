@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reviewsData from '../data/reviews.json';
-// import { Table, TableCell, TableHeader, TableRow, PaginationContainer,
-//   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,
+  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
 import { Container, Text } from '../styles/common';
 import usePagination from '../hooks/usePagination';
 
@@ -22,28 +22,22 @@ export const Reviews = () => {
   };
   return (
     <Container>
-    {/* <Table>
-      <thead>
-        <TableRow>
-          <TableHeader>Order Id</TableHeader>
-          <TableHeader>Date</TableHeader>
-          <TableHeader>Customer</TableHeader>
-          <TableHeader>Comment</TableHeader>
-          <TableHeader>Rating</TableHeader>
+    <Table columnscount={4}>
+      <TableHeaderRow>
+        <TableHeaderCell>Order Id</TableHeaderCell>
+        <TableHeaderCell>Date</TableHeaderCell>
+        <TableHeaderCell>Customer</TableHeaderCell>
+        <TableHeaderCell>Comment</TableHeaderCell>
+      </TableHeaderRow>
+      {currentData().map((review, index) => (
+        <TableRow key={index}>
+          <TableCell><Text>#{review.order_id}</Text></TableCell>
+          <TableCell><Text>{review.review_date.text}</Text></TableCell>
+          <TableCell><Text>{review.customer_name}</Text></TableCell>
+          <TableCell><Text maxwidth={"350px"}>{review.comment}</Text></TableCell>
         </TableRow>
-      </thead>
-      <tbody>
-        {currentData().map((review, index) => (
-          <TableRow key={index}>
-            <TableCell>#{review.order_id}</TableCell>
-            <TableCell>{review.review_date.text}</TableCell>
-            <TableCell>{review.customer_name}</TableCell>
-            <TableCell>{review.comment}</TableCell>
-            <TableCell>{review.rating}</TableCell>
-          </TableRow>
-        ))}
-      </tbody>
-    </Table> */}
+      ))}
+    </Table>
     <PaginationContainer>
       <Text>
         Showing {pageSize} of {reviewsData.length} entries
