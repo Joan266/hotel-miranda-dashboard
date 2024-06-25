@@ -5,7 +5,7 @@
     "bed_type": "King bed",
     "floor_room": "A - 1",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$145/night",
+    "rate": 145,
     "status": "booked"
   },
   {
@@ -14,7 +14,7 @@
     "bed_type": "Queen bed",
     "floor_room": "B - 2",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$120/night",
+    "rate": 120,
     "status": "available"
   },
   {
@@ -23,7 +23,7 @@
     "bed_type": "King bed",
     "floor_room": "C - 3",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$155/night",
+    "rate": 155,
     "status": "available"
   },
   {
@@ -32,7 +32,7 @@
     "bed_type": "Twin bed",
     "floor_room": "A - 4",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$115/night",
+    "rate": 115,
     "status": "booked"
   },
   {
@@ -41,7 +41,7 @@
     "bed_type": "King bed",
     "floor_room": "B - 5",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$160/night",
+    "rate": 160,
     "status": "available"
   },
   {
@@ -50,7 +50,7 @@
     "bed_type": "Queen bed",
     "floor_room": "C - 6",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$125/night",
+    "rate": 125,
     "status": "available"
   },
   {
@@ -59,7 +59,7 @@
     "bed_type": "King bed",
     "floor_room": "A - 7",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$150/night",
+    "rate": 150,
     "status": "booked"
   },
   {
@@ -68,7 +68,7 @@
     "bed_type": "Queen bed",
     "floor_room": "B - 8",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$130/night",
+    "rate": 130,
     "status": "available"
   },
   {
@@ -77,7 +77,7 @@
     "bed_type": "King bed",
     "floor_room": "C - 9",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$165/night",
+    "rate": 165,
     "status": "available"
   },
   {
@@ -86,277 +86,187 @@
     "bed_type": "Twin bed",
     "floor_room": "A - 10",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$120/night",
+    "rate": 120,
     "status": "booked"
   },
   {
-    "id": "1234567890",
+    "id": "1234567891",
     "room_type": "Deluxe B-011",
     "bed_type": "King bed",
     "floor_room": "B - 11",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$155/night",
+    "rate": 155,
     "status": "available"
   },
   {
-    "id": "2345678901",
+    "id": "2345678902",
     "room_type": "Standard C-012",
     "bed_type": "Queen bed",
     "floor_room": "C - 12",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$135/night",
+    "rate": 135,
     "status": "available"
   },
   {
-    "id": "3456789012",
+    "id": "3456789013",
     "room_type": "Deluxe A-013",
     "bed_type": "King bed",
     "floor_room": "A - 13",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$155/night",
+    "rate": 155,
     "status": "booked"
   },
   {
-    "id": "4567890123",
+    "id": "4567890124",
     "room_type": "Standard B-014",
     "bed_type": "Queen bed",
     "floor_room": "B - 14",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$125/night",
+    "rate": 125,
     "status": "available"
   },
   {
-    "id": "5678901234",
+    "id": "5678901235",
     "room_type": "Deluxe C-015",
     "bed_type": "King bed",
     "floor_room": "C - 15",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$170/night",
+    "rate": 170,
     "status": "available"
   },
   {
-    "id": "6789012345",
+    "id": "6789012346",
     "room_type": "Standard A-016",
     "bed_type": "Twin bed",
     "floor_room": "A - 16",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$130/night",
+    "rate": 130,
     "status": "booked"
   },
   {
-    "id": "7890123456",
+    "id": "7890123457",
     "room_type": "Deluxe B-017",
     "bed_type": "King bed",
     "floor_room": "B - 17",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$160/night",
+    "rate": 160,
     "status": "available"
   },
   {
-    "id": "8901234567",
+    "id": "8901234568",
     "room_type": "Standard C-018",
     "bed_type": "Queen bed",
     "floor_room": "C - 18",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$140/night",
+    "rate": 140,
     "status": "available"
   },
   {
-    "id": "9012345678",
+    "id": "9012345679",
     "room_type": "Deluxe A-019",
     "bed_type": "King bed",
     "floor_room": "A - 19",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$160/night",
+    "rate": 160,
     "status": "booked"
   },
   {
-    "id": "0123456789",
+    "id": "0123456781",
     "room_type": "Standard B-020",
     "bed_type": "Queen bed",
     "floor_room": "B - 20",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$135/night",
+    "rate": 135,
     "status": "available"
   },
   {
-    "id": "1234567890",
+    "id": "1234567892",
     "room_type": "Deluxe C-021",
     "bed_type": "King bed",
     "floor_room": "C - 21",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$175/night",
+    "rate": 175,
     "status": "available"
   },
   {
-    "id": "2345678901",
+    "id": "2345678903",
     "room_type": "Standard A-022",
     "bed_type": "Twin bed",
     "floor_room": "A - 22",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$140/night",
+    "rate": 125,
     "status": "booked"
   },
   {
-    "id": "3456789012",
+    "id": "3456789014",
     "room_type": "Deluxe B-023",
     "bed_type": "King bed",
     "floor_room": "B - 23",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$165/night",
+    "rate": 165,
     "status": "available"
   },
   {
-    "id": "4567890123",
+    "id": "4567890125",
     "room_type": "Standard C-024",
     "bed_type": "Queen bed",
     "floor_room": "C - 24",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$145/night",
+    "rate": 140,
     "status": "available"
   },
   {
-    "id": "5678901234",
+    "id": "5678901236",
     "room_type": "Deluxe A-025",
     "bed_type": "King bed",
     "floor_room": "A - 25",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$180/night",
+    "rate": 160,
     "status": "booked"
   },
   {
-    "id": "6789012345",
+    "id": "6789012347",
     "room_type": "Standard B-026",
     "bed_type": "Queen bed",
     "floor_room": "B - 26",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$150/night",
+    "rate": 130,
     "status": "available"
   },
   {
-    "id": "7890123456",
+    "id": "7890123458",
     "room_type": "Deluxe C-027",
     "bed_type": "King bed",
     "floor_room": "C - 27",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$185/night",
+    "rate": 170,
     "status": "available"
   },
   {
-    "id": "8901234567",
+    "id": "8901234569",
     "room_type": "Standard A-028",
     "bed_type": "Twin bed",
     "floor_room": "A - 28",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$145/night",
+    "rate": 135,
     "status": "booked"
   },
   {
-    "id": "9012345678",
+    "id": "9012345671",
     "room_type": "Deluxe B-029",
     "bed_type": "King bed",
     "floor_room": "B - 29",
     "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$170/night",
+    "rate": 175,
     "status": "available"
   },
   {
-    "id": "0123456789",
+    "id": "0123456782",
     "room_type": "Standard C-030",
     "bed_type": "Queen bed",
     "floor_room": "C - 30",
     "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$150/night",
+    "rate": 140,
     "status": "available"
-  },
-  {
-    "id": "1234567890",
-    "room_type": "Deluxe A-031",
-    "bed_type": "King bed",
-    "floor_room": "A - 31",
-    "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$190/night",
-    "status": "booked"
-  },
-  {
-    "id": "2345678901",
-    "room_type": "Standard B-032",
-    "bed_type": "Queen bed",
-    "floor_room": "B - 32",
-    "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$155/night",
-    "status": "available"
-  },
-  {
-    "id": "3456789012",
-    "room_type": "Deluxe C-033",
-    "bed_type": "King bed",
-    "floor_room": "C - 33",
-    "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$195/night",
-    "status": "available"
-  },
-  {
-    "id": "4567890123",
-    "room_type": "Standard A-034",
-    "bed_type": "Twin bed",
-    "floor_room": "A - 34",
-    "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$155/night",
-    "status": "booked"
-  },
-  {
-    "id": "5678901234",
-    "room_type": "Deluxe B-035",
-    "bed_type": "King bed",
-    "floor_room": "B - 35",
-    "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$175/night",
-    "status": "available"
-  },
-  {
-    "id": "6789012345",
-    "room_type": "Standard C-036",
-    "bed_type": "Queen bed",
-    "floor_room": "C - 36",
-    "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$160/night",
-    "status": "available"
-  },
-  {
-    "id": "7890123456",
-    "room_type": "Deluxe A-037",
-    "bed_type": "King bed",
-    "floor_room": "A - 37",
-    "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$200/night",
-    "status": "booked"
-  },
-  {
-    "id": "8901234567",
-    "room_type": "Standard B-038",
-    "bed_type": "Queen bed",
-    "floor_room": "B - 38",
-    "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$165/night",
-    "status": "available"
-  },
-  {
-    "id": "9012345678",
-    "room_type": "Deluxe C-039",
-    "bed_type": "King bed",
-    "floor_room": "C - 39",
-    "facilities": ["AC", "Shower", "Towel", "Bathtub", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$210/night",
-    "status": "available"
-  },
-  {
-    "id": "0123456789",
-    "room_type": "Standard A-040",
-    "bed_type": "Twin bed",
-    "floor_room": "A - 40",
-    "facilities": ["AC", "Shower", "Towel", "Coffee Set", "LED TV", "Wifi"],
-    "rate": "$165/night",
-    "status": "booked"
   }
 ]

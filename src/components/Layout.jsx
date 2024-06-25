@@ -67,7 +67,10 @@ const ContentContainer = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 1.2em 0.5em;
+  padding: 0 0.5em;
+  height:5em;
+  display:flex;
+  align-items:center;
   background-color: #FFFFFF;
 `;
 const Title = styled.h1`
