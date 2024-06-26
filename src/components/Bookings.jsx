@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, Text, SmallText } from '../styles/common';
@@ -54,10 +55,18 @@ const StatusButton = styled.div`
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
+  const params = useParams();
   const pageSize = 8; 
   const [bookingsData, setBookingsData] = useState(null);
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(bookingsData, pageSize);
-  const [inputPage, setInputPage] =useState(currentPage);
+  const {
+    dataCurrentPage,
+    goToPage,
+    goToNextPage,
+    goToPrevPage,
+    totalPages,
+  } = usePagination(bookingsData, pageSize, params.page || 1); 
+  const [inputPage, setInputPage] =useState(params.page || 1);
+  useEffect(()=>{setInputPage(params.page || 1)},[params.page])
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value);
     setInputPage(value);
@@ -105,7 +114,7 @@ export const Bookings = () => {
           <TableHeaderCell>Room Type</TableHeaderCell>
           <TableHeaderCell>Status</TableHeaderCell>
         </TableHeaderRow>
-        {currentData().map((booking, index) => (
+        {dataCurrentPage.map((booking, index) => (
           <TableRow key={index}>
             <TableCell height={"5em"}>
               <CellContainer>
@@ -145,7 +154,7 @@ export const Bookings = () => {
         Showing {pageSize} of {bookingsData.length} entries
       </Text>
       <PaginationControls>
-        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
+        <PaginationButton onClick={() => goToPrevPage()} disabled={params.page === 1 || !params.page}>Prev</PaginationButton>
         <PaginationInput 
             type="number" 
             value={inputPage || ""} 
@@ -155,7 +164,7 @@ export const Bookings = () => {
             max={totalPages}
           />
           <Text>{totalPages}</Text>
-        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
+        <PaginationButton onClick={() => goToNextPage()} disabled={params.page === totalPages}>Next</PaginationButton>
       </PaginationControls>
       </PaginationContainer>
       </>}

@@ -39,7 +39,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<PrivateRoute><Layout/></PrivateRoute>}>
             <Route index element={<DashBoard />} />
-            <Route path="bookings" element={<Bookings />} />
+            <Route path="bookings/:page?" element={<Bookings />} />
             <Route path="bookings/:id" element={<BookingDetails />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
