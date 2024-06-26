@@ -26,13 +26,13 @@ const Nav = styled.nav`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: ${props => (props.active ? props.theme.colors.primaryRed : props.theme.colors.gray)};
+  color: ${props => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
   font-size: 0.8rem;
-  border-left: 4px solid ${props => (props.active ? props.theme.colors.primaryRed : "transparent")};
+  border-left: 4px solid ${props => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
   width: 100%;
   padding-left: 3em;
-  font-weight: ${props => (props.active ? "bold" : "500")}; 
+  font-weight: ${props => (props.$active === "true" ? "bold" : "500")}; 
   &:hover {
     color: ${props => props.theme.colors.primaryRed};
     border-left: 4px solid ${props => props.theme.colors.primaryRed};
@@ -92,19 +92,19 @@ export const Layout = () => {
     <LayoutContainer>
       <NavContainer>
         <Nav>
-          <NavLink to="/" active={location.pathname.includes('/')} >
+          <NavLink to="/" $active={location.pathname.endsWith('/').toString()} >
             Dashboard
           </NavLink>
-          <NavLink to="/bookings" active={location.pathname.includes('/bookings')}>
+          <NavLink to="/bookings" $active={location.pathname.includes('/bookings').toString()}>
             Bookings
           </NavLink>
-          <NavLink to="/reviews" active={location.pathname.includes('/reviews')}>
+          <NavLink to="/reviews" $active={location.pathname.includes('/reviews').toString()}>
             Reviews
           </NavLink>
-          <NavLink to="/rooms" active={location.pathname.includes('/rooms')}>
+          <NavLink to="/rooms" $active={location.pathname.includes('/rooms').toString()}>
             Rooms
           </NavLink>
-          <NavLink to="/employees" active={location.pathname.includes('/employees')}>
+          <NavLink to="/employees" $active={location.pathname.includes('/employees').toString()}>
             Employees
           </NavLink>
           <LogoutButton onClick={logout}>Logout</LogoutButton>

@@ -69,12 +69,12 @@ const Nav = styled.nav`
 const NavStatusOptions = styled.button`
   padding: 10px 20px;
   border: none;
-  background-color: ${(props) => (props.active ? '#007BFF' : '#E0E0E0')};
-  color: ${(props) => (props.active ? '#FFF' : '#000')};
+  background-color: ${(props) => (props.$active === "true" ? '#007BFF' : '#E0E0E0')};
+  color: ${(props) => (props.$active === "true" ? '#FFF' : '#000')};
   cursor: pointer;
   
   &:hover {
-    background-color: ${(props) => (props.active ? '#0056b3' : '#d6d6d6')};
+    background-color: ${(props) => (props.$active === "true" ? '#0056b3' : '#d6d6d6')};
   }
 `;
 export const Bookings = () => {
@@ -91,6 +91,9 @@ export const Bookings = () => {
     totalPages,
   } = usePagination(bookingsData, pageSize, params.page || 1); 
   const [inputPage, setInputPage] =useState(params.page || 1);
+  const [activeStatus, setActiveStatus] = useState('all');
+  const [filteredData, setFilteredData] = useState(null);
+
   useEffect(()=>{setInputPage(params.page || 1)},[params.page])
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value);
@@ -128,31 +131,31 @@ export const Bookings = () => {
   }, [status]);
   useEffect(() => {
     if (activeStatus === 'all') {
-      setFilteredData(data);
+      setFilteredData(dataCurrentPage);
     } else {
-      setFilteredData(data.filter(booking => booking.status === activeStatus));
+      setFilteredData(dataCurrentPage.filter(booking => booking.status === activeStatus));
     }
-  }, [activeStatus, data]);
+  }, [activeStatus, dataCurrentPage]);
 
   return (
     <Container>
-      { bookingsData  && <>
+      { filteredData  && <>
       <DataModifiers>
         <FilterStatusNav>
           <Nav>
-            <NavStatusOptions active={activeStatus === 'all'} onClick={() => setActiveStatus('all')}>
+            <NavStatusOptions $active={(activeStatus === 'all').toString()} onClick={() => setActiveStatus('all')}>
               All Bookings
             </NavStatusOptions>
-            <NavStatusOptions active={activeStatus === 'pending'} onClick={() => setActiveStatus('pending')}>
+            <NavStatusOptions $active={(activeStatus === 'pending').toString()} onClick={() => setActiveStatus('pending')}>
               Pending
             </NavStatusOptions>
-            <NavStatusOptions active={activeStatus === 'booked'} onClick={() => setActiveStatus('booked')}>
+            <NavStatusOptions $active={(activeStatus === 'booked').toString()} onClick={() => setActiveStatus('booked')}>
               Booked
             </NavStatusOptions>
-            <NavStatusOptions active={activeStatus === 'cancelled'} onClick={() => setActiveStatus('cancelled')}>
+            <NavStatusOptions $active={(activeStatus === 'cancelled').toString()} onClick={() => setActiveStatus('cancelled')}>
               Cancelled
             </NavStatusOptions>
-            <NavStatusOptions active={activeStatus === 'refund'} onClick={() => setActiveStatus('refund')}>
+            <NavStatusOptions $active={(activeStatus === 'refund').toString()} onClick={() => setActiveStatus('refund')}>
               Refund
             </NavStatusOptions>
           </Nav>
@@ -167,7 +170,7 @@ export const Bookings = () => {
           <TableHeaderCell>Room Type</TableHeaderCell>
           <TableHeaderCell>Status</TableHeaderCell>
         </TableHeaderRow>
-        {dataCurrentPage.map((booking, index) => (
+        {filteredData.map((booking, index) => (
           <TableRow key={index}>
             <TableCell height={"5em"}>
               <CellContainer>
