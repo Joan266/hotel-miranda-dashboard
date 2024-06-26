@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, Text, SmallText } from '../styles/common';
-import usePagination from '../hooks/usePagination';
+import { useDataModifiers } from '../hooks/useDataModifiers';
 import styled from 'styled-components';
 import clientDefault from '../assets/img/client_default.webp';
 import { toast } from 'react-toastify';
@@ -39,6 +38,25 @@ const getStatusBackgroundcolor = (status) => {
   }
 };
 
+const DateSorterSelector = styled.select`
+  padding: 0.5em 1em;
+  border: 1px solid ${props => props.theme.colors.darkGreen};
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  font-size: 0.7rem;
+  border-radius: 0.4em;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Option = styled.option`
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  padding: 1em;
+`;
 
 const StatusButton = styled.div`
   border:none;
@@ -54,47 +72,55 @@ const StatusButton = styled.div`
 `
 
 const DataModifiers = styled.div`
-  margin: 20px;
-`;
+  margin-bottom:1.5em;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  `;
 
-const FilterStatusNav = styled.div`
-  margin-bottom: 20px;
-`;
-
-const Nav = styled.nav`
+const FilterStatusNav = styled.nav`
   display: flex;
-  gap: 10px;
 `;
 
 const NavStatusOptions = styled.button`
-  padding: 10px 20px;
+  padding: 0.7em 2em;
   border: none;
-  background-color: ${(props) => (props.$active === "true" ? '#007BFF' : '#E0E0E0')};
-  color: ${(props) => (props.$active === "true" ? '#FFF' : '#000')};
+  font-size: 0.7rem;
+  font-weight:500;
+  font-family: ${props => props.theme.fontFamily};
+  border-bottom: 2px solid  ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : "#B0B0B0")};
+  background-color: transparent;
+  color: ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : props.theme.colors.gray)};
   cursor: pointer;
   
   &:hover {
-    background-color: ${(props) => (props.$active === "true" ? '#0056b3' : '#d6d6d6')};
+    color: ${props => props.theme.colors.darkGreen };
+    border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
   }
 `;
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
-  const params = useParams();
-  const pageSize = 8; 
+  const pageSize = 6; 
   const [bookingsData, setBookingsData] = useState(null);
+  const [activeStatus, setActiveStatus] = useState('all');
+  const [dateSorter, setDateSorter] = useState('newest');
+
   const {
+    page,
     dataCurrentPage,
     goToPage,
     goToNextPage,
     goToPrevPage,
     totalPages,
-  } = usePagination(bookingsData, pageSize, params.page || 1); 
-  const [inputPage, setInputPage] =useState(params.page || 1);
-  const [activeStatus, setActiveStatus] = useState('all');
-  const [filteredData, setFilteredData] = useState(null);
+  } = useDataModifiers(bookingsData, pageSize, activeStatus, dateSorter); 
+  const [inputPage, setInputPage] = useState(null);
 
-  useEffect(()=>{setInputPage(params.page || 1)},[params.page])
+  const handleDateSorterChange = (event) => {
+    setDateSorter(event.target.value);
+  };
+  useEffect(()=>{setInputPage(page)},[page])
+
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value);
     setInputPage(value);
@@ -129,37 +155,33 @@ export const Bookings = () => {
       });
     }
   }, [status]);
-  useEffect(() => {
-    if (activeStatus === 'all') {
-      setFilteredData(dataCurrentPage);
-    } else {
-      setFilteredData(dataCurrentPage.filter(booking => booking.status === activeStatus));
-    }
-  }, [activeStatus, dataCurrentPage]);
+ 
 
   return (
     <Container>
-      { filteredData  && <>
+      { dataCurrentPage  && <>
       <DataModifiers>
         <FilterStatusNav>
-          <Nav>
-            <NavStatusOptions $active={(activeStatus === 'all').toString()} onClick={() => setActiveStatus('all')}>
-              All Bookings
-            </NavStatusOptions>
-            <NavStatusOptions $active={(activeStatus === 'pending').toString()} onClick={() => setActiveStatus('pending')}>
-              Pending
-            </NavStatusOptions>
-            <NavStatusOptions $active={(activeStatus === 'booked').toString()} onClick={() => setActiveStatus('booked')}>
-              Booked
-            </NavStatusOptions>
-            <NavStatusOptions $active={(activeStatus === 'cancelled').toString()} onClick={() => setActiveStatus('cancelled')}>
-              Cancelled
-            </NavStatusOptions>
-            <NavStatusOptions $active={(activeStatus === 'refund').toString()} onClick={() => setActiveStatus('refund')}>
-              Refund
-            </NavStatusOptions>
-          </Nav>
+          <NavStatusOptions $active={(activeStatus === 'all').toString()} onClick={() => setActiveStatus('all')}>
+            All Bookings
+          </NavStatusOptions>
+          <NavStatusOptions $active={(activeStatus === 'pending').toString()} onClick={() => setActiveStatus('pending')}>
+            Pending
+          </NavStatusOptions>
+          <NavStatusOptions $active={(activeStatus === 'booked').toString()} onClick={() => setActiveStatus('booked')}>
+            Booked
+          </NavStatusOptions>
+          <NavStatusOptions $active={(activeStatus === 'cancelled').toString()} onClick={() => setActiveStatus('cancelled')}>
+            Cancelled
+          </NavStatusOptions>
+          <NavStatusOptions $active={(activeStatus === 'refund').toString()} onClick={() => setActiveStatus('refund')}>
+            Refund
+          </NavStatusOptions>
         </FilterStatusNav>
+        <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
+          <Option value="newest">Newest</Option>
+          <Option value="oldest">Oldest</Option>
+        </DateSorterSelector>
       </DataModifiers>
       <Table $columnscount={6} >
         <TableHeaderRow>
@@ -170,7 +192,7 @@ export const Bookings = () => {
           <TableHeaderCell>Room Type</TableHeaderCell>
           <TableHeaderCell>Status</TableHeaderCell>
         </TableHeaderRow>
-        {filteredData.map((booking, index) => (
+        {dataCurrentPage.map((booking, index) => (
           <TableRow key={index}>
             <TableCell height={"5em"}>
               <CellContainer>
@@ -210,7 +232,7 @@ export const Bookings = () => {
           Showing {pageSize} of {bookingsData.length} entries
         </Text>
         <PaginationControls>
-          <PaginationButton onClick={() => goToPrevPage()} disabled={params.page === 1 || !params.page}>Prev</PaginationButton>
+          <PaginationButton onClick={() => goToPrevPage()} disabled={page === 1 }>Prev</PaginationButton>
           <PaginationInput 
               type="number" 
               value={inputPage || ""} 
@@ -220,7 +242,7 @@ export const Bookings = () => {
               max={totalPages}
             />
             <Text>{totalPages}</Text>
-          <PaginationButton onClick={() => goToNextPage()} disabled={params.page === totalPages}>Next</PaginationButton>
+          <PaginationButton onClick={() => goToNextPage()} disabled={page === totalPages}>Next</PaginationButton>
         </PaginationControls>
       </PaginationContainer>
       </>}
