@@ -52,6 +52,31 @@ const StatusButton = styled.div`
   border-radius:0.6em;
   font-size: 0.7rem;
 `
+
+const DataModifiers = styled.div`
+  margin: 20px;
+`;
+
+const FilterStatusNav = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 10px;
+`;
+
+const NavStatusOptions = styled.button`
+  padding: 10px 20px;
+  border: none;
+  background-color: ${(props) => (props.active ? '#007BFF' : '#E0E0E0')};
+  color: ${(props) => (props.active ? '#FFF' : '#000')};
+  cursor: pointer;
+  
+  &:hover {
+    background-color: ${(props) => (props.active ? '#0056b3' : '#d6d6d6')};
+  }
+`;
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
@@ -101,10 +126,38 @@ export const Bookings = () => {
       });
     }
   }, [status]);
-  
+  useEffect(() => {
+    if (activeStatus === 'all') {
+      setFilteredData(data);
+    } else {
+      setFilteredData(data.filter(booking => booking.status === activeStatus));
+    }
+  }, [activeStatus, data]);
+
   return (
     <Container>
       { bookingsData  && <>
+      <DataModifiers>
+        <FilterStatusNav>
+          <Nav>
+            <NavStatusOptions active={activeStatus === 'all'} onClick={() => setActiveStatus('all')}>
+              All Bookings
+            </NavStatusOptions>
+            <NavStatusOptions active={activeStatus === 'pending'} onClick={() => setActiveStatus('pending')}>
+              Pending
+            </NavStatusOptions>
+            <NavStatusOptions active={activeStatus === 'booked'} onClick={() => setActiveStatus('booked')}>
+              Booked
+            </NavStatusOptions>
+            <NavStatusOptions active={activeStatus === 'cancelled'} onClick={() => setActiveStatus('cancelled')}>
+              Cancelled
+            </NavStatusOptions>
+            <NavStatusOptions active={activeStatus === 'refund'} onClick={() => setActiveStatus('refund')}>
+              Refund
+            </NavStatusOptions>
+          </Nav>
+        </FilterStatusNav>
+      </DataModifiers>
       <Table $columnscount={6} >
         <TableHeaderRow>
           <TableHeaderCell>Guest</TableHeaderCell>
@@ -150,22 +203,22 @@ export const Bookings = () => {
         ))}
       </Table>
       <PaginationContainer>
-      <Text>
-        Showing {pageSize} of {bookingsData.length} entries
-      </Text>
-      <PaginationControls>
-        <PaginationButton onClick={() => goToPrevPage()} disabled={params.page === 1 || !params.page}>Prev</PaginationButton>
-        <PaginationInput 
-            type="number" 
-            value={inputPage || ""} 
-            onChange={handleInputChange} 
-            onKeyDown={handleInputSubmit} 
-            min={1}
-            max={totalPages}
-          />
-          <Text>{totalPages}</Text>
-        <PaginationButton onClick={() => goToNextPage()} disabled={params.page === totalPages}>Next</PaginationButton>
-      </PaginationControls>
+        <Text>
+          Showing {pageSize} of {bookingsData.length} entries
+        </Text>
+        <PaginationControls>
+          <PaginationButton onClick={() => goToPrevPage()} disabled={params.page === 1 || !params.page}>Prev</PaginationButton>
+          <PaginationInput 
+              type="number" 
+              value={inputPage || ""} 
+              onChange={handleInputChange} 
+              onKeyDown={handleInputSubmit} 
+              min={1}
+              max={totalPages}
+            />
+            <Text>{totalPages}</Text>
+          <PaginationButton onClick={() => goToNextPage()} disabled={params.page === totalPages}>Next</PaginationButton>
+        </PaginationControls>
       </PaginationContainer>
       </>}
     </Container>

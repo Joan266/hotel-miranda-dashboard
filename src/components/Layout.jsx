@@ -26,22 +26,17 @@ const Nav = styled.nav`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: ${props => props.theme.colors.gray};
+  color: ${props => (props.active ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
   font-size: 0.8rem;
-  border-left: 4px solid transparent;
-  width:100%;
-  padding-left:3em;
-  font-weight:500;
+  border-left: 4px solid ${props => (props.active ? props.theme.colors.primaryRed : "transparent")};
+  width: 100%;
+  padding-left: 3em;
+  font-weight: ${props => (props.active ? "bold" : "500")}; 
   &:hover {
     color: ${props => props.theme.colors.primaryRed};
     border-left: 4px solid ${props => props.theme.colors.primaryRed};
     font-weight: bold;
-  }
-  &.active {
-    color: ${props => props.theme.colors.primaryRed};
-    font-weight: bold;
-    border-left: 4px solid ${props => props.theme.colors.primaryRed};
   }
 `;
 
@@ -97,19 +92,19 @@ export const Layout = () => {
     <LayoutContainer>
       <NavContainer>
         <Nav>
-          <NavLink to="/" className={location.pathname === '/' ? 'active' : ''}>
+          <NavLink to="/" active={location.pathname.includes('/')} >
             Dashboard
           </NavLink>
-          <NavLink to="/bookings" className={location.pathname.includes('/bookings') ? 'active' : ''}>
+          <NavLink to="/bookings" active={location.pathname.includes('/bookings')}>
             Bookings
           </NavLink>
-          <NavLink to="/reviews" className={location.pathname.includes('/reviews') ? 'active' : ''}>
+          <NavLink to="/reviews" active={location.pathname.includes('/reviews')}>
             Reviews
           </NavLink>
-          <NavLink to="/rooms" className={location.pathname.includes('/rooms') ? 'active' : ''}>
+          <NavLink to="/rooms" active={location.pathname.includes('/rooms')}>
             Rooms
           </NavLink>
-          <NavLink to="/employees" className={location.pathname.includes('/employees') ? 'active' : ''}>
+          <NavLink to="/employees" active={location.pathname.includes('/employees')}>
             Employees
           </NavLink>
           <LogoutButton onClick={logout}>Logout</LogoutButton>
