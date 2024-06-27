@@ -1,4 +1,4 @@
-export const delayedRequest = (data, time) => {
+export const delayedRequest = (data, time=800) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (data) {

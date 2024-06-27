@@ -3,11 +3,11 @@ import reviewsData from '../data/reviews.json';
 import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow,  PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
 import { Container, Text } from '../styles/common';
-import usePagination from '../hooks/usePagination';
+import { useDataModifiers } from '../hooks/useDataModifiers';
 
 export const Reviews = () => {
   const pageSize = 8; 
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(reviewsData, pageSize);
+  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = useDataModifiers(reviewsData, pageSize);
   const [inputPage, setInputPage] =useState(currentPage);
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value);

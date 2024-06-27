@@ -3,7 +3,7 @@ import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRo
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
   import { Container, SmallText, Text } from '../styles/common';
 import { useState } from 'react';
-import usePagination from '../hooks/usePagination';
+import { useDataModifiers } from '../hooks/useDataModifiers';
 import styled from 'styled-components';
 import standardRoomImg from '../assets/img/standard_room.webp';
 import deluxeRoomImg from '../assets/img/deluxe_room.webp';
@@ -35,7 +35,7 @@ const StatusButton = styled.div`
 `
 export const Rooms = () => {
   const pageSize = 7; 
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = usePagination(roomsData, pageSize);
+  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = useDataModifiers(roomsData, pageSize);
   const [inputPage, setInputPage] =useState(currentPage);
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value);

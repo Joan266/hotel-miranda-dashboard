@@ -9,11 +9,9 @@ const root = document.getElementById('root');
 const app = ReactDOM.createRoot(root);
 
 app.render(
-  <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </StrictMode>
 );

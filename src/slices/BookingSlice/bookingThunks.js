@@ -7,8 +7,8 @@ const data =  bookingsData;
 
 const ReadOneThunk = createAsyncThunk("booking/readOneThunk", async (id) => {
   try {
-    const response = await delayedRequest(data, 500);
-    return response.find(booking => booking.id === id) || null;
+    const response = await delayedRequest((data.find(booking => booking.id === id) || null), 500);
+    return response;
   } catch (error) {
     return null; 
   }
@@ -24,9 +24,8 @@ const ReadAllThunk = createAsyncThunk("booking/readAllThunk", async () => {
 
 const CreateOneThunk = createAsyncThunk("booking/createOneThunk", async (newBooking) => {
   try {
-    const response = await delayedRequest(data, 500);
-    const updatedBookings = [...response, newBooking];
-    return updatedBookings;
+    const response = await delayedRequest([...data, newBooking], 500);
+    return response;
   } catch (error) {
     return null;
   }
@@ -34,9 +33,8 @@ const CreateOneThunk = createAsyncThunk("booking/createOneThunk", async (newBook
 
 const DeleteOneThunk = createAsyncThunk("booking/deleteOneThunk", async (id) => {
   try {
-    const response = await delayedRequest(data, 500);
-    const updatedBookings = response.filter(booking => booking.id !== id);
-    return updatedBookings;
+    const response = await delayedRequest(data.filter(booking => booking.id !== id), 500);
+    return response;
   } catch (error) {
     return null; 
   }
