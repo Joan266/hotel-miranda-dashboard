@@ -1,9 +1,10 @@
-
-import clientDefault from '../assets/img/client_default.webp';
-import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+import { 
+  Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, 
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput 
+} from '../styles/table';
 import { Container, Text, SmallText } from '../styles/common';
 import styled from 'styled-components';
+
 const getStatusColor = (status) => {
   switch (status) {
     case 'refund':
@@ -18,7 +19,8 @@ const getStatusColor = (status) => {
       return '#6D6D6D'; 
   }
 };
-const getStatusBackgroundcolor = (status) => {
+
+const getStatusBackgroundColor = (status) => {
   switch (status) {
     case 'refund':
       return '#FFEDEC';
@@ -34,63 +36,33 @@ const getStatusBackgroundcolor = (status) => {
 };
 
 const StatusButton = styled.div`
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 6.5em;
-  height:3em;
-  color: ${props => getStatusColor(props.$status)};
-  background-color: ${props => getStatusBackgroundcolor(props.$status)};
-  border-radius:0.6em;
+  height: 3em;
+  color: ${(props) => getStatusColor(props.$status)};
+  background-color: ${(props) => getStatusBackgroundColor(props.$status)};
+  border-radius: 0.6em;
   font-size: 0.7rem;
-  `
-export const TableComponent = ({data, columnsCount}) => {
+`;
 
-return (  
-  <Table $columnscount={columnsCount} >
-    <TableHeaderRow>
-      <TableHeaderCell>Guest</TableHeaderCell>
-      <TableHeaderCell>Order Date</TableHeaderCell>
-      <TableHeaderCell>Check In</TableHeaderCell>
-      <TableHeaderCell>Check Out</TableHeaderCell>
-      <TableHeaderCell>Room Type</TableHeaderCell>
-      <TableHeaderCell>Status</TableHeaderCell>
-    </TableHeaderRow>
-    {data.map((booking, index) => (
-      <TableRow key={index}>
-        <TableCell height={"5em"}>
-          <CellContainer>
-            <ProfileImgContainer>
-              <img 
-                    src={ booking.img
-                      ? "" 
-                      : clientDefault} 
-                    alt="employee" 
-              />
-            </ProfileImgContainer>
-            <div>
-              <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
-              <SmallText>#{booking.id}</SmallText>
-            </div>
-          </CellContainer>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.order_date.date}</Text>
-          <SmallText>{booking.order_date.time}</SmallText>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.check_in.date}</Text>
-          <SmallText>{booking.check_in.time}</SmallText>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.check_out.date}</Text>
-          <SmallText>{booking.check_out.time}</SmallText>
-        </TableCell>
-        <TableCell><Text>{booking.room_type}</Text></TableCell>
-        <TableCell><StatusButton  $status={booking.status}>{booking.status}</StatusButton></TableCell>
-      </TableRow>
-    ))}
-  </Table>
-  )
+export const TableComponent = ({ data, columns }) => {
+  return (  
+    <Table $columnscount={columns.length}>
+      <TableHeaderRow>
+        {columns.map((column, cellIndex) => (
+          <TableHeaderCell key={cellIndex}>{column.label}</TableHeaderCell> 
+        ))}
+      </TableHeaderRow>
+      {data.map((row, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {columns.map((column, cellIndex) => (
+            <TableCell key={cellIndex}>{column.display(row)}</TableCell> 
+          ))}
+        </TableRow>
+      ))}
+    </Table>
+  );
 };

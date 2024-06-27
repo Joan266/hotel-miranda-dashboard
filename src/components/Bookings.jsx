@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 import { ReadAllThunk } from '../slices/BookingSlice/bookingThunks';
 import { TableComponent } from './Table';
+import clientDefault from '../assets/img/client_default.webp';
 const getStatusColor = (status) => {
   switch (status) {
     case 'refund':
@@ -99,6 +100,52 @@ const NavStatusOptions = styled.button`
   }
 `;
 
+
+const Columns = [
+  {label: "Guest", display: booking => (
+      <>
+        <CellContainer>
+          <ProfileImgContainer>
+            <img 
+                  src={ booking.img
+                    ? "" 
+                    : clientDefault} 
+                  alt="employee" 
+            />
+          </ProfileImgContainer>
+          <div>
+            <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
+            <SmallText>#{booking.id}</SmallText>
+          </div>
+        </CellContainer>
+      </>
+  ), sort: "name"},
+  {label: "Order Date", display: booking => (
+    <>
+      <Text>{booking.order_date.date}</Text>
+      <SmallText>{booking.order_date.time}</SmallText>
+    </>
+  )},
+  {label: "Check in", display: booking => (
+    <>
+      <Text>{booking.check_in.date}</Text>
+      <SmallText>{booking.check_in.time}</SmallText>
+    </>
+  )},
+  {label: "Check out", display: booking => (
+    <>
+      <Text>{booking.check_out.date}</Text>
+      <SmallText>{booking.check_out.time}</SmallText>
+    </>
+  )},
+  {label: "Room type", display: booking => (
+    <Text>{booking.room_type}</Text>
+  )},
+  {label: "Status", display: booking => (
+    <StatusButton  $status={booking.status}>{booking.status}</StatusButton>
+  )},
+];
+
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
@@ -184,7 +231,7 @@ export const Bookings = () => {
           <Option value="oldest">Oldest</Option>
         </DateSorterSelector>
       </DataModifiers>
-      <TableComponent data={dataCurrentPage} columnsCount={6}></TableComponent>
+      <TableComponent data={dataCurrentPage} columns={Columns}></TableComponent>
       <PaginationContainer>
         <Text>
           Showing {pageSize} of {bookingsData.length} entries
