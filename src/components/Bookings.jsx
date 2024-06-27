@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
   PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
-  import { Container, Text, SmallText } from '../styles/common';
+import { Container, Text, SmallText } from '../styles/common';
 import { useDataModifiers } from '../hooks/useDataModifiers';
 import styled from 'styled-components';
-import clientDefault from '../assets/img/client_default.webp';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 import { ReadAllThunk } from '../slices/BookingSlice/bookingThunks';
+import { TableComponent } from './Table';
 const getStatusColor = (status) => {
   switch (status) {
     case 'refund':
@@ -98,6 +98,7 @@ const NavStatusOptions = styled.button`
     border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
   }
 `;
+
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
@@ -183,50 +184,7 @@ export const Bookings = () => {
           <Option value="oldest">Oldest</Option>
         </DateSorterSelector>
       </DataModifiers>
-      <Table $columnscount={6} >
-        <TableHeaderRow>
-          <TableHeaderCell>Guest</TableHeaderCell>
-          <TableHeaderCell>Order Date</TableHeaderCell>
-          <TableHeaderCell>Check In</TableHeaderCell>
-          <TableHeaderCell>Check Out</TableHeaderCell>
-          <TableHeaderCell>Room Type</TableHeaderCell>
-          <TableHeaderCell>Status</TableHeaderCell>
-        </TableHeaderRow>
-        {dataCurrentPage.map((booking, index) => (
-          <TableRow key={index}>
-            <TableCell height={"5em"}>
-              <CellContainer>
-                <ProfileImgContainer>
-                  <img 
-                        src={ booking.img
-                          ? "" 
-                          : clientDefault} 
-                        alt="employee" 
-                  />
-                </ProfileImgContainer>
-                <div>
-                  <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
-                  <SmallText>#{booking.id}</SmallText>
-                </div>
-              </CellContainer>
-            </TableCell>
-            <TableCell>
-              <Text>{booking.order_date.date}</Text>
-              <SmallText>{booking.order_date.time}</SmallText>
-            </TableCell>
-            <TableCell>
-              <Text>{booking.check_in.date}</Text>
-              <SmallText>{booking.check_in.time}</SmallText>
-            </TableCell>
-            <TableCell>
-              <Text>{booking.check_out.date}</Text>
-              <SmallText>{booking.check_out.time}</SmallText>
-            </TableCell>
-            <TableCell><Text>{booking.room_type}</Text></TableCell>
-            <TableCell><StatusButton  $status={booking.status}>{booking.status}</StatusButton></TableCell>
-          </TableRow>
-        ))}
-      </Table>
+      <TableComponent data={dataCurrentPage} columnsCount={6}></TableComponent>
       <PaginationContainer>
         <Text>
           Showing {pageSize} of {bookingsData.length} entries
