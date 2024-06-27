@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter) => {
+  useEffect(()=>{console.log("render"),[]})
   const [ page, setPage ] = useState(1);
   const orderedData = useMemo(() => {
     console.log("orderedData")
@@ -25,10 +26,11 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter) 
     }
   }, [activeStatus, orderedData]);
 
-  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
-
+  const totalPages = useMemo(()=>{
+    if(!filteredData) return null;
+    return Math.ceil(filteredData.length / itemsPerPage)
+  },[filteredData]);
   const validatedCurrentPage = Math.min(Math.max(page, 1), totalPages);
-
   const dataCurrentPage = useMemo(() => {
     console.log("dataCurrentPage")
     if(!filteredData) return null;
