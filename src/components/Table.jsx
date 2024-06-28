@@ -54,7 +54,7 @@ const NavStatusOptions = styled.button`
   }
 `;
 
-export const TableComponent = ({ pageSize, data, columns }) => {
+export const TableComponent = ({ pageSize, data, columns, statuses,sorterProperty }) => {
   const [activeStatus, setActiveStatus] = useState('all');
   const [dateSorter, setDateSorter] = useState('newest');
   const {
@@ -64,7 +64,7 @@ export const TableComponent = ({ pageSize, data, columns }) => {
     goToNextPage,
     goToPrevPage,
     totalPages,
-  } = useDataModifiers(data, pageSize, activeStatus, dateSorter); 
+  } = useDataModifiers(data, pageSize, activeStatus, dateSorter, sorterProperty); 
 
   const [inputPage, setInputPage] = useState("");
 
@@ -90,21 +90,15 @@ export const TableComponent = ({ pageSize, data, columns }) => {
     <>
     <DataModifiers>
         <FilterStatusNav>
-          <NavStatusOptions $active={(activeStatus === 'all').toString()} onClick={() => setActiveStatus('all')}>
-            All Bookings
-          </NavStatusOptions>
-          <NavStatusOptions $active={(activeStatus === 'pending').toString()} onClick={() => setActiveStatus('pending')}>
-            Pending
-          </NavStatusOptions>
-          <NavStatusOptions $active={(activeStatus === 'booked').toString()} onClick={() => setActiveStatus('booked')}>
-            Booked
-          </NavStatusOptions>
-          <NavStatusOptions $active={(activeStatus === 'cancelled').toString()} onClick={() => setActiveStatus('cancelled')}>
-            Cancelled
-          </NavStatusOptions>
-          <NavStatusOptions $active={(activeStatus === 'refund').toString()} onClick={() => setActiveStatus('refund')}>
-            Refund
-          </NavStatusOptions>
+          {statuses.map((status, index) => (
+            <NavStatusOptions
+              key={index}
+              $active={(activeStatus === status.value).toString()}
+              onClick={() => setActiveStatus(status.value)}
+            >
+              {status.label}
+            </NavStatusOptions>
+          ))}
         </FilterStatusNav>
         <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
           <Option value="newest">Newest</Option>
@@ -126,11 +120,11 @@ export const TableComponent = ({ pageSize, data, columns }) => {
       ))}
     </Table>
     <PaginationContainer>
-    <Text>
+    <SmallText>
       Showing {pageSize} of {dataCurrentPage.length} entries
-    </Text>
+    </SmallText>
     <PaginationControls>
-      <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>Prev</PaginationButton>
+      <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>{"<"}</PaginationButton>
       <PaginationInput 
           type="number" 
           value={inputPage||""} 
@@ -140,8 +134,8 @@ export const TableComponent = ({ pageSize, data, columns }) => {
           min={1}
           max={totalPages}
         ></PaginationInput>
-        <Text>{totalPages}</Text>
-      <PaginationButton onClick={() => {goToNextPage(); setInputPage(null);}} disabled={page === totalPages}>Next</PaginationButton>
+        <Text><strong>/ {totalPages}</strong></Text>
+      <PaginationButton onClick={() => {goToNextPage(); setInputPage(null);}} disabled={page === totalPages}>{">"}</PaginationButton>
     </PaginationControls>
     </PaginationContainer>
     </>

@@ -97,12 +97,33 @@ const PaginationControls = styled.div`
 `;
 
 const PaginationInput = styled.input`
-  width: 3em;
-  margin: 0 0.5em;
+  width: 1.5em;
+  margin-right: 0.4em;
+  font-size: 0.75rem;
+  font-weight:600;
+  color: ${props => props.theme.colors.mediumBlack};
   text-align: center;
+  background-color:transparent;
+  border:none;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+      /* Hide the spinners in input type number */
+  /* For Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 `;
 const PaginationButton = styled.button`
-  padding: 0.5em 1em;
+  padding: 0.2em 0.5em;
   color: ${props => props.theme.colors.darkGreen}; 
   border: 1px solid ${props => props.theme.colors.darkGreen};
   background-color: transparent;
@@ -110,9 +131,15 @@ const PaginationButton = styled.button`
   font-size: 0.75rem;
   font-weight: 500;
   cursor:pointer;
+  margin: 0 0.5em;
   &:hover {
-  color: ${props => props.theme.colors.mediumBlack}; 
-  border: 1px solid ${props => props.theme.colors.mediumBlack};
+  color: ${props => props.theme.colors.black}; 
+  border: 1px solid ${props => props.theme.colors.black};
+  }
+  &:disabled {
+    color: ${props => props.theme.colors.gray}; 
+    border: 1px solid ${props => props.theme.colors.gray};
+    cursor: not-allowed;
   }
 `;
 

@@ -98,7 +98,14 @@ const Columns = [
     <StatusButton  $status={booking.status}>{booking.status}</StatusButton>
   )},
 ];
-
+const statuses = [
+  { label: 'All Bookings', value: 'all' },
+  { label: 'Pending', value: 'pending' },
+  { label: 'Booked', value: 'booked' },
+  { label: 'Cancelled', value: 'cancelled' },
+  { label: 'Refund', value: 'refund' }
+];
+const sorterProperty = 'order_date.datetime';
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
@@ -130,7 +137,7 @@ export const Bookings = () => {
 
   return (
     <Container>
-      {bookingsData && <TableComponent pageSize={6} data={bookingsData} columns={Columns}></TableComponent>}
+      {bookingsData && <TableComponent pageSize={6} data={bookingsData} columns={Columns} statuses={statuses} sorterProperty={sorterProperty}></TableComponent>}
     </Container>
   );
 };

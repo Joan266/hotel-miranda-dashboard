@@ -1,20 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
 
-export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter) => {
+export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, sorterProperty) => {
   useEffect(()=>{console.log("render"),[]})
   const [ page, setPage ] = useState(1);
+  const getNestedProperty = (obj, propertyPath) => {
+    return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
+  };
   const orderedData = useMemo(() => {
-    console.log("orderedData")
     if(!items) return;
     setPage(1);
-    return [...items].sort((a, b) => {
+    const sortedData = [...items].sort((a, b) => {
+      const dateA = new Date(getNestedProperty(a, sorterProperty));
+      const dateB = new Date(getNestedProperty(b, sorterProperty));
       if (dateSorter === 'newest') {
-        return new Date(b.order_date.datetime) - new Date(a.order_date.datetime);
+        return dateB - dateA;
       } else {
-        return new Date(a.order_date.datetime) - new Date(b.order_date.datetime);
+        return dateA - dateB;
       }
     });
-  }, [dateSorter, items]);
+    return sortedData
+  }, [dateSorter, items,sorterProperty]);
   const filteredData = useMemo(() => {
     console.log("filteredData")
     if(!orderedData) return;
@@ -30,6 +35,7 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter) 
     if(!filteredData) return null;
     return Math.ceil(filteredData.length / itemsPerPage)
   },[filteredData]);
+
   const validatedCurrentPage = Math.min(Math.max(page, 1), totalPages);
   const dataCurrentPage = useMemo(() => {
     console.log("dataCurrentPage")
