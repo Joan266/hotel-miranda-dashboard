@@ -74,6 +74,11 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
   };
   const handleDateSorterChange = (event) => {
     setDateSorter(event.target.value);
+    goToPage(1);
+  };
+  const handleActiveStatusChange = (statusValue) => {
+    setActiveStatus(statusValue);
+    goToPage(1);
   };
 
 
@@ -94,7 +99,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
             <NavStatusOptions
               key={index}
               $active={(activeStatus === status.value).toString()}
-              onClick={() => setActiveStatus(status.value)}
+              onClick={() => handleActiveStatusChange(status.value)}
             >
               {status.label}
             </NavStatusOptions>
