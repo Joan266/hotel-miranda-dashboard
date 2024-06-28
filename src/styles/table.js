@@ -99,9 +99,10 @@ const PaginationControls = styled.div`
 const PaginationInput = styled.input`
   width: 1.5em;
   margin-right: 0.4em;
-  font-size: 0.75rem;
-  font-weight:600;
-  color: ${props => props.theme.colors.mediumBlack};
+  font-size: 0.65rem;
+  font-weight:700;
+  margin-bottom:0.1em;
+  color: ${props => props.theme.colors.gray};
   text-align: center;
   background-color:transparent;
   border:none;
@@ -131,7 +132,7 @@ const PaginationButton = styled.button`
   font-size: 0.75rem;
   font-weight: 500;
   cursor:pointer;
-  margin: 0 0.5em;
+  margin: 0 1em;
   &:hover {
   color: ${props => props.theme.colors.black}; 
   border: 1px solid ${props => props.theme.colors.black};

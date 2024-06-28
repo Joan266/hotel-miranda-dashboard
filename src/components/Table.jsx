@@ -100,10 +100,14 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
             </NavStatusOptions>
           ))}
         </FilterStatusNav>
+        <div>
+        <button>Add one +</button>
+
         <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
           <Option value="newest">Newest</Option>
           <Option value="oldest">Oldest</Option>
         </DateSorterSelector>
+        </div>
     </DataModifiers>
     <Table $columnscount={columns.length}>
       <TableHeaderRow>
@@ -121,7 +125,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
     </Table>
     <PaginationContainer>
     <SmallText>
-      Showing {pageSize} of {dataCurrentPage.length} entries
+      Showing {pageSize} of {data.length} entries
     </SmallText>
     <PaginationControls>
       <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>{"<"}</PaginationButton>
@@ -134,7 +138,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
           min={1}
           max={totalPages}
         ></PaginationInput>
-        <Text><strong>/ {totalPages}</strong></Text>
+        <SmallText>/ {totalPages}</SmallText>
       <PaginationButton onClick={() => {goToNextPage(); setInputPage(null);}} disabled={page === totalPages}>{">"}</PaginationButton>
     </PaginationControls>
     </PaginationContainer>

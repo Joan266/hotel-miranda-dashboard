@@ -142,16 +142,6 @@
     "status": "booked"
   },
   {
-    "id": "5748926130",
-    "first_name": "Ana",
-    "last_name": "Morales",
-    "order_date": {"date": "Feb 14th, 2020", "time": "04:00 PM", "datetime": "2020-02-14T16:00:00"},
-    "check_in": {"date": "Feb 16th, 2020", "time": "10:00 AM", "datetime": "2020-02-16T10:00:00"},
-    "check_out": {"date": "Feb 18th, 2020", "time": "08:00 AM", "datetime": "2020-02-18T08:00:00"},
-    "room_type": "Standard B-022",
-    "status": "cancelled"
-  },
-  {
     "id": "1578293645",
     "first_name": "Miguel",
     "last_name": "Torres",

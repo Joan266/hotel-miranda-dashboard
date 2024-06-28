@@ -7,7 +7,7 @@ import { useDataModifiers } from '../hooks/useDataModifiers';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-import { ReadAllThunk } from '../slices/BookingSlice/bookingThunks';
+import { ReadAllThunk, DeleteOneThunk } from '../slices/BookingSlice/bookingThunks';
 import { TableComponent } from './Table';
 import clientDefault from '../assets/img/client_default.webp';
 
@@ -54,50 +54,7 @@ const StatusButton = styled.div`
   font-size: 0.7rem;
 `;
 
-const Columns = [
-  {label: "Guest", display: booking => (
-      <>
-        <CellContainer>
-          <ProfileImgContainer>
-            <img 
-                  src={ booking.img
-                    ? "" 
-                    : clientDefault} 
-                  alt="employee" 
-            />
-          </ProfileImgContainer>
-          <div>
-            <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
-            <SmallText>#{booking.id}</SmallText>
-          </div>
-        </CellContainer>
-      </>
-  ), sort: "name"},
-  {label: "Order Date", display: booking => (
-    <>
-      <Text>{booking.order_date.date}</Text>
-      <SmallText>{booking.order_date.time}</SmallText>
-    </>
-  )},
-  {label: "Check in", display: booking => (
-    <>
-      <Text>{booking.check_in.date}</Text>
-      <SmallText>{booking.check_in.time}</SmallText>
-    </>
-  )},
-  {label: "Check out", display: booking => (
-    <>
-      <Text>{booking.check_out.date}</Text>
-      <SmallText>{booking.check_out.time}</SmallText>
-    </>
-  )},
-  {label: "Room type", display: booking => (
-    <Text>{booking.room_type}</Text>
-  )},
-  {label: "Status", display: booking => (
-    <StatusButton  $status={booking.status}>{booking.status}</StatusButton>
-  )},
-];
+
 const statuses = [
   { label: 'All Bookings', value: 'all' },
   { label: 'Pending', value: 'pending' },
@@ -110,7 +67,130 @@ export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
   const dispatch = useDispatch();
   const [bookingsData, setBookingsData] = useState(null);
-
+  const Columns = [
+    {label: "Guest", display: booking => (
+        <>
+          <CellContainer>
+            <ProfileImgContainer>
+              <img 
+                    src={ booking.img
+                      ? booking.img 
+                      : clientDefault} 
+                    alt="employee" 
+              />
+            </ProfileImgContainer>
+            <div>
+              <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
+              <SmallText>#{booking.id}</SmallText>
+            </div>
+          </CellContainer>
+        </>
+    ), sort: "name"},
+    {label: "Order Date", display: booking => (
+      <>
+        <Text>{booking.order_date.date}</Text>
+        <SmallText>{booking.order_date.time}</SmallText>
+      </>
+    )},
+    {label: "Check in", display: booking => (
+      <>
+        <Text>{booking.check_in.date}</Text>
+        <SmallText>{booking.check_in.time}</SmallText>
+      </>
+    )},
+    {label: "Check out", display: booking => (
+      <>
+        <Text>{booking.check_out.date}</Text>
+        <SmallText>{booking.check_out.time}</SmallText>
+      </>
+    )},
+    {label: "Room type", display: booking => (
+      <Text>{booking.room_type}</Text>
+    )},
+    {label: "Status", display: booking => (
+      <StatusButton $status={booking.status}>{booking.status}</StatusButton>
+    )},
+    {label: "Actions", display: booking => (
+      <>
+        <button onClick={() => console.log(`edit ${booking.id}`)}>edit</button>
+        <button onClick={() => dispatch(DeleteOneThunk(booking.id))}>delete</button>
+      </>
+    )},
+  ];
+  const FormProperties = [
+    {
+      label: "Guest",
+      fields: [
+        {
+          name: "first_name",
+          label: "First Name",
+          type: "text"
+        },
+        {
+          name: "last_name",
+          label: "Last Name",
+          type: "text"
+        },
+        {
+          name: "img",
+          label: "Profile Image URL",
+          type: "url"
+        }
+      ]
+    },
+    {
+      label: "Order Date",
+      fields: [
+        {
+          name: "order_date",
+          label: "Order Date",
+          type: "date"
+        }
+      ]
+    },
+    {
+      label: "Check in",
+      fields: [
+        {
+          name: "check_in",
+          label: "Check-in Date",
+          type: "date"
+        }
+      ]
+    },
+    {
+      label: "Check out",
+      fields: [
+        {
+          name: "check_out",
+          label: "Check-out Date",
+          type: "date"
+        }
+      ]
+    },
+    {
+      label: "Room type",
+      fields: [
+        {
+          name: "room_type",
+          label: "Room Type",
+          type: "text"
+        }
+      ]
+    },
+    {
+      label: "Status",
+      fields: [
+        {
+          name: "status",
+          label: "Status",
+          type: "select",
+          options: ["Pending", "Booked", "Cancelled", "Refund"]
+        }
+      ]
+    }
+  ];
+  
   useEffect(() => {
     console.log(status)
     if (status === 'idle') {
