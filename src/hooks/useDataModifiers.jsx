@@ -5,26 +5,33 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, 
   const getNestedProperty = (obj, propertyPath) => {
     return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
   };
-  const { dataCurrentPage, totalPages } = useMemo(() => {
+  const { dataCurrentPage, totalPages, dataLength } = useMemo(() => {
     if (!items) return { dataCurrentPage: [], totalPages: 0 };
     
-    const sortedData = [...items].sort((a, b) => {
+    const sortedData = sorterProperty ? [...items].sort((a, b) => {
       const dateA = new Date(getNestedProperty(a, sorterProperty));
       const dateB = new Date(getNestedProperty(b, sorterProperty));
+      
+      if (isNaN(dateA) || isNaN(dateB)) {
+        return 0;
+      }
+      
       return dateSorter === 'newest' ? dateB - dateA : dateA - dateB;
-    });
-  
-    const filteredData = activeStatus === 'all'
-      ? sortedData
-      : sortedData.filter(booking => booking.status === activeStatus);
-  
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    }) : items;
+
+    const filteredData = activeStatus === 'all'  
+    ? sortedData
+    : sortedData.filter(booking => booking.status === activeStatus);
+    
+    const dataLength = filteredData.length;
+
+    const totalPages = Math.ceil(dataLength  / itemsPerPage);
   
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const dataCurrentPage = filteredData.slice(startIndex, endIndex);
   
-    return { dataCurrentPage, totalPages };
+    return { dataCurrentPage, totalPages, dataLength };
   }, [items, dateSorter, activeStatus, sorterProperty, itemsPerPage, page]);
 
   const goToPage = (pageNumber) => {
@@ -51,6 +58,7 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, 
       goToPrevPage: null,
       totalPages: null,
       page:null,
+      dataLength:null,
     };
   }
 
@@ -61,5 +69,6 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, 
     goToPrevPage,
     totalPages,
     page,
+    dataLength,
   };
 };

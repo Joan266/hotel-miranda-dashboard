@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './bookingThunks';
+import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './employeesThunks';
 
-const BookingSlice = createSlice({
-  name: 'booking',
+const EmployeeSlice = createSlice({
+  name: 'Employee',
   initialState: {
     status: "idle",
     items: [],
@@ -53,7 +53,7 @@ const BookingSlice = createSlice({
       })
       .addCase(DeleteOneThunk.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.items = state.items.filter(item => item.id !== action.payload)
+        state.items = action.payload;
         state.error = null;
       })
       .addCase(DeleteOneThunk.rejected, (state, action) => {
@@ -63,4 +63,4 @@ const BookingSlice = createSlice({
   }
 });
 
-export const BookingSliceReducer = BookingSlice.reducer;
+export const EmployeeSliceReducer = EmployeeSlice.reducer;
