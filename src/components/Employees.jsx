@@ -12,7 +12,7 @@ const IsTextActive = styled.div`
   color: ${props => props.status ? "#5AD07A" : "#E23428"};
 `
 const statuses = [
-  { label: 'All Bookings', value: 'all' },
+  { label: 'All Employees', value: 'all' },
   { label: 'Active Employee', value: true },
   { label: 'Inactive Employee', value: false },
 ];
