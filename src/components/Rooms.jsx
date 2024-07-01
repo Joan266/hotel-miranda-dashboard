@@ -1,16 +1,17 @@
-import roomsData from '../data/rooms.json';
-import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRow,  PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
-  import { Container, SmallText, Text } from '../styles/common';
+import { CellContainer } from '../styles/table';
+import { Container, SmallText, Text } from '../styles/common';
 import { useState } from 'react';
-import { useDataModifiers } from '../hooks/useDataModifiers';
+import { TableComponent } from './Table';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { ReadAllThunk, DeleteOneThunk } from '../slices/RoomSlice/roomThunks';
 import styled from 'styled-components';
 import standardRoomImg from '../assets/img/standard_room.webp';
 import deluxeRoomImg from '../assets/img/deluxe_room.webp';
 
 const RoomImgContainer = styled.div`
-  height: 85px;
-  min-width: 170px;
+  height: 65px;
+  min-width: 130px;
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 0.5em;
   margin-right:1em;
@@ -33,81 +34,83 @@ const StatusButton = styled.div`
   border-radius:0.6em;
   font-size: 0.7rem;
 `
-export const Rooms = () => {
-  const pageSize = 7; 
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = useDataModifiers(roomsData, pageSize);
-  const [inputPage, setInputPage] =useState(currentPage);
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value);
-    setInputPage(value);
-  };
+const statuses = [
+  { label: 'All Rooms', value: 'all' },
+  { label: 'Available Rooms', value: 'available' },
+  { label: 'Booked Rooms', value: 'booked' },
+];
 
-  const handleInputSubmit = (e) => {
-    if (e.key === 'Enter') {
-      if(inputPage>totalPages || inputPage === 0)return;
-      goToPage(inputPage);
+export const Rooms = () => {
+  const { items, status, error } = useSelector(state => state.room);
+  const dispatch = useDispatch();
+  const [roomData, setRoomData] = useState(null);
+  const Columns = [
+    {label: "RoomName", display: room => (
+        <>
+          <CellContainer>
+            <RoomImgContainer>
+              <img 
+                src={room.room_type.startsWith("Standard") 
+                  ? standardRoomImg 
+                  : deluxeRoomImg} 
+                alt={room.room_type} 
+              />
+            </RoomImgContainer>
+            <div>
+              <SmallText>#{room.id}</SmallText>
+              <Text>{room.room_type}</Text>
+            </div>
+          </CellContainer>
+        </>
+    ), sort: "name"},
+    {label: "Bed Type", display: room => (
+      <Text>{room.bed_type}</Text>
+    )},
+    {label: "Room Floor", display: room => (
+      <>
+        <Text>Floor {room.floor_room}</Text>
+      </>
+    )},
+    {label: "Facilities", display: room => (
+      <Text>{room.facilities.map((item, index) => index !== 0 ? `, ${item}` : item)}</Text>
+    )},
+    {label: "Rate", display: room => (
+      <CellContainer>
+        <Text><strong>${room.rate}</strong></Text>
+        <SmallText>/night</SmallText>
+      </CellContainer>
+    )},
+    {label: "Status", display: room => (
+      <StatusButton status={room.status}>{room.status}</StatusButton>
+    )},
+  ];
+  
+  useEffect(() => {
+    console.log(status)
+    if (status === 'idle') {
+      dispatch(ReadAllThunk());
+    } else if (status === 'fulfilled') {
+      console.log(items);
+      setRoomData(items);
+    } else if (status === 'rejected') {
+      console.log(error);
+      toast.error('API request limit reached, try searching for photos again in 1 hour', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
-  };
+  }, [status]);
+ 
   return (
     <Container>
-      <Table columnscount={6}>
-        <TableHeaderRow>
-          <TableHeaderCell>Room Name</TableHeaderCell>
-          <TableHeaderCell>Bed Type</TableHeaderCell>
-          <TableHeaderCell>Room Floor</TableHeaderCell>
-          <TableHeaderCell>Facilities</TableHeaderCell>
-          <TableHeaderCell>Rate</TableHeaderCell>
-          <TableHeaderCell>Status</TableHeaderCell>
-        </TableHeaderRow>
-        {currentData().map((room, index) => (
-          <TableRow key={index}>
-            <TableCell>
-              <CellContainer>
-                <RoomImgContainer>
-                  <img 
-                    src={room.room_type.startsWith("Standard") 
-                      ? standardRoomImg 
-                      : deluxeRoomImg} 
-                    alt={room.room_type} 
-                  />
-                </RoomImgContainer>
-                <div>
-                  <SmallText>#{room.id}</SmallText>
-                  <Text>{room.room_type}</Text>
-                </div>
-              </CellContainer>
-            </TableCell>
-            <TableCell><Text>{room.bed_type}</Text></TableCell>
-            <TableCell><Text>Floor {room.floor_room}</Text></TableCell>
-            <TableCell><Text>{room.facilities.map((item, index) => index !== 0 ? `, ${item}` : item)}</Text></TableCell>
-            <TableCell>
-              <CellContainer>
-                <Text><strong>${room.rate}</strong></Text>
-                <SmallText>/night</SmallText>
-              </CellContainer>
-            </TableCell>
-            <TableCell><StatusButton status={room.status}>{room.status}</StatusButton></TableCell>
-          </TableRow>
-        ))}
-      </Table>
-      <PaginationContainer>
-      <Text>
-        Showing {pageSize} of {roomsData.length} entries
-      </Text>
-      <PaginationControls>
-        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
-        <PaginationInput 
-            type="number" 
-            value={inputPage} 
-            onChange={handleInputChange} 
-            onKeyDown={handleInputSubmit} 
-            min={1}
-            max={totalPages}
-          />
-          <Text>{totalPages}</Text>
-        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
-      </PaginationControls>
-    </PaginationContainer>
+      {roomData && <TableComponent pageSize={6} data={roomData} columns={Columns} statuses={statuses}></TableComponent>}
     </Container>
   );
 };
