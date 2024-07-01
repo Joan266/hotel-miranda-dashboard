@@ -1,84 +1,87 @@
-import employeesData from '../data/employees.json';
-import { Table, TableCell, CellContainer,TableHeaderRow,TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
-  import { Container, Text, SmallText } from '../styles/common';
-import { useState } from 'react';
-import { useDataModifiers } from '../hooks/useDataModifiers';
+import {  CellContainer, ProfileImgContainer} from '../styles/table';
+import { Container, Text, SmallText } from '../styles/common';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import clientDefault from '../assets/img/client_default.webp';
 
 const IsTextActive = styled.div`
   color: ${props => props.status ? "#5AD07A" : "#E23428"};
 `
-export const Employees = () => {
-  const pageSize = 8; 
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = useDataModifiers(employeesData, pageSize);
-  const [inputPage, setInputPage] =useState(currentPage);
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value);
-    setInputPage(value);
-  };
+const statuses = [
+  { label: 'All Bookings', value: 'all' },
+  { label: 'Active Employee', value: 'active' },
+  { label: 'Inactive Employee', value: 'inactive' },
+];
 
-  const handleInputSubmit = (e) => {
-    if (e.key === 'Enter') {
-      if(inputPage>totalPages || inputPage === 0)return;
-      goToPage(inputPage);
+export const Employees = () => {
+  const { items, status, error } = useSelector(state => state.employee);
+  const dispatch = useDispatch();
+  const [employeeData, setEmployeeData] = useState(null);
+  const Columns = [
+    {label: "Name", display: employee => (
+        <>
+          <CellContainer>
+            <ProfileImgContainer>
+              <img 
+                  src={ employee.img
+                    ? "" 
+                    : clientDefault} 
+                  alt="employee" 
+              />
+            </ProfileImgContainer> 
+            <div>
+              <Text><strong>{employee.first_name} {employee.last_name}</strong></Text>
+              <SmallText>#{employee.id}</SmallText>
+              <Text>Joined on {employee.join_date.text}</Text>
+            </div>
+          </CellContainer>
+        </>
+    ), sort: "name"},
+    {label: "Job Desk", display: employee => (
+      <Text maxwidth={"350px"}>{employee.job_desk}</Text>
+    )},
+    {label: "Schedule", display: employee => (
+      <>
+        <Text>{employee.schedule.days}</Text>
+        <SmallText>{employee.schedule.hours}</SmallText>
+      </>
+    )},
+    {label: "Contact", display: employee => (
+      <Text>{employee.phone_number}</Text>
+    )},
+    {label: "Status", display: employee => (
+      <Text>
+        <IsTextActive status={employee.status}>{employee.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
+      </Text>
+    )},
+  ];
+  
+  useEffect(() => {
+    console.log(status)
+    if (status === 'idle') {
+      dispatch(ReadAllThunk());
+    } else if (status === 'fulfilled') {
+      console.log(items);
+      setEmployeeData(items);
+    } else if (status === 'rejected') {
+      console.log(error);
+      toast.error('API request limit reached, try searching for photos again in 1 hour', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
-  };
+  }, [status]);
+ 
   return (
     <Container>
-      <Table columnscount={5}>
-        <TableHeaderRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Job Desk</TableHeaderCell>
-          <TableHeaderCell>Schedule</TableHeaderCell>
-          <TableHeaderCell>Contact</TableHeaderCell>
-          <TableHeaderCell>Status</TableHeaderCell>
-        </TableHeaderRow>
-        {currentData().map((employee, index) => (
-          <TableRow key={index}>
-            <TableCell height={"5.5em"}>
-              <CellContainer>
-                <ProfileImgContainer>
-                  <img 
-                      src={ employee.img
-                        ? "" 
-                        : clientDefault} 
-                      alt="employee" 
-                  />
-                </ProfileImgContainer> 
-                <div>
-                  <Text><strong>{employee.first_name} {employee.last_name}</strong></Text>
-                  <SmallText>#{employee.id}</SmallText>
-                  <Text>Joined on {employee.join_date.text}</Text>
-                </div>
-              </CellContainer>
-            </TableCell>
-            <TableCell><Text maxwidth={"350px"}>{employee.job_desk}</Text></TableCell>
-            <TableCell><Text>{employee.schedule.days}</Text> <SmallText>{employee.schedule.hours}</SmallText></TableCell>
-            <TableCell><Text>{employee.phone_number}</Text></TableCell>
-            <TableCell><Text><IsTextActive status={employee.status}>{employee.status ? "ACTIVE" : "INACTIVE"}</IsTextActive></Text></TableCell>
-          </TableRow>
-        ))}
-      </Table>
-      <PaginationContainer>
-      <Text>
-        Showing {pageSize} of {employeesData.length} entries
-      </Text>
-      <PaginationControls>
-        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
-        <PaginationInput 
-            type="number" 
-            value={inputPage} 
-            onChange={handleInputChange} 
-            onKeyDown={handleInputSubmit} 
-            min={1}
-            max={totalPages}
-          />
-          <Text>{totalPages}</Text>
-        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
-      </PaginationControls>
-    </PaginationContainer>
+      {employeeData && <TableComponent pageSize={8} data={employeeData} columns={Columns} statuses={statuses}></TableComponent>}
     </Container>
   );
 };

@@ -94,18 +94,22 @@ const PaginationContainer = styled.div`
 const PaginationControls = styled.div`
   display: flex;
   align-items: center;
+  position:relative;
 `;
 
 const PaginationInput = styled.input`
   width: 1.5em;
   margin-right: 0.4em;
-  font-size: 0.65rem;
-  font-weight:700;
-  margin-bottom:0.1em;
-  color: ${props => props.theme.colors.gray};
+  position:relative;
+  font-family: ${props => props.theme.fontFamily};
+  font-size: 0.7rem;
+  font-weight:500;
+  margin-bottom:0;
+  color: ${props => props.theme.colors.mediumBlack};
   text-align: center;
   background-color:transparent;
   border:none;
+  min-height:25px;
   &:focus {
     outline: none;
     box-shadow: none;
@@ -143,5 +147,53 @@ const PaginationButton = styled.button`
     cursor: not-allowed;
   }
 `;
+const DateSorterSelector = styled.select`
+  padding: 0.5em 1em;
+  border: 1px solid ${props => props.theme.colors.darkGreen};
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  font-size: 0.7rem;
+  border-radius: 0.4em;
+  &:focus {
+    outline: none;
+  }
+`;
 
-export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,PaginationControls,PaginationInput };
+const Option = styled.option`
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  padding: 1em;
+`;
+
+const DataModifiers = styled.div`
+  margin-bottom:1.5em;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  `;
+
+const FilterStatusNav = styled.nav`
+  display: flex;
+`;
+
+const NavStatusOptions = styled.button`
+  padding: 0.7em 2em;
+  border: none;
+  font-size: 0.7rem;
+  font-weight:500;
+  font-family: ${props => props.theme.fontFamily};
+  border-bottom: 2px solid  ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : "#B0B0B0")};
+  background-color: transparent;
+  color: ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : props.theme.colors.gray)};
+  cursor: pointer;
+  
+  &:hover {
+    color: ${props => props.theme.colors.darkGreen };
+    border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
+  }
+`;
+export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, 
+  TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,
+  PaginationControls,PaginationInput, DateSorterSelector,Option,DataModifiers,FilterStatusNav,NavStatusOptions };

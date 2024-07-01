@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
+import { CellContainer, ProfileImgContainer } from '../styles/table';
 import { Container, Text, SmallText } from '../styles/common';
-import { useDataModifiers } from '../hooks/useDataModifiers';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
@@ -11,35 +9,24 @@ import { ReadAllThunk, DeleteOneThunk } from '../slices/BookingSlice/bookingThun
 import { TableComponent } from './Table';
 import clientDefault from '../assets/img/client_default.webp';
 
-const getStatusColor = (status) => {
-  switch (status) {
-    case 'refund':
-      return '#E23428';
-    case 'booked':
-      return '#5AD07A';
-    case 'cancelled':
-      return '#BEBEBE';
-    case 'pending':
-      return '#6D6D6D';
-    default:
-      return '#6D6D6D'; 
-  }
+const statusColors = {
+  refund: '#E23428',
+  booked: '#5AD07A',
+  cancelled: '#BEBEBE',
+  pending: '#6D6D6D',
+  default: '#6D6D6D'
 };
 
-const getStatusBackgroundColor = (status) => {
-  switch (status) {
-    case 'refund':
-      return '#FFEDEC';
-    case 'booked':
-      return '#E8FFEE';
-    case 'cancelled':
-      return '#575757';
-    case 'pending':
-      return '#E2E2E2';
-    default:
-      return '#E2E2E2'; 
-  }
+const statusBackgroundColors = {
+  refund: '#FFEDEC',
+  booked: '#E8FFEE',
+  cancelled: '#575757',
+  pending: '#E2E2E2',
+  default: '#E2E2E2'
 };
+
+const getStatusColor = (status) => statusColors[status] || statusColors.default;
+const getStatusBackgroundColor = (status) => statusBackgroundColors[status] || statusBackgroundColors.default;
 
 const StatusButton = styled.div`
   border: none;
@@ -62,6 +49,7 @@ const statuses = [
   { label: 'Cancelled', value: 'cancelled' },
   { label: 'Refund', value: 'refund' }
 ];
+
 const sorterProperty = 'order_date.datetime';
 export const Bookings = () => {
   const { items, status, error } = useSelector(state => state.booking);
@@ -116,79 +104,6 @@ export const Bookings = () => {
         <button onClick={() => dispatch(DeleteOneThunk(booking.id))}>delete</button>
       </>
     )},
-  ];
-  const FormProperties = [
-    {
-      label: "Guest",
-      fields: [
-        {
-          name: "first_name",
-          label: "First Name",
-          type: "text"
-        },
-        {
-          name: "last_name",
-          label: "Last Name",
-          type: "text"
-        },
-        {
-          name: "img",
-          label: "Profile Image URL",
-          type: "url"
-        }
-      ]
-    },
-    {
-      label: "Order Date",
-      fields: [
-        {
-          name: "order_date",
-          label: "Order Date",
-          type: "date"
-        }
-      ]
-    },
-    {
-      label: "Check in",
-      fields: [
-        {
-          name: "check_in",
-          label: "Check-in Date",
-          type: "date"
-        }
-      ]
-    },
-    {
-      label: "Check out",
-      fields: [
-        {
-          name: "check_out",
-          label: "Check-out Date",
-          type: "date"
-        }
-      ]
-    },
-    {
-      label: "Room type",
-      fields: [
-        {
-          name: "room_type",
-          label: "Room Type",
-          type: "text"
-        }
-      ]
-    },
-    {
-      label: "Status",
-      fields: [
-        {
-          name: "status",
-          label: "Status",
-          type: "select",
-          options: ["Pending", "Booked", "Cancelled", "Refund"]
-        }
-      ]
-    }
   ];
   
   useEffect(() => {

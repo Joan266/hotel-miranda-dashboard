@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, sorterProperty) => {
   const [ page, setPage ] = useState(1);
@@ -7,7 +7,7 @@ export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, 
   };
   const { dataCurrentPage, totalPages } = useMemo(() => {
     if (!items) return { dataCurrentPage: [], totalPages: 0 };
-  
+    
     const sortedData = [...items].sort((a, b) => {
       const dateA = new Date(getNestedProperty(a, sorterProperty));
       const dateB = new Date(getNestedProperty(b, sorterProperty));
