@@ -17,6 +17,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
     goToNextPage,
     goToPrevPage,
     totalPages,
+    dataLength,
   } = useDataModifiers(data, pageSize, activeStatus, dateSorter, sorterProperty); 
 
   const [inputPage, setInputPage] = useState("");
@@ -47,7 +48,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
   return (  
     <>
     <DataModifiers>
-        <FilterStatusNav>
+       { statuses && <FilterStatusNav>
           {statuses.map((status, index) => (
             <NavStatusOptions
               key={index}
@@ -57,14 +58,14 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
               {status.label}
             </NavStatusOptions>
           ))}
-        </FilterStatusNav>
+        </FilterStatusNav>}
         <div>
         <button>Add one +</button>
 
-        <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
+        {sorterProperty && <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
           <Option value="newest">Newest</Option>
           <Option value="oldest">Oldest</Option>
-        </DateSorterSelector>
+        </DateSorterSelector>}
         </div>
     </DataModifiers>
     <Table $columnscount={columns.length}>
@@ -83,7 +84,7 @@ export const TableComponent = ({ pageSize, data, columns, statuses,sorterPropert
     </Table>
     <PaginationContainer>
     <SmallText>
-      Showing {pageSize} of {data.length} entries
+      Showing {pageSize} of {dataLength} entries
     </SmallText>
     <PaginationControls>
       <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>{"<"}</PaginationButton>

@@ -1,16 +1,20 @@
-import {  CellContainer, ProfileImgContainer} from '../styles/table';
 import { Container, Text, SmallText } from '../styles/common';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {  CellContainer, ProfileImgContainer} from '../styles/table';
+import { ReadAllThunk, DeleteOneThunk } from '../slices/EmployeeSlice/employeesThunks';
+import { toast } from 'react-toastify';
+import { Bounce } from 'react-toastify';
 import styled from 'styled-components';
 import clientDefault from '../assets/img/client_default.webp';
-
+import { TableComponent } from './Table';
 const IsTextActive = styled.div`
   color: ${props => props.status ? "#5AD07A" : "#E23428"};
 `
 const statuses = [
   { label: 'All Bookings', value: 'all' },
-  { label: 'Active Employee', value: 'active' },
-  { label: 'Inactive Employee', value: 'inactive' },
+  { label: 'Active Employee', value: true },
+  { label: 'Inactive Employee', value: false },
 ];
 
 export const Employees = () => {
@@ -81,7 +85,7 @@ export const Employees = () => {
  
   return (
     <Container>
-      {employeeData && <TableComponent pageSize={8} data={employeeData} columns={Columns} statuses={statuses}></TableComponent>}
+      {employeeData && <TableComponent pageSize={6} data={employeeData} columns={Columns} statuses={statuses}></TableComponent>}
     </Container>
   );
 };

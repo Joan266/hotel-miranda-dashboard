@@ -1,20 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import bookingsData from '../../data/bookings.json';
+import employeesData from '../../data/employees.json';
 
 import { delayedRequest } from "../../utils/delayRequest";
 
-const data =  bookingsData;
+const data =  employeesData;
 
-const ReadOneThunk = createAsyncThunk("booking/readOneThunk", async (id) => {
+const ReadOneThunk = createAsyncThunk("employee/readOneThunk", async (id) => {
   try {
-    const response = await delayedRequest((data.find(booking => booking.id === id) || null), 500);
+    const response = await delayedRequest((data.find(employee => employee.id === id) || null), 500);
     return response;
   } catch (error) {
     return null; 
   }
 });
 
-const ReadAllThunk = createAsyncThunk("booking/readAllThunk", async () => {
+const ReadAllThunk = createAsyncThunk("employee/readAllThunk", async () => {
   try {
     return delayedRequest(data, 500);
   } catch (error) {
@@ -22,16 +22,16 @@ const ReadAllThunk = createAsyncThunk("booking/readAllThunk", async () => {
   }
 });
 
-const CreateOneThunk = createAsyncThunk("booking/createOneThunk", async (newBooking) => {
+const CreateOneThunk = createAsyncThunk("employee/createOneThunk", async (newEmployee) => {
   try {
     const response = await delayedRequest(data, 500);
-    return newBooking;
+    return newEmployee;
   } catch (error) {
     return null;
   }
 });
 
-const DeleteOneThunk = createAsyncThunk("booking/deleteOneThunk", async (id) => {
+const DeleteOneThunk = createAsyncThunk("employee/deleteOneThunk", async (id) => {
   try {
     const response = await delayedRequest(data, 500);
     return id;
