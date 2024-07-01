@@ -1,61 +1,56 @@
-import { useState } from 'react';
-import reviewsData from '../data/reviews.json';
-import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow,  PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
 import { Container, Text } from '../styles/common';
-import { useDataModifiers } from '../hooks/useDataModifiers';
+import { useState } from 'react';
+import { TableComponent } from './Table';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { ReadAllThunk, DeleteOneThunk } from '../slices/ReviewSlice/reviewThunks';
+
+const sorterProperty = 'review_date.date';
 
 export const Reviews = () => {
-  const pageSize = 8; 
-  const { currentPage, currentData, goToPage, goToNextPage, goToPrevPage, totalPages } = useDataModifiers(reviewsData, pageSize);
-  const [inputPage, setInputPage] =useState(currentPage);
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value);
-    setInputPage(value);
-  };
-
-  const handleInputSubmit = (e) => {
-    if (e.key === 'Enter') {
-      if(inputPage>totalPages || inputPage === 0)return;
-      goToPage(inputPage);
+  const { items, status, error } = useSelector(state => state.review);
+  const dispatch = useDispatch();
+  const [reviewData, setReviewData] = useState(null);
+  const Columns = [
+    {label: "Order Id", display: review => (
+      <Text>#{review.order_id}</Text>
+    ), sort: "name"},
+    {label: "Date", display: review => (
+      <Text>{review.review_date.text}</Text>
+    )},
+    {label: "Customer", display: review => (
+      <Text>{review.customer_name}</Text>
+    )},
+    {label: "Comment", display: review => (
+      <Text maxwidth={"350px"}>{review.comment}</Text>
+    )},
+  ];
+  useEffect(() => {
+    console.log(status)
+    if (status === 'idle') {
+      dispatch(ReadAllThunk());
+    } else if (status === 'fulfilled') {
+      console.log(items);
+      setReviewData(items);
+    } else if (status === 'rejected') {
+      console.log(error);
+      toast.error('API request limit reached, try searching for photos again in 1 hour', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
-  };
+  }, [status]);
+ 
   return (
     <Container>
-    <Table columnscount={4}>
-      <TableHeaderRow>
-        <TableHeaderCell>Order Id</TableHeaderCell>
-        <TableHeaderCell>Date</TableHeaderCell>
-        <TableHeaderCell>Customer</TableHeaderCell>
-        <TableHeaderCell>Comment</TableHeaderCell>
-      </TableHeaderRow>
-      {currentData().map((review, index) => (
-        <TableRow key={index}>
-          <TableCell><Text>#{review.order_id}</Text></TableCell>
-          <TableCell><Text>{review.review_date.text}</Text></TableCell>
-          <TableCell><Text>{review.customer_name}</Text></TableCell>
-          <TableCell><Text maxwidth={"350px"}>{review.comment}</Text></TableCell>
-        </TableRow>
-      ))}
-    </Table>
-    <PaginationContainer>
-      <Text>
-        Showing {pageSize} of {reviewsData.length} entries
-      </Text>
-      <PaginationControls>
-        <PaginationButton onClick={() => goToPrevPage()} disabled={currentPage === 1}>Prev</PaginationButton>
-        <PaginationInput 
-            type="number" 
-            value={inputPage} 
-            onChange={handleInputChange} 
-            onKeyDown={handleInputSubmit} 
-            min={1}
-            max={totalPages}
-          />
-          <Text>{totalPages}</Text>
-        <PaginationButton onClick={() => goToNextPage()} disabled={currentPage === totalPages}>Next</PaginationButton>
-      </PaginationControls>
-    </PaginationContainer>
-  </Container>
+      {reviewData && <TableComponent pageSize={6} data={reviewData} columns={Columns} sorterProperty={sorterProperty}></TableComponent>}
+    </Container>
   );
 };
