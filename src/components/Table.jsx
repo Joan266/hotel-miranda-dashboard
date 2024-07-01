@@ -1,96 +1,105 @@
+import { useState } from 'react';
+import { 
+  Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput,
+  DateSorterSelector, Option, DataModifiers, FilterStatusNav, NavStatusOptions,
+} from '../styles/table';
+import { Text, SmallText } from '../styles/common';
+import { useDataModifiers } from '../hooks/useDataModifiers';
 
-import clientDefault from '../assets/img/client_default.webp';
-import { Table, TableCell, TableHeaderRow,TableHeaderCell, TableRow, CellContainer, ProfileImgContainer, PaginationContainer,
-  PaginationButton, PaginationControls, PaginationInput } from '../styles/table';
-import { Container, Text, SmallText } from '../styles/common';
-import styled from 'styled-components';
-const getStatusColor = (status) => {
-  switch (status) {
-    case 'refund':
-      return '#E23428';
-    case 'booked':
-      return '#5AD07A';
-    case 'cancelled':
-      return '#BEBEBE';
-    case 'pending':
-      return '#6D6D6D';
-    default:
-      return '#6D6D6D'; 
-  }
-};
-const getStatusBackgroundcolor = (status) => {
-  switch (status) {
-    case 'refund':
-      return '#FFEDEC';
-    case 'booked':
-      return '#E8FFEE';
-    case 'cancelled':
-      return '#575757';
-    case 'pending':
-      return '#E2E2E2';
-    default:
-      return '#E2E2E2'; 
-  }
-};
+export const TableComponent = ({ pageSize, data, columns, statuses,sorterProperty }) => {
+  const [activeStatus, setActiveStatus] = useState('all');
+  const [dateSorter, setDateSorter] = useState('newest');
+  const {
+    page,
+    dataCurrentPage,
+    goToPage,
+    goToNextPage,
+    goToPrevPage,
+    totalPages,
+  } = useDataModifiers(data, pageSize, activeStatus, dateSorter, sorterProperty); 
 
-const StatusButton = styled.div`
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width: 6.5em;
-  height:3em;
-  color: ${props => getStatusColor(props.$status)};
-  background-color: ${props => getStatusBackgroundcolor(props.$status)};
-  border-radius:0.6em;
-  font-size: 0.7rem;
-  `
-export const TableComponent = ({data, columnsCount}) => {
+  const [inputPage, setInputPage] = useState("");
 
-return (  
-  <Table $columnscount={columnsCount} >
-    <TableHeaderRow>
-      <TableHeaderCell>Guest</TableHeaderCell>
-      <TableHeaderCell>Order Date</TableHeaderCell>
-      <TableHeaderCell>Check In</TableHeaderCell>
-      <TableHeaderCell>Check Out</TableHeaderCell>
-      <TableHeaderCell>Room Type</TableHeaderCell>
-      <TableHeaderCell>Status</TableHeaderCell>
-    </TableHeaderRow>
-    {data.map((booking, index) => (
-      <TableRow key={index}>
-        <TableCell height={"5em"}>
-          <CellContainer>
-            <ProfileImgContainer>
-              <img 
-                    src={ booking.img
-                      ? "" 
-                      : clientDefault} 
-                    alt="employee" 
-              />
-            </ProfileImgContainer>
-            <div>
-              <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
-              <SmallText>#{booking.id}</SmallText>
-            </div>
-          </CellContainer>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.order_date.date}</Text>
-          <SmallText>{booking.order_date.time}</SmallText>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.check_in.date}</Text>
-          <SmallText>{booking.check_in.time}</SmallText>
-        </TableCell>
-        <TableCell>
-          <Text>{booking.check_out.date}</Text>
-          <SmallText>{booking.check_out.time}</SmallText>
-        </TableCell>
-        <TableCell><Text>{booking.room_type}</Text></TableCell>
-        <TableCell><StatusButton  $status={booking.status}>{booking.status}</StatusButton></TableCell>
-      </TableRow>
-    ))}
-  </Table>
-  )
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value);
+    setInputPage(value);
+  };
+  const handleDateSorterChange = (event) => {
+    setDateSorter(event.target.value);
+    goToPage(1);
+  };
+  const handleActiveStatusChange = (statusValue) => {
+    setActiveStatus(statusValue);
+    goToPage(1);
+  };
+
+
+  const handleInputSubmit = (e) => {
+    if (e.key === 'Enter') {
+      console.log(inputPage)
+      if(inputPage>totalPages || inputPage === 0 || !inputPage)return;
+      setInputPage(null)
+      goToPage(inputPage);
+    }
+  };
+
+  return (  
+    <>
+    <DataModifiers>
+        <FilterStatusNav>
+          {statuses.map((status, index) => (
+            <NavStatusOptions
+              key={index}
+              $active={(activeStatus === status.value).toString()}
+              onClick={() => handleActiveStatusChange(status.value)}
+            >
+              {status.label}
+            </NavStatusOptions>
+          ))}
+        </FilterStatusNav>
+        <div>
+        <button>Add one +</button>
+
+        <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
+          <Option value="newest">Newest</Option>
+          <Option value="oldest">Oldest</Option>
+        </DateSorterSelector>
+        </div>
+    </DataModifiers>
+    <Table $columnscount={columns.length}>
+      <TableHeaderRow>
+        {columns.map((column, cellIndex) => (
+          <TableHeaderCell key={cellIndex}>{column.label}</TableHeaderCell> 
+        ))}
+      </TableHeaderRow>
+      {dataCurrentPage.map((row, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {columns.map((column, cellIndex) => (
+            <TableCell key={cellIndex}>{column.display(row)}</TableCell> 
+          ))}
+        </TableRow>
+      ))}
+    </Table>
+    <PaginationContainer>
+    <SmallText>
+      Showing {pageSize} of {data.length} entries
+    </SmallText>
+    <PaginationControls>
+      <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>{"<"}</PaginationButton>
+      <PaginationInput 
+          type="number" 
+          value={inputPage||""} 
+          onChange={handleInputChange} 
+          onKeyDown={handleInputSubmit} 
+          placeholder={page}
+          min={1}
+          max={totalPages}
+        ></PaginationInput>
+        <Text>/ {totalPages}</Text>
+      <PaginationButton onClick={() => {goToNextPage(); setInputPage(null);}} disabled={page === totalPages}>{">"}</PaginationButton>
+    </PaginationControls>
+    </PaginationContainer>
+    </>
+  );
 };

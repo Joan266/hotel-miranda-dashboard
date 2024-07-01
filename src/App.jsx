@@ -11,7 +11,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './styles/theme';
-
+import { EditTableElement } from './components/EditTableElement';
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: ${props => props.theme.fontFamily};
@@ -41,6 +41,7 @@ export const App = () => {
             <Route index element={<DashBoard />} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="bookings/:id" element={<BookingDetails />} />
+            <Route path="bookings/:id/edit" element={<EditTableElement />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
             <Route path="employees" element={<Employees />} />

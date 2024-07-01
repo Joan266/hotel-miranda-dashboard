@@ -94,15 +94,41 @@ const PaginationContainer = styled.div`
 const PaginationControls = styled.div`
   display: flex;
   align-items: center;
+  position:relative;
 `;
 
 const PaginationInput = styled.input`
-  width: 3em;
-  margin: 0 0.5em;
+  width: 1.5em;
+  margin-right: 0.4em;
+  position:relative;
+  font-family: ${props => props.theme.fontFamily};
+  font-size: 0.7rem;
+  font-weight:500;
+  margin-bottom:0;
+  color: ${props => props.theme.colors.mediumBlack};
   text-align: center;
+  background-color:transparent;
+  border:none;
+  min-height:25px;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+      /* Hide the spinners in input type number */
+  /* For Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 `;
 const PaginationButton = styled.button`
-  padding: 0.5em 1em;
+  padding: 0.2em 0.5em;
   color: ${props => props.theme.colors.darkGreen}; 
   border: 1px solid ${props => props.theme.colors.darkGreen};
   background-color: transparent;
@@ -110,10 +136,64 @@ const PaginationButton = styled.button`
   font-size: 0.75rem;
   font-weight: 500;
   cursor:pointer;
+  margin: 0 1em;
   &:hover {
-  color: ${props => props.theme.colors.mediumBlack}; 
-  border: 1px solid ${props => props.theme.colors.mediumBlack};
+  color: ${props => props.theme.colors.black}; 
+  border: 1px solid ${props => props.theme.colors.black};
+  }
+  &:disabled {
+    color: ${props => props.theme.colors.gray}; 
+    border: 1px solid ${props => props.theme.colors.gray};
+    cursor: not-allowed;
+  }
+`;
+const DateSorterSelector = styled.select`
+  padding: 0.5em 1em;
+  border: 1px solid ${props => props.theme.colors.darkGreen};
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  font-size: 0.7rem;
+  border-radius: 0.4em;
+  &:focus {
+    outline: none;
   }
 `;
 
-export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,PaginationControls,PaginationInput };
+const Option = styled.option`
+  background-color: transparent;
+  color: ${props => props.theme.colors.darkGreen};
+  cursor: pointer;
+  padding: 1em;
+`;
+
+const DataModifiers = styled.div`
+  margin-bottom:1.5em;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  `;
+
+const FilterStatusNav = styled.nav`
+  display: flex;
+`;
+
+const NavStatusOptions = styled.button`
+  padding: 0.7em 2em;
+  border: none;
+  font-size: 0.7rem;
+  font-weight:500;
+  font-family: ${props => props.theme.fontFamily};
+  border-bottom: 2px solid  ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : "#B0B0B0")};
+  background-color: transparent;
+  color: ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : props.theme.colors.gray)};
+  cursor: pointer;
+  
+  &:hover {
+    color: ${props => props.theme.colors.darkGreen };
+    border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
+  }
+`;
+export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, 
+  TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,
+  PaginationControls,PaginationInput, DateSorterSelector,Option,DataModifiers,FilterStatusNav,NavStatusOptions };

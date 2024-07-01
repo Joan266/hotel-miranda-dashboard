@@ -1,55 +1,44 @@
 import { useMemo, useState } from 'react';
 
-export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter) => {
+export const useDataModifiers = (items, itemsPerPage, activeStatus, dateSorter, sorterProperty) => {
   const [ page, setPage ] = useState(1);
-  const orderedData = useMemo(() => {
-    console.log("orderedData")
-    if(!items) return;
-    setPage(1);
-    return [...items].sort((a, b) => {
-      if (dateSorter === 'newest') {
-        return new Date(b.order_date.datetime) - new Date(a.order_date.datetime);
-      } else {
-        return new Date(a.order_date.datetime) - new Date(b.order_date.datetime);
-      }
+  const getNestedProperty = (obj, propertyPath) => {
+    return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
+  };
+  const { dataCurrentPage, totalPages } = useMemo(() => {
+    if (!items) return { dataCurrentPage: [], totalPages: 0 };
+    
+    const sortedData = [...items].sort((a, b) => {
+      const dateA = new Date(getNestedProperty(a, sorterProperty));
+      const dateB = new Date(getNestedProperty(b, sorterProperty));
+      return dateSorter === 'newest' ? dateB - dateA : dateA - dateB;
     });
-  }, [dateSorter, items]);
-  const filteredData = useMemo(() => {
-    console.log("filteredData")
-    if(!orderedData) return;
-    setPage(1);
-    if (activeStatus === 'all') {
-      return orderedData;
-    } else {
-      return orderedData.filter(booking => booking.status === activeStatus);
-    }
-  }, [activeStatus, orderedData]);
-
-  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
-
-  const validatedCurrentPage = Math.min(Math.max(page, 1), totalPages);
-
-  const dataCurrentPage = useMemo(() => {
-    console.log("dataCurrentPage")
-    if(!filteredData) return null;
-    const startIndex = (validatedCurrentPage - 1) * itemsPerPage;
+  
+    const filteredData = activeStatus === 'all'
+      ? sortedData
+      : sortedData.filter(booking => booking.status === activeStatus);
+  
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  
+    const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filteredData.slice(startIndex, endIndex);
-  }, [filteredData, itemsPerPage, validatedCurrentPage]);
+    const dataCurrentPage = filteredData.slice(startIndex, endIndex);
+  
+    return { dataCurrentPage, totalPages };
+  }, [items, dateSorter, activeStatus, sorterProperty, itemsPerPage, page]);
 
   const goToPage = (pageNumber) => {
-    const validPageNumber = Math.min(Math.max(pageNumber, 1), totalPages);
-    setPage(validPageNumber);
+    setPage(pageNumber);
   };
 
   const goToNextPage = () => {
-    if (validatedCurrentPage < totalPages) {
+    if (page < totalPages) {
       setPage(page + 1);
     }
   };
 
   const goToPrevPage = () => {
-    if (validatedCurrentPage > 1) {
+    if (page > 1) {
       setPage(page - 1);
     }
   };
