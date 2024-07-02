@@ -4,6 +4,7 @@ import { TableComponent } from './Table';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReadAllThunk, DeleteOneThunk } from '../slices/ReviewSlice/reviewThunks';
+import { ReviewCards } from './ReviewCards';
 
 const sorterProperty = 'review_date.date';
 
@@ -50,7 +51,12 @@ export const Reviews = () => {
  
   return (
     <Container>
-      {reviewData && <TableComponent pageSize={6} data={reviewData} columns={Columns} sorterProperty={sorterProperty}></TableComponent>}
+    {reviewData && 
+      <>
+        <ReviewCards data={reviewData}></ReviewCards>
+        <TableComponent pageSize={8} data={reviewData} columns={Columns} sorterProperty={sorterProperty}></TableComponent>
+      </>
+    }
     </Container>
   );
 };

@@ -67,7 +67,7 @@ const TableCell = styled.div`
   text-align: left;
   width: 100%;
   min-width: fit-content;
-  padding: 1em;
+  padding: 0.5em;
   height: ${props => props.height};
   border-bottom: 1px solid ${props => props.theme.colors.lightGray}; 
 `;

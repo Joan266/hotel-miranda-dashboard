@@ -13,7 +13,7 @@ const RoomImgContainer = styled.div`
   height: 65px;
   min-width: 130px;
   background-color: ${props => props.theme.colors.lightGray};
-  border-radius: 0.5em;
+  border-radius: 0.3em;
   margin-right:1em;
   overflow: hidden;
   img {
@@ -110,7 +110,7 @@ export const Rooms = () => {
  
   return (
     <Container>
-      {roomData && <TableComponent pageSize={6} data={roomData} columns={Columns} statuses={statuses}></TableComponent>}
+      {roomData && <TableComponent pageSize={7} data={roomData} columns={Columns} statuses={statuses}></TableComponent>}
     </Container>
   );
 };
