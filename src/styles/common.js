@@ -4,6 +4,7 @@ const Container = styled.div`
   padding: 1em;
   overflow-y:auto;
   max-height: calc(100vh - 5em);
+  max-width: calc(100vw - 250px);
 `;
 
 const Title = styled.h1`

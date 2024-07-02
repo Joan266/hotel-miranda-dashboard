@@ -132,7 +132,7 @@ export const Bookings = () => {
 
   return (
     <Container>
-      {bookingsData && <TableComponent pageSize={6} data={bookingsData} columns={Columns} statuses={statuses} sorterProperty={sorterProperty}></TableComponent>}
+      {bookingsData && <TableComponent pageSize={8} data={bookingsData} columns={Columns} statuses={statuses} sorterProperty={sorterProperty}></TableComponent>}
     </Container>
   );
 };

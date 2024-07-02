@@ -85,7 +85,7 @@ export const Employees = () => {
  
   return (
     <Container>
-      {employeeData && <TableComponent pageSize={6} data={employeeData} columns={Columns} statuses={statuses}></TableComponent>}
+      {employeeData && <TableComponent pageSize={8} data={employeeData} columns={Columns} statuses={statuses}></TableComponent>}
     </Container>
   );
 };
