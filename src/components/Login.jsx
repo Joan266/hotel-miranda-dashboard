@@ -2,27 +2,31 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth.jsx";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
+  const [gmail, setGmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "1234") {
-      await login({ username });
+    if (gmail === "miranda@gmail.com" && password === "mirapass") {
+      await login({ gmail });
+      setError(""); 
     } else {
-      alert("Invalid username or password");
+      setError("Invalid credentials");
     }
   };
+
   return (
     <div>
       <form onSubmit={handleLogin}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="gmail">gmail:</label>
           <input
-            id="username"
+            id="email"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={gmail}
+            onChange={(e) => setGmail(e.target.value)}
           />
         </div>
         <div>
@@ -34,6 +38,7 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

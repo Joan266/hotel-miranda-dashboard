@@ -12,6 +12,7 @@ const CardsContainer = styled.div`
   margin-bottom:2em;
   position:relative;
   height:100%;
+  padding-bottom:0.5em;
 `;
 
 const ReviewCard = styled.div`
