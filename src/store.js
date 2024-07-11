@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { BookingSliceReducer } from './slices/BookingSlice/BookingSlice.js'
-import { EmployeeSliceReducer } from './slices/EmployeeSlice/EmployeeSlice.js'
-import { RoomSliceReducer } from './slices/RoomSlice/RoomSlice.js'
-import { ReviewSliceReducer } from './slices/ReviewSlice/ReviewSlice.js'
+import { configureStore } from '@reduxjs/toolkit';
+import BookingSliceReducer from './slices/BookingSlice/BookingSlice';
+import EmployeeSliceReducer from './slices/EmployeeSlice/EmployeeSlice';
+import RoomSliceReducer from './slices/RoomSlice/RoomSlice';
+import ReviewSliceReducer from './slices/ReviewSlice/ReviewSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,4 +11,4 @@ export const store = configureStore({
     room: RoomSliceReducer,
     review: ReviewSliceReducer,
   },
-})
+});
