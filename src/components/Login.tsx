@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { useAuth } from "../hooks/useAuth.jsx";
+import React, { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 export const Login = () => {
-  const [gmail, setGmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [gmail, setGmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
   const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (gmail === "miranda@gmail.com" && password === "mirapass") {
       await login({ gmail });
@@ -21,7 +22,7 @@ export const Login = () => {
     <div>
       <form onSubmit={handleLogin}>
         <div>
-          <label htmlFor="gmail">gmail:</label>
+          <label htmlFor="email">Email:</label>
           <input
             id="email"
             type="text"

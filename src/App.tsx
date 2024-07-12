@@ -12,12 +12,13 @@ import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './styles/theme';
 import { EditTableElement } from './components/EditTableElement';
+
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: ${props => props.theme.fontFamily};
-    width:100%;
-    height:100%;
-    position:relative;
+    width: 100%;
+    height: 100%;
+    position: relative;
     overflow: hidden;
   }
   #root {
@@ -25,9 +26,9 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
   }
   * {
-    box-sizing: border-box; 
-    margin:0;
-    padding:0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 `;
 
