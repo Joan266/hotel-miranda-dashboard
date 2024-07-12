@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './bookingThunks';
 
 interface BookingItem {
-  id: number;
+  id: string;
   first_name: string;
   last_name: string;
   order_date: {
@@ -84,7 +84,7 @@ const BookingSlice = createSlice({
       .addCase(DeleteOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(DeleteOneThunk.fulfilled, (state, action: PayloadAction<number>) => {
+      .addCase(DeleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
         state.status = 'fulfilled';
         state.items = state.items.filter(item => item.id !== action.payload);
         state.error = null;

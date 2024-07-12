@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-
+import React from "react";
 interface AuthContextType {
   user: string; 
   login: (data: any) => void; 

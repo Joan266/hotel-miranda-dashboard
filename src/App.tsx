@@ -12,6 +12,7 @@ import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './styles/theme';
 import { EditTableElement } from './components/EditTableElement';
+import React from 'react';
 
 const GlobalStyle = createGlobalStyle`
   body {

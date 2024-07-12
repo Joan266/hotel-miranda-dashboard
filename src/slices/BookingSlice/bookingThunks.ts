@@ -3,7 +3,7 @@ import bookingsData from '../../data/bookings.json';
 import { delayedRequest } from "../../utils/delayRequest";
 
 interface Booking {
-  id: number;
+  id: string;
   first_name: string;
   last_name: string;
   order_date: {
@@ -27,7 +27,7 @@ interface Booking {
 
 const data: Booking[] = bookingsData as Booking[];
 
-const ReadOneThunk = createAsyncThunk<Booking | null, number>(
+const ReadOneThunk = createAsyncThunk<Booking | null, string>(
   "booking/readOneThunk",
   async (id) => {
     try {

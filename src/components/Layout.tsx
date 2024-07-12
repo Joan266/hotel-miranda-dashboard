@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useAuth, AuthContextType } from '../hooks/useAuth'; 
+import { useAuth } from '../hooks/useAuth'; 
 import styled from 'styled-components';
 import React from 'react';
 
@@ -81,7 +81,7 @@ const Title = styled.h1`
 `;
 
 export const Layout: React.FC = () => {
-  const { logout } = useAuth() as AuthContextType; 
+  const { logout } = useAuth(); 
   const location = useLocation();
 
   const getPageName = (pathname: string): string => {

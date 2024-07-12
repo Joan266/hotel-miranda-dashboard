@@ -7,6 +7,8 @@ export const theme = {
     white: '#FFFFFF',
     gray: '#799283',
     mediumBlack: '#393939',
-    darkGreen:'#135846',
+    darkGreen: '#135846',
   },
-};
+} as const;
+
+export type Theme = typeof theme;

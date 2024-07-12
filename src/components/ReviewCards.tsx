@@ -2,6 +2,19 @@ import { SmallText, Text } from "../styles/common";
 import clientDefault from '../assets/img/client_default.webp';
 import { ProfileImgContainer } from "../styles/table";
 import styled from 'styled-components';
+import React from "react";
+
+interface Review {
+  id: number;
+  customer_name: string;
+  review_date: { text: string };
+  comment: string;
+  img: string | null;
+}
+
+interface ReviewCardsProps {
+  data: Review[];
+}
 
 const CardsContainer = styled.div`
   display: flex;
@@ -9,24 +22,24 @@ const CardsContainer = styled.div`
   overflow-x: scroll;
   gap: 1.5em;
   align-items: center;
-  margin-bottom:2em;
-  position:relative;
-  height:100%;
-  padding-bottom:0.5em;
+  margin-bottom: 2em;
+  position: relative;
+  height: 100%;
+  padding-bottom: 0.5em;
 `;
 
 const ReviewCard = styled.div`
-  position:relative;
+  position: relative;
   background-color: ${(props) => props.theme.colors.white};
   padding: 1em;
   border-radius: 0.4em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-height:11em;
-  height:100%;
-  min-width:19em;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+  min-height: 11em;
+  height: 100%;
+  min-width: 19em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const BottomContainer = styled.div`
@@ -38,17 +51,17 @@ const BottomContainer = styled.div`
   align-items: center;
 `;
 
-export const ReviewCards = ({ data }) => {
+export const ReviewCards: React.FC<ReviewCardsProps> = ({ data }) => {
   return (
     <CardsContainer>
-      {data.map((review, index) => (
-        <ReviewCard key={index}>
+      {data.map((review) => (
+        <ReviewCard key={"card"+review.id}>
           <Text maxwidth={"350px"}>{review.comment}</Text>
           <BottomContainer>
             <ProfileImgContainer>
               <img 
-                  src={review.img ? review.img : clientDefault} 
-                  alt="review profile customer" 
+                src={review.img ? review.img : clientDefault} 
+                alt="review profile customer" 
               />
             </ProfileImgContainer>
             <div>
