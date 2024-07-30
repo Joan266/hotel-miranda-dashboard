@@ -39,7 +39,7 @@ const UserSlice = createSlice({
       })
       .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.status = 'fulfilled';
-        state.items = action.payload;
+        state.items = action.payload.users;
         state.error = null;
       })
       .addCase(ReadAllThunk.rejected, (state, action) => {

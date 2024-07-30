@@ -15,9 +15,9 @@ interface UseDataModifiersReturn<T> {
 }
 
 export const useDataModifiers = <T,>(
-  items: T[],
+  items: any[],
   itemsPerPage: number,
-  activeStatus: string ,
+  activeStatus: string | boolean ,
   dateSorter: string,
   sorterProperty?: string
 ): UseDataModifiersReturn<T> => {

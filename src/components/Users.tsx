@@ -20,8 +20,8 @@ interface Status {
   value: boolean | string;
 }
 
-const IsTextActive = styled.div<{ status: boolean }>`
-  color: ${props => props.status ? "#5AD07A" : "#E23428"};
+const IsTextActive = styled.div<{ status: string}>`
+  color: ${props => props.status === "true" ? "#5AD07A" : "#E23428"};
 `;
 
 const statuses: Status[] = [
@@ -80,7 +80,7 @@ export const Users = () => {
       label: "Status",
       display: (user) => (
         <Text>
-          <IsTextActive status={user.status}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
+          <IsTextActive status={user.status.toString()}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
         </Text>
       )
     },

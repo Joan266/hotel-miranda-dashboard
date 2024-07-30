@@ -110,8 +110,8 @@ export const Layout: React.FC = () => {
           <NavLink to="/rooms" $active={location.pathname.includes('/rooms').toString()}>
             Rooms
           </NavLink>
-          <NavLink to="/employees" $active={location.pathname.includes('/employees').toString()}>
-            Employees
+          <NavLink to="/users" $active={location.pathname.includes('/users').toString()}>
+            Users
           </NavLink>
           <LogoutButton onClick={logout}>Logout</LogoutButton>
         </Nav>
