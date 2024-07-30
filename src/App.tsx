@@ -4,7 +4,7 @@ import { Bookings } from './components/Bookings';
 import { BookingDetails } from './components/BookingDetails';
 import { Reviews } from './components/Reviews';
 import { Rooms } from './components/Rooms';
-import { Employees } from './components/Employees';
+import { Users } from './components/Users';
 import { Login } from './components/Login';
 import { Layout } from './components/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -46,7 +46,7 @@ export const App = () => {
             <Route path="bookings/:id/edit" element={<EditTableElement />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
-            <Route path="employees" element={<Employees />} />
+            <Route path="users" element={<Users />} />
           </Route>
           <Route path="/login" element={<Login/>} />
         </Routes>
