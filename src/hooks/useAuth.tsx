@@ -1,10 +1,11 @@
-import { createContext, useContext, useMemo, ReactNode } from "react";
+import React, { createContext, useContext, useMemo, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import React from "react";
+import { User } from "../interfaces/user";
+
 interface AuthContextType {
-  user: string; 
-  login: (data: any) => void; 
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -16,25 +17,47 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
+  const [token, setToken] = useLocalStorage("token", null);
   const navigate = useNavigate();
 
-  const login = async (data: any) => {
-    setUser(data);
+  const login = async (email: string, password: string) => {
+    const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/auth/login`;
+
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    };
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      console.error(`Error: ${response.status} ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { user, token } = await response.json();
+    setUser(user);
+    setToken(token);
     navigate("/");
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     navigate("/login", { replace: true });
   };
 
   const value = useMemo(
     () => ({
       user,
+      token,
       login,
       logout,
     }),
-    [user]
+    [token,user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

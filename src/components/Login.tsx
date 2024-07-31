@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export const Login = () => {
-  const [gmail, setGmail] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
@@ -10,11 +10,10 @@ export const Login = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (gmail === "miranda@gmail.com" && password === "mirapass") {
-      await login({ gmail });
-      setError(""); 
-    } else {
-      setError("Invalid credentials");
+    try {
+      await login(email, password);
+    } catch (err: any) {
+      setError(err.message || "Failed to login");
     }
   };
 
@@ -26,8 +25,8 @@ export const Login = () => {
           <input
             id="email"
             type="text"
-            value={gmail}
-            onChange={(e) => setGmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
