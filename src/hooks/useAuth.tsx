@@ -2,9 +2,10 @@ import React, { createContext, useContext, useMemo, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { User } from "../interfaces/user";
-
+import { authenticateUser } from "../utils/authenticateUser";
 interface AuthContextType {
   user: User | null;
+  token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -21,24 +22,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/auth/login`;
-
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    };
-
-    const response = await fetch(url, options);
-
-    if (!response.ok) {
-      console.error(`Error: ${response.status} ${response.statusText}`);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const { user, token } = await response.json();
+    const { user, token } = await authenticateUser(email, password);
     setUser(user);
     setToken(token);
     navigate("/");
@@ -57,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       login,
       logout,
     }),
-    [token,user]
+    [token, user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
