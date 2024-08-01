@@ -1,27 +1,35 @@
 import styled from 'styled-components';
 
-const Table = styled.div`
+interface TableProps {
+  $columnscount: number;
+}
+
+interface NavStatusOptionsProps {
+  $active: string;
+}
+
+const Table = styled.div<TableProps>`
   display: grid;
   width: 100%;
   margin-top: 1em;
   border-radius: 0.5em;
   background-color: ${props => props.theme.colors.white};
   grid-template-columns: repeat(${props => props.$columnscount}, auto);
-  gap:0;
+  gap: 0;
 `;
 
 const TableHeaderRow = styled.div`
-  display: contents; 
+  display: contents;
 `;
 
 const TableHeaderCell = styled.div`
   width: 100%;
   text-align: left;
-  padding: 1em ;
+  padding: 1em;
   font-size: 0.7rem;
   font-weight: 700;
   color: ${props => props.theme.colors.mediumBlack};
-  border-bottom: 2px solid ${props => props.theme.colors.lightGray}; 
+  border-bottom: 2px solid ${props => props.theme.colors.lightGray};
 `;
 
 const TableRow = styled.div`
@@ -38,7 +46,7 @@ const TableRow = styled.div`
       left: 0;
       right: 0;
       opacity: 0;
-      transition: opacity 0.2s ease-in-out; 
+      transition: opacity 0.2s ease-in-out;
     }
 
     &::before {
@@ -58,32 +66,35 @@ const TableRow = styled.div`
     }
   }
 `;
+
 const CellContainer = styled.div`
   display: flex;
-  width:100%;
-  height:100%
+  width: 100%;
+  height: 100%;
 `;
+
 const TableCell = styled.div`
   text-align: left;
   width: 100%;
   min-width: fit-content;
   padding: 0.5em;
-  height: ${props => props.height};
-  border-bottom: 1px solid ${props => props.theme.colors.lightGray}; 
+  border-bottom: 1px solid ${props => props.theme.colors.lightGray};
 `;
+
 const ProfileImgContainer = styled.div`
   height: 60px;
   min-width: 60px;
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 0.3em;
-  margin-right:1em;
-  overflow:hidden;
+  margin-right: 1em;
+  overflow: hidden;
   img {
-    width:100%;
-    height:100%;  
-    cover:fit-content;
+    width: 100%;
+    height: 100%;
+    cover: fit-content;
   }
-`
+`;
+
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,27 +105,27 @@ const PaginationContainer = styled.div`
 const PaginationControls = styled.div`
   display: flex;
   align-items: center;
-  position:relative;
+  position: relative;
 `;
 
 const PaginationInput = styled.input`
   width: 1.5em;
   margin-right: 0.4em;
-  position:relative;
+  position: relative;
   font-family: ${props => props.theme.fontFamily};
   font-size: 0.7rem;
-  font-weight:500;
-  margin-bottom:0;
+  font-weight: 500;
+  margin-bottom: 0;
   color: ${props => props.theme.colors.mediumBlack};
   text-align: center;
-  background-color:transparent;
-  border:none;
-  min-height:25px;
+  background-color: transparent;
+  border: none;
+  min-height: 25px;
   &:focus {
     outline: none;
     box-shadow: none;
   }
-      /* Hide the spinners in input type number */
+  /* Hide the spinners in input type number */
   /* For Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -127,26 +138,28 @@ const PaginationInput = styled.input`
     -moz-appearance: textfield;
   }
 `;
+
 const PaginationButton = styled.button`
   padding: 0.2em 0.5em;
-  color: ${props => props.theme.colors.darkGreen}; 
+  color: ${props => props.theme.colors.darkGreen};
   border: 1px solid ${props => props.theme.colors.darkGreen};
   background-color: transparent;
   border-radius: 0.3em;
   font-size: 0.75rem;
   font-weight: 500;
-  cursor:pointer;
+  cursor: pointer;
   margin: 0 1em;
   &:hover {
-  color: ${props => props.theme.colors.black}; 
-  border: 1px solid ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.black};
+    border: 1px solid ${props => props.theme.colors.black};
   }
   &:disabled {
-    color: ${props => props.theme.colors.gray}; 
+    color: ${props => props.theme.colors.gray};
     border: 1px solid ${props => props.theme.colors.gray};
     cursor: not-allowed;
   }
 `;
+
 const DateSorterSelector = styled.select`
   padding: 0.5em 1em;
   border: 1px solid ${props => props.theme.colors.darkGreen};
@@ -168,32 +181,48 @@ const Option = styled.option`
 `;
 
 const DataModifiers = styled.div`
-  margin-bottom:1.5em;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  `;
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const FilterStatusNav = styled.nav`
   display: flex;
 `;
 
-const NavStatusOptions = styled.button`
+const NavStatusOptions = styled.button<NavStatusOptionsProps>`
   padding: 0.7em 2em;
   border: none;
   font-size: 0.7rem;
-  font-weight:500;
+  font-weight: 500;
   font-family: ${props => props.theme.fontFamily};
-  border-bottom: 2px solid  ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : "#B0B0B0")};
+  border-bottom: 2px solid ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : "#B0B0B0")};
   background-color: transparent;
   color: ${(props) => (props.$active === "true" ? props.theme.colors.darkGreen : props.theme.colors.gray)};
   cursor: pointer;
-  
+
   &:hover {
-    color: ${props => props.theme.colors.darkGreen };
+    color: ${props => props.theme.colors.darkGreen};
     border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
   }
 `;
-export { Table, TableCell, CellContainer, TableHeaderRow, TableHeaderCell, 
-  TableRow, ProfileImgContainer, PaginationContainer,PaginationButton,
-  PaginationControls,PaginationInput, DateSorterSelector,Option,DataModifiers,FilterStatusNav,NavStatusOptions };
+
+export {
+  Table,
+  TableCell,
+  CellContainer,
+  TableHeaderRow,
+  TableHeaderCell,
+  TableRow,
+  ProfileImgContainer,
+  PaginationContainer,
+  PaginationButton,
+  PaginationControls,
+  PaginationInput,
+  DateSorterSelector,
+  Option,
+  DataModifiers,
+  FilterStatusNav,
+  NavStatusOptions
+};

@@ -4,7 +4,7 @@ import { Bookings } from './components/Bookings';
 import { BookingDetails } from './components/BookingDetails';
 import { Reviews } from './components/Reviews';
 import { Rooms } from './components/Rooms';
-import { Employees } from './components/Employees';
+import { Users } from './components/Users';
 import { Login } from './components/Login';
 import { Layout } from './components/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -12,12 +12,14 @@ import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './styles/theme';
 import { EditTableElement } from './components/EditTableElement';
+import React from 'react';
+
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: ${props => props.theme.fontFamily};
-    width:100%;
-    height:100%;
-    position:relative;
+    width: 100%;
+    height: 100%;
+    position: relative;
     overflow: hidden;
   }
   #root {
@@ -25,9 +27,9 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
   }
   * {
-    box-sizing: border-box; 
-    margin:0;
-    padding:0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 `;
 
@@ -44,7 +46,7 @@ export const App = () => {
             <Route path="bookings/:id/edit" element={<EditTableElement />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
-            <Route path="employees" element={<Employees />} />
+            <Route path="users" element={<Users />} />
           </Route>
           <Route path="/login" element={<Login/>} />
         </Routes>
