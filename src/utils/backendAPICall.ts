@@ -2,7 +2,7 @@ export async function backendAPICall(path: string, method: string = 'GET', data:
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
 
   const token = localStorage.getItem('token');
-
+  console.log(token)
   if (!token) {
     console.error('Error: No authentication token found');
     throw new Error('No authentication token found');

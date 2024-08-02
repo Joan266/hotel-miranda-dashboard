@@ -1,5 +1,6 @@
 export const authenticateUser = async (email: string, password: string) => {
-  const response = await fetch('your/api/authenticate', {
+  const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/auth/login`;
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

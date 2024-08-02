@@ -37,7 +37,7 @@ const UserSlice = createSlice({
       .addCase(ReadAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<User[]>) => {
+      .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<any>) => {
         state.status = 'fulfilled';
         state.items = action.payload.users;
         state.error = null;
