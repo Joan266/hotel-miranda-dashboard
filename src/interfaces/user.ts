@@ -7,6 +7,7 @@ export interface User {
   phonenumber: string;
   joindate: Date;
   days?: string;
+  token?: string;
   hours?: string;
   jobdesk?: string;
 }

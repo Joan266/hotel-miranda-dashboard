@@ -5,7 +5,6 @@ import { User } from "../interfaces/user";
 import { authenticateUser } from "../utils/authenticateUser";
 interface AuthContextType {
   user: User | null;
-  token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -18,30 +17,26 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
-  const [token, setToken] = useLocalStorage("token", null);
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const { user, token } = await authenticateUser(email, password);
+    const user = await authenticateUser(email, password);
     setUser(user);
-    setToken(token);
     navigate("/");
   };
 
   const logout = () => {
     setUser(null);
-    setToken(null);
     navigate("/login", { replace: true });
   };
 
   const value = useMemo(
     () => ({
       user,
-      token,
       login,
       logout,
     }),
-    [token, user]
+    [user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
