@@ -3,21 +3,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
-const IconWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5em; 
-  
-  div {
-    cursor: pointer;
-    transition: color 0.2s ease;
-    color: #333333; 
-    &:hover {
-      color: #ff4545; 
-    }
-  }
-`;
 
 const DataActions = ({ DeletePopup, EditPopup }) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
