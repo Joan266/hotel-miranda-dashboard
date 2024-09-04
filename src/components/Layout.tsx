@@ -3,9 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import styled from 'styled-components';
 import React from 'react';
 
-interface NavLinkProps {
-  $active: string;
-}
+
 
 
 export const Layout: React.FC = () => {

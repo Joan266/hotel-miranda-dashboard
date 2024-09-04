@@ -4,19 +4,6 @@ import { ProfileImgContainer } from "../styles/table";
 import styled from 'styled-components';
 import React from "react";
 
-interface Review {
-  id: number;
-  customer_name: string;
-  review_date: { text: string };
-  comment: string;
-  img: string | null;
-}
-
-interface ReviewCardsProps {
-  data: Review[];
-}
-
-
 
 export const ReviewCards: React.FC<ReviewCardsProps> = ({ data }) => {
   return (

@@ -10,34 +10,6 @@ import { TableComponent } from './Table';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 
-interface Room {
-  id: number;
-  room_type: string;
-  bed_type: string;
-  floor_room: number;
-  facilities: string[];
-  rate: number;
-  status: string;
-}
-
-interface RoomState {
-  items: Room[];
-  status: 'idle' | 'loading' | 'fulfilled' | 'rejected';
-  error: string | null;
-}
-
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
-
-interface Status {
-  label: string;
-  value: string;
-}
-
-
 
 const statuses: Status[] = [
   { label: 'All Rooms', value: 'all' },

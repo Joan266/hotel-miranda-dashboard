@@ -1,0 +1,3 @@
+interface NavLinkProps {
+  $active: string;
+}

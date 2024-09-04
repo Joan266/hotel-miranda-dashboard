@@ -10,20 +10,7 @@ import { User } from '../interfaces/user';
 import { AppDispatch, RootState } from '../store';
 import UserActions from './DataActions';
 
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
 
-interface Status {
-  label: string;
-  value: boolean | string;
-}
-
-const IsTextActive = styled.div<{ status: string }>`
-  color: ${props => props.status === "true" ? "#5AD07A" : "#E23428"};
-`;
 
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },

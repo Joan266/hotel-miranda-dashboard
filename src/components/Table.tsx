@@ -7,24 +7,7 @@ import {
 import { Text, SmallText } from '../styles/common';
 import { useDataModifiers } from '../hooks/useDataModifiers';
 
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
 
-interface Status {
-  label: string;
-  value: string | boolean;
-}
-
-interface TableComponentProps<T> {
-  pageSize: number;
-  data: T[];
-  columns: Column<T>[];
-  statuses?: Status[];
-  sorterProperty?: string;
-}
 
 export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterProperty }: TableComponentProps<T>) => {
   const [activeStatus, setActiveStatus] = useState<string | boolean>('all');

@@ -22,3 +22,15 @@ export interface CreateUser {
   hours?: string;
   jobdesk?: string;
 }
+
+
+interface Column<T> {
+  label: string;
+  display: (item: T) => React.ReactNode;
+  sort?: string;
+}
+
+interface Status {
+  label: string;
+  value: boolean | string;
+}
