@@ -1,3 +1,3 @@
-interface NavLinkProps {
+export interface NavLinkProps {
   $active: string;
 }

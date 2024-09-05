@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CellContainer } from '../styles/table';
 import { Container, SmallText, Text } from '../styles/common';
 import { ReadAllThunk, DeleteOneThunk } from '../slices/RoomSlice/roomThunks';
-import styled from 'styled-components';
 import standardRoomImg from '../assets/img/standard_room.webp';
 import deluxeRoomImg from '../assets/img/deluxe_room.webp';
 import { TableComponent } from './Table';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-
-
+import { Room, RoomState } from '../interfaces/rooms';
+import { Column, Status } from '../interfaces/common';
+import { RoomImgContainer, StatusButton } from '../styles/rooms';
 const statuses: Status[] = [
   { label: 'All Rooms', value: 'all' },
   { label: 'Available Rooms', value: 'available' },

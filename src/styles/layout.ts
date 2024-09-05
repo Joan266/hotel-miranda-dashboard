@@ -1,9 +1,13 @@
-const LayoutContainer = styled.div`
+import styled from 'styled-components';
+import { NavLinkProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+export const LayoutContainer = styled.div`
   display: flex;
   min-height: 100%;
 `;
 
-const NavContainer = styled.div`
+export const NavContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
   padding: 3em 0;
   height: 100%;
@@ -12,7 +16,7 @@ const NavContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const Nav = styled.nav`
+export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -20,7 +24,7 @@ const Nav = styled.nav`
   width: 100%;
 `;
 
-const NavLink = styled(Link)<NavLinkProps>`
+export const NavLink = styled(Link)<NavLinkProps>`
   text-decoration: none;
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
@@ -36,7 +40,7 @@ const NavLink = styled(Link)<NavLinkProps>`
   }
 `;
 
-const LogoutButton = styled.div`
+export const LogoutButton = styled.div`
   cursor: pointer;
   padding: 0.5em 1em;
   font-size: 0.85rem;
@@ -50,14 +54,14 @@ const LogoutButton = styled.div`
   }
 `;
 
-const ContentContainer = styled.div`
+export const ContentContainer = styled.div`
   width: 100%;
   min-height: 100%;
   position: relative;
   background-color: ${(props) => props.theme.colors.lightGray};
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   padding: 0 0.5em;
   height: 5em;
   display: flex;
@@ -65,7 +69,7 @@ const Header = styled.header`
   background-color: #FFFFFF;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   font-weight: 600;
   font-size: 1.15rem;
   margin-left: 1.5em;

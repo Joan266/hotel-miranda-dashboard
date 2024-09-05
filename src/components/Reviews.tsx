@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 import { ReadAllThunk, DeleteOneThunk } from '../slices/ReviewSlice/reviewThunks';
 import { ReviewCards } from './ReviewCards';
-import {TableComponent} from './Table';
-
+import { TableComponent } from './Table';
+import { Review, ReviewState, Column } from '../interfaces/reviews';
 const sorterProperty = 'review_date.date';
 
 export const Reviews = () => {
@@ -17,18 +17,26 @@ export const Reviews = () => {
   const [reviewData, setReviewData] = useState<Review[] | null>(null);
 
   const Columns: Column<Review>[] = [
-    { label: "Order Id", display: review => (
-      <Text>#{review.order_id}</Text>
-    ) },
-    { label: "Date", display: review => (
-      <Text>{review.review_date.text}</Text>
-    ) },
-    { label: "Customer", display: review => (
-      <Text>{review.customer_name}</Text>
-    ) },
-    { label: "Comment", display: review => (
-      <Text maxwidth={"350px"}>{review.comment}</Text>
-    ) },
+    {
+      label: "Order Id", display: review => (
+        <Text>#{review.order_id}</Text>
+      )
+    },
+    {
+      label: "Date", display: review => (
+        <Text>{review.review_date.text}</Text>
+      )
+    },
+    {
+      label: "Customer", display: review => (
+        <Text>{review.customer_name}</Text>
+      )
+    },
+    {
+      label: "Comment", display: review => (
+        <Text maxwidth={"350px"}>{review.comment}</Text>
+      )
+    },
   ];
 
   useEffect(() => {
@@ -56,14 +64,14 @@ export const Reviews = () => {
 
   return (
     <Container>
-      {reviewData && 
+      {reviewData &&
         <>
           <ReviewCards data={reviewData} />
-          <TableComponent 
-            pageSize={8} 
-            data={reviewData} 
-            columns={Columns} 
-            sorterProperty={sorterProperty} 
+          <TableComponent
+            pageSize={8}
+            data={reviewData}
+            columns={Columns}
+            sorterProperty={sorterProperty}
           />
         </>
       }

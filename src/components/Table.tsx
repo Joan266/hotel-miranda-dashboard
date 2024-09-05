@@ -1,12 +1,12 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
-import { 
+import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
   PaginationContainer, PaginationButton, PaginationControls, PaginationInput,
   DateSorterSelector, Option, DataModifiers, FilterStatusNav, NavStatusOptions,
 } from '../styles/table';
 import { Text, SmallText } from '../styles/common';
 import { useDataModifiers } from '../hooks/useDataModifiers';
-
+import { TableComponentProps } from '../interfaces/common';
 
 
 export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterProperty }: TableComponentProps<T>) => {
@@ -20,7 +20,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
     goToPrevPage,
     totalPages,
     dataLength,
-  } = useDataModifiers<T>(data, pageSize, activeStatus, dateSorter, sorterProperty); 
+  } = useDataModifiers<T>(data, pageSize, activeStatus, dateSorter, sorterProperty);
 
   const [inputPage, setInputPage] = useState<number | null>(null);
 
@@ -48,7 +48,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
     }
   };
 
-  return (  
+  return (
     <>
       <DataModifiers>
         {statuses && (
@@ -78,13 +78,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
       <Table $columnscount={columns.length}>
         <TableHeaderRow>
           {columns.map((column, cellIndex) => (
-            <TableHeaderCell key={cellIndex}>{column.label}</TableHeaderCell> 
+            <TableHeaderCell key={cellIndex}>{column.label}</TableHeaderCell>
           ))}
         </TableHeaderRow>
         {dataCurrentPage.map((row, rowIndex) => (
           <TableRow key={rowIndex}>
             {columns.map((column, cellIndex) => (
-              <TableCell key={cellIndex}>{column.display(row)}</TableCell> 
+              <TableCell key={cellIndex}>{column.display(row)}</TableCell>
             ))}
           </TableRow>
         ))}
@@ -95,14 +95,14 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
           Showing {pageSize} of {dataLength} entries
         </SmallText>
         <PaginationControls>
-          <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1 }>
+          <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1}>
             {"<"}
           </PaginationButton>
-          <PaginationInput 
-            type="number" 
-            value={inputPage !== null ? inputPage : ''} 
-            onChange={handleInputChange} 
-            onKeyDown={handleInputSubmit} 
+          <PaginationInput
+            type="number"
+            value={inputPage !== null ? inputPage : ''}
+            onChange={handleInputChange}
+            onKeyDown={handleInputSubmit}
             placeholder={page.toString()}
             min={1}
             max={totalPages}

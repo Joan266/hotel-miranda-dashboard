@@ -1,4 +1,6 @@
-const Overlay = styled.div`
+import styled from 'styled-components';
+
+export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +13,7 @@ const Overlay = styled.div`
   z-index: 1000;
 `;
 
-const PopupContainer = styled.div`
+export const PopupContainer = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -20,20 +22,20 @@ const PopupContainer = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
 
-const CloseButton = styled.div`
+export const CloseButton = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
 `;
 
-const Message = styled.p`
+export const Message = styled.p`
   margin: 20px 0;
   font-size: 16px;
   text-align: center;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background: #007bff;
   color: #fff;
   padding: 10px 20px;

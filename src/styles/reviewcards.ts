@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 const CardsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -32,3 +34,5 @@ const BottomContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+export { CardsContainer, ReviewCard, BottomContainer };

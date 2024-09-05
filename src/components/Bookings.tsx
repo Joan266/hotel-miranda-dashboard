@@ -2,33 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CellContainer, ProfileImgContainer } from '../styles/table';
 import { Container, Text, SmallText } from '../styles/common';
-import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 import { ReadAllThunk, DeleteOneThunk } from '../slices/BookingSlice/bookingThunks';
 import { TableComponent } from './Table';
 import clientDefault from '../assets/img/client_default.webp';
-
-const statusColors = {
-  refund: '#E23428',
-  booked: '#5AD07A',
-  cancelled: '#BEBEBE',
-  pending: '#6D6D6D',
-  default: '#6D6D6D'
-};
-
-const statusBackgroundColors = {
-  refund: '#FFEDEC',
-  booked: '#E8FFEE',
-  cancelled: '#575757',
-  pending: '#E2E2E2',
-  default: '#E2E2E2'
-};
-
-const getStatusColor = (status: string) => statusColors[status] || statusColors.default;
-const getStatusBackgroundColor = (status: string) => statusBackgroundColors[status] || statusBackgroundColors.default;
-
-
+import { Booking, BookingState } from '../interfaces/bookings';
+import { StatusButton } from '../styles/bookings';
 
 const statuses = [
   { label: 'All Bookings', value: 'all' },

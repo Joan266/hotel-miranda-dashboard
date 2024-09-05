@@ -23,14 +23,3 @@ export interface CreateUser {
   jobdesk?: string;
 }
 
-
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
-
-interface Status {
-  label: string;
-  value: boolean | string;
-}

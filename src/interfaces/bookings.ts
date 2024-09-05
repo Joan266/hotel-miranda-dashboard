@@ -1,8 +1,8 @@
-interface StatusButtonProps {
+export interface StatusButtonProps {
   $status: string;
 }
 
-interface Booking {
+export interface Booking {
   id: number;
   first_name: string;
   last_name: string;
@@ -13,7 +13,7 @@ interface Booking {
   room_type: string;
   status: string;
 }
-interface BookingState {
+export interface BookingState {
   items: Booking[];
   status: string;
   error: string | null;

@@ -1,3 +1,3 @@
-interface PrivateRouteProps {
+export interface PrivateRouteProps {
   children: React.ReactNode;
 }

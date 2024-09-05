@@ -1,4 +1,6 @@
-const IconWrapper = styled.div`
+import styled from 'styled-components';
+
+export const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

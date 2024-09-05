@@ -1,4 +1,4 @@
-interface Review {
+export interface Review {
   id: number;
   customer_name: string;
   review_date: { text: string };
@@ -6,6 +6,6 @@ interface Review {
   img: string | null;
 }
 
-interface ReviewCardsProps {
+export interface ReviewCardsProps {
   data: Review[];
 }

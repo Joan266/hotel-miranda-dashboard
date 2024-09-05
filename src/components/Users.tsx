@@ -3,22 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Text, SmallText } from '../styles/common';
 import { CellContainer, ProfileImgContainer } from '../styles/table';
 import { readAllThunk } from '../slices/UserSlice/userThunks';
-import styled from 'styled-components';
 import clientDefault from '../assets/img/client_default.webp';
 import { TableComponent } from './Table';
-import { User } from '../interfaces/user';
+import { User, CreateUser } from '../interfaces/user';
+import { Column, Status } from '../interfaces/common';
+import { IsTextActive } from '../styles/users';
 import { AppDispatch, RootState } from '../store';
 import UserActions from './DataActions';
-
-
 
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },
   { label: 'Active Employee', value: true },
   { label: 'Inactive Employee', value: false },
 ];
-
-
 
 export const Users = () => {
   const { items, status, error } = useSelector((state: RootState) => state.user);

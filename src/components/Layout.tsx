@@ -1,11 +1,7 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; 
-import styled from 'styled-components';
 import React from 'react';
-
-
-
-
+import { LayoutContainer,NavContainer,Nav, NavLink,LogoutButton, ContentContainer, Header, Title } from '../styles/layout';
 export const Layout: React.FC = () => {
   const { logout } = useAuth(); 
   const location = useLocation();

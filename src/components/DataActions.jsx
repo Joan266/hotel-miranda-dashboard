@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-
 
 const DataActions = ({ DeletePopup, EditPopup }) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);

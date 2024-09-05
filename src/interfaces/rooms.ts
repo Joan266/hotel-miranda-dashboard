@@ -1,5 +1,4 @@
-
-interface Room {
+export interface Room {
   id: number;
   room_type: string;
   bed_type: string;
@@ -9,20 +8,8 @@ interface Room {
   status: string;
 }
 
-interface RoomState {
+export interface RoomState {
   items: Room[];
   status: 'idle' | 'loading' | 'fulfilled' | 'rejected';
   error: string | null;
 }
-
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
-
-interface Status {
-  label: string;
-  value: string;
-}
-

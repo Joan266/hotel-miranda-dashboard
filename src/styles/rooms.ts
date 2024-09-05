@@ -1,4 +1,5 @@
-const RoomImgContainer = styled.div`
+import styled from 'styled-components';
+export const RoomImgContainer = styled.div`
   height: 65px;
   min-width: 130px;
   background-color: ${(props) => props.theme.colors.lightGray};
@@ -12,7 +13,7 @@ const RoomImgContainer = styled.div`
   }
 `;
 
-const StatusButton = styled.div<{ status: string }>`
+export const StatusButton = styled.div<{ status: string }>`
   border: none;
   display: flex;
   align-items: center;
