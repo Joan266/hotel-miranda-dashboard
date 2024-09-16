@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Text } from '../styles/common';
+import { Container, Text } from '../../styles/common';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-import { ReadAllThunk, DeleteOneThunk } from '../slices/ReviewSlice/reviewThunks';
-import { ReviewCards } from './ReviewCards';
-import { TableComponent } from './Table';
-import { Review, ReviewState, Column } from '../interfaces/reviews';
+import { ReadAllThunk, DeleteOneThunk } from '../../slices/ReviewSlice/reviewThunks';
+import { ReviewCards } from '../../components/ReviewCards';
+import { TableComponent } from '../../components/Table';
+import { Review, ReviewState, Column } from '../../interfaces/reviews';
 const sorterProperty = 'review_date.date';
 
 export const Reviews = () => {

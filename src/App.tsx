@@ -1,17 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
-import { DashBoard } from './components/DashBoard';
-import { Bookings } from './components/Bookings';
-import { BookingDetails } from './components/BookingDetails';
-import { Reviews } from './components/Reviews';
-import { Rooms } from './components/Rooms';
-import { Users } from './components/Users';
-import { Login } from './components/Login';
-import { Layout } from './components/Layout';
+import { DashBoard } from './pages/DashBoard';
+import { Bookings } from './pages/bookings/Bookings';
+import { BookingDetails } from './pages/bookings/BookingDetails';
+import { Reviews } from './pages/reviews/Reviews';
+import { Rooms } from './pages/rooms/Rooms';
+import { Users } from './pages/users/Users';
+import { Login } from './pages/Login';
+import { Layout } from './pages/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { theme } from './styles/theme';
-import { EditTableElement } from './components/EditTableElement';
 import React from 'react';
 
 const GlobalStyle = createGlobalStyle`
@@ -43,7 +42,6 @@ export const App = () => {
             <Route index element={<DashBoard />} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="bookings/:id" element={<BookingDetails />} />
-            <Route path="bookings/:id/edit" element={<EditTableElement />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
             <Route path="users" element={<Users />} />

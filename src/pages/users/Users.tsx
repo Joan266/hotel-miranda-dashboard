@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Text, SmallText } from '../styles/common';
-import { CellContainer, ProfileImgContainer } from '../styles/table';
-import { readAllThunk } from '../slices/UserSlice/userThunks';
-import clientDefault from '../assets/img/client_default.webp';
-import { TableComponent } from './Table';
-import { User, CreateUser } from '../interfaces/user';
-import { Column, Status } from '../interfaces/common';
-import { IsTextActive } from '../styles/users';
-import { AppDispatch, RootState } from '../store';
-import UserActions from './DataActions';
+import { Container, Text, SmallText } from '../../styles/common';
+import { CellContainer, ProfileImgContainer } from '../../styles/table';
+import { readAllThunk } from '../../slices/UserSlice/userThunks';
+import clientDefault from '../../assets/img/client_default.webp';
+import { TableComponent } from '../../components/Table';
+import { User, CreateUser } from '../../interfaces/user';
+import { Column, Status } from '../../interfaces/common';
+import { IsTextActive } from '../../styles/users';
+import { AppDispatch, RootState } from '../../store';
+import UserActions from '../../components/DataActions';
 
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },

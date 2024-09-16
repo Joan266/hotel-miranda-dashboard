@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CellContainer, ProfileImgContainer } from '../styles/table';
-import { Container, Text, SmallText } from '../styles/common';
+import { CellContainer, ProfileImgContainer } from '../../styles/table';
+import { Container, Text, SmallText } from '../../styles/common';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-import { ReadAllThunk, DeleteOneThunk } from '../slices/BookingSlice/bookingThunks';
-import { TableComponent } from './Table';
-import clientDefault from '../assets/img/client_default.webp';
-import { Booking, BookingState } from '../interfaces/bookings';
-import { StatusButton } from '../styles/bookings';
+import { ReadAllThunk, DeleteOneThunk } from '../../slices/BookingSlice/bookingThunks';
+import { TableComponent } from '../../components/Table';
+import clientDefault from '../../assets/img/client_default.webp';
+import { Booking, BookingState } from '../../interfaces/bookings';
+import { StatusButton } from '../../styles/bookings';
 
 const statuses = [
   { label: 'All Bookings', value: 'all' },
