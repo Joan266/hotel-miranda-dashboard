@@ -34,7 +34,7 @@ const TableHeaderCell = styled.div`
 
 const TableRow = styled.div`
   display: contents;
-  cursor: pointer;
+  cursor:default;
   > div {
     position: relative;
     &::before,
@@ -51,12 +51,12 @@ const TableRow = styled.div`
 
     &::before {
       top: -10px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.13) 0%, rgba(0, 0, 0, 0) 100%);
     }
 
     &::after {
       bottom: -10px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.13) 0%, rgba(0, 0, 0, 0) 100%);
     }
   }
   &:hover > div {
@@ -77,7 +77,7 @@ const TableCell = styled.div`
   text-align: left;
   width: 100%;
   min-width: fit-content;
-  padding: 0.5em;
+  padding: 1em 0.5em;
   border-bottom: 1px solid ${props => props.theme.colors.lightGray};
 `;
 

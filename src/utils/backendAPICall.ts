@@ -1,8 +1,12 @@
+import { User } from "../interfaces/user";
+
 export async function backendAPICall(path: string, method: string = 'GET', data: any = null) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
 
-  const token = localStorage.getItem('token');
-  console.log(token)
+  const userString = localStorage.getItem('user');
+  const user: User | null = userString ? JSON.parse(userString) : null;
+
+  const token = user?.token;
   if (!token) {
     console.error('Error: No authentication token found');
     throw new Error('No authentication token found');
@@ -21,9 +25,12 @@ export async function backendAPICall(path: string, method: string = 'GET', data:
   }
 
   const response = await fetch(url, options);
-
-  if (!response.ok) {
-    console.error(`Error: ${response.status} ${response.statusText}`);
+  if ([401, 403].includes(response.status)) {
+    // toast.error('Login required');
+    location.reload();
+    return;
+  } else if (!response.ok) {
+    //  toast.error(response.statusText);
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 

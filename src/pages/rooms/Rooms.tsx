@@ -1,69 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CellContainer } from '../styles/table';
-import { Container, SmallText, Text } from '../styles/common';
-import { ReadAllThunk, DeleteOneThunk } from '../slices/RoomSlice/roomThunks';
-import styled from 'styled-components';
-import standardRoomImg from '../assets/img/standard_room.webp';
-import deluxeRoomImg from '../assets/img/deluxe_room.webp';
-import { TableComponent } from './Table';
+import { CellContainer } from '../../styles/table';
+import { Container, SmallText, Text } from '../../styles/common';
+import { ReadAllThunk, DeleteOneThunk } from '../../slices/RoomSlice/roomThunks';
+import standardRoomImg from '../../assets/img/standard_room.webp';
+import deluxeRoomImg from '../../assets/img/deluxe_room.webp';
+import { TableComponent } from '../../components/Table';
 import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
-
-interface Room {
-  id: number;
-  room_type: string;
-  bed_type: string;
-  floor_room: number;
-  facilities: string[];
-  rate: number;
-  status: string;
-}
-
-interface RoomState {
-  items: Room[];
-  status: 'idle' | 'loading' | 'fulfilled' | 'rejected';
-  error: string | null;
-}
-
-interface Column<T> {
-  label: string;
-  display: (item: T) => React.ReactNode;
-  sort?: string;
-}
-
-interface Status {
-  label: string;
-  value: string;
-}
-
-const RoomImgContainer = styled.div`
-  height: 65px;
-  min-width: 130px;
-  background-color: ${(props) => props.theme.colors.lightGray};
-  border-radius: 0.3em;
-  margin-right: 1em;
-  overflow: hidden;
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const StatusButton = styled.div<{ status: string }>`
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 6.5em;
-  height: 3em;
-  color: ${(props) => props.theme.colors.white};
-  background-color: ${(props) => props.status === "available" ? "#5AD07A" : "#E23428"};
-  border-radius: 0.6em;
-  font-size: 0.7rem;
-`;
-
+import { Room, RoomState } from '../../interfaces/rooms';
+import { Column, Status } from '../../interfaces/common';
+import { RoomImgContainer, StatusButton } from '../../styles/rooms';
 const statuses: Status[] = [
   { label: 'All Rooms', value: 'all' },
   { label: 'Available Rooms', value: 'available' },
