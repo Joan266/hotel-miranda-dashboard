@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../styles/dataactions';
-import React from 'react';
 
 const DataActions = ({ DeletePopup, EditPopup }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -10,6 +10,7 @@ const DataActions = ({ DeletePopup, EditPopup }) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
 
   const containerRef = useRef(null);
+  const navigate = useNavigate(); 
 
   const handleToggleMenu = () => {
     setShowMenu(!showMenu); 
@@ -23,12 +24,12 @@ const DataActions = ({ DeletePopup, EditPopup }) => {
   const handleEditClick = () => {
     setShowEditPopup(true);
     setShowMenu(false); 
+    navigate('/user/update'); 
   };
 
   const closeDeletePopup = () => setShowDeletePopup(false);
   const closeEditPopup = () => setShowEditPopup(false);
 
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -36,10 +37,8 @@ const DataActions = ({ DeletePopup, EditPopup }) => {
       }
     };
 
-    
     document.addEventListener('mousedown', handleClickOutside);
 
-   
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
