@@ -1,10 +1,12 @@
-import { User } from "../interfaces/user";
+import { useAuth } from "../hooks/useAuth"; 
 
-export async function backendAPICall(path: string, method: string = 'GET', data: any = null) {
+export async function backendAPICall(
+  path: string, 
+  method: string = 'GET', 
+  data: any = null
+) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
-
-  const userString = localStorage.getItem('user');
-  const user: User | null = userString ? JSON.parse(userString) : null;
+  const { user, logout } = useAuth(); // Get user and logout from the context
 
   const token = user?.token;
   if (!token) {
@@ -25,12 +27,12 @@ export async function backendAPICall(path: string, method: string = 'GET', data:
   }
 
   const response = await fetch(url, options);
-  if ([401, 403].includes(response.status)) {
-    // toast.error('Login required');
-    location.reload();
+
+  if (response.status === 401 || response.status === 403) {
+    // Call the logout method to handle the logout and redirection
+    logout(); // This will clear the user and redirect to login
     return;
   } else if (!response.ok) {
-    //  toast.error(response.statusText);
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 

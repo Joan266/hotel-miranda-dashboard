@@ -31,10 +31,10 @@ const deleteOneThunk = createAsyncThunk<string, string>(
   }
 );
 
-const updateOneThunk = createAsyncThunk<User, { id: string, newUser: Partial<User> }>(
+const updateOneThunk = createAsyncThunk<User, { id: string, user: Partial<User> }>(
   "user/updateOneThunk",
-  async ({ id, newUser }) => {
-    return await backendAPICall(`user/${id}`, 'PUT', newUser);
+  async ({ id, user }) => {
+    return await backendAPICall(`user/${id}`, 'PUT', user);
   }
 );
 
