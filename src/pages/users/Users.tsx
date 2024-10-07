@@ -9,7 +9,7 @@ import { UserInterface, CreateUser } from '../../interfaces/user';
 import { Column, Status } from '../../interfaces/common';
 import { IsTextActive } from '../../styles/users';
 import { AppDispatch, RootState } from '../../store';
-import UserActions from '../../components/DataActions';
+import UserActions from '../../components/Actions';
 
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },

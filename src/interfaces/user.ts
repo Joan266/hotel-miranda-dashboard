@@ -4,9 +4,9 @@ export interface UserInterface {
   lastname: string;         
   email: string;            
   status: boolean;          
-  password: string;          
   phonenumber: string;      
   joindate: Date;   
+  password?: string;          
   photoUrl?: string;
   description?: string;        
   jobdesk?: string;        

@@ -9,7 +9,7 @@ import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/UserS
 import { AppDispatch, RootState } from '../../store';
 
 export const UserForm: React.FC = () => {
-  const { id:userId } = useParams<{ id: string }>(); // Get userId from URL
+  const { id:userId } = useParams<{ id: string }>(); 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { single } = useSelector((state: RootState) => state.user); 
