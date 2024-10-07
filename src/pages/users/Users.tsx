@@ -5,7 +5,7 @@ import { CellContainer, ProfileImgContainer } from '../../styles/table';
 import { readAllThunk } from '../../slices/UserSlice/userThunks';
 import clientDefault from '../../assets/img/client_default.webp';
 import { TableComponent } from '../../components/Table';
-import { User, CreateUser } from '../../interfaces/user';
+import { UserInterface, CreateUser } from '../../interfaces/user';
 import { Column, Status } from '../../interfaces/common';
 import { IsTextActive } from '../../styles/users';
 import { AppDispatch, RootState } from '../../store';
@@ -21,7 +21,7 @@ export const Users = () => {
   const { items, status, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
 
-  const Columns: Column<User>[] = [
+  const Columns: Column<UserInterface>[] = [
     {
       label: "Name",
       display: (user) => (
@@ -48,15 +48,6 @@ export const Users = () => {
       )
     },
     {
-      label: "Schedule",
-      display: (user) => (
-        <>
-          <Text>{user.days}</Text>
-          <SmallText>{user.hours}</SmallText>
-        </>
-      )
-    },
-    {
       label: "Contact",
       display: (user) => (
         <Text>{user.phonenumber}</Text>
@@ -72,8 +63,8 @@ export const Users = () => {
     },
     {
       label: "",
-      display: () => (
-        <UserActions />
+      display: (user) => (
+        <UserActions userId={user._id}/>
       )
     },
   ];
@@ -82,6 +73,7 @@ export const Users = () => {
     if (status === 'idle') {
       dispatch(readAllThunk());
     }
+    console.log(items,status, error)
   }, [status, dispatch]);
 
   return (

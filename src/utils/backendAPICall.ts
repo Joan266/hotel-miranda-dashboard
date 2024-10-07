@@ -1,12 +1,13 @@
-import { useAuth } from "../hooks/useAuth"; 
-
 export async function backendAPICall(
   path: string, 
   method: string = 'GET', 
   data: any = null
 ) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
-  const { user, logout } = useAuth(); // Get user and logout from the context
+
+  // Retrieve user data from local storage
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
 
   const token = user?.token;
   if (!token) {
@@ -29,9 +30,9 @@ export async function backendAPICall(
   const response = await fetch(url, options);
 
   if (response.status === 401 || response.status === 403) {
-    // Call the logout method to handle the logout and redirection
-    logout(); // This will clear the user and redirect to login
-    return;
+    // Clear user from local storage and return a flag for redirecting
+    localStorage.setItem('user', JSON.stringify(null)); // Clear the user
+    return { redirectToLogin: true }; // Indicate that redirection is needed
   } else if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

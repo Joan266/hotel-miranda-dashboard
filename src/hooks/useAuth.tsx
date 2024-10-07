@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useMemo, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { User } from "../interfaces/user";
+import { AuthInterface } from "../interfaces/auth";
 import { authenticateUser } from "../utils/authenticateUser";
 interface AuthContextType {
-  user: User | null;
+  user: AuthInterface | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { User, CreateUser } from '../../interfaces/user'
+import { UserInterface ,UserFormInterface } from '../../interfaces/user'
 import { backendAPICall } from "../../utils/backendAPICall";
 
-const readAllThunk = createAsyncThunk<{ users: User[] }, void>(
+const readAllThunk = createAsyncThunk<{ users: UserInterface[] }, void>(
   "user/readAllThunk",
   async () => {
     const data = await backendAPICall('user');
@@ -10,16 +10,16 @@ const readAllThunk = createAsyncThunk<{ users: User[] }, void>(
   }
 );
 
-const readOneThunk = createAsyncThunk<User, string>(
+const readOneThunk = createAsyncThunk<UserInterface, string>(
   "user/readOneThunk",
   async (id) => {
     return await backendAPICall(`user/${id}`);
   }
 );
 
-const createOneThunk = createAsyncThunk<User, CreateUser>(
+const createOneThunk = createAsyncThunk<UserInterface, UserFormInterface>(
   "user/createOneThunk",
-  async (newUser: CreateUser) => {
+  async (newUser: UserFormInterface) => {
     return await backendAPICall(`auth/newuser`, 'POST', newUser);
   }
 );
@@ -31,7 +31,7 @@ const deleteOneThunk = createAsyncThunk<string, string>(
   }
 );
 
-const updateOneThunk = createAsyncThunk<User, { id: string, user: Partial<User> }>(
+const updateOneThunk = createAsyncThunk<UserInterface, { id: string, user: Partial<UserInterface> }>(
   "user/updateOneThunk",
   async ({ id, user }) => {
     return await backendAPICall(`user/${id}`, 'PUT', user);

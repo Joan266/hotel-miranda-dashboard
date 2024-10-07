@@ -1,39 +1,32 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../styles/dataactions';
+import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../styles/actions';
 
-const DataActions = ({ DeletePopup, EditPopup }) => {
+const DataActions = ({ userId }) => { 
   const [showMenu, setShowMenu] = useState(false);
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [showEditPopup, setShowEditPopup] = useState(false);
-
   const containerRef = useRef(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleToggleMenu = () => {
-    setShowMenu(!showMenu); 
+    setShowMenu((prev) => !prev); 
   };
 
   const handleDeleteClick = () => {
-    setShowDeletePopup(true);
-    setShowMenu(false); 
+    setShowMenu(false);
   };
 
   const handleEditClick = () => {
-    setShowEditPopup(true);
     setShowMenu(false); 
-    navigate('/user/update'); 
+    navigate(`/users/${userId}/update`); 
   };
-
-  const closeDeletePopup = () => setShowDeletePopup(false);
-  const closeEditPopup = () => setShowEditPopup(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
-        setShowMenu(false); 
+        setShowMenu(false);
       }
     };
 
@@ -56,9 +49,6 @@ const DataActions = ({ DeletePopup, EditPopup }) => {
           <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
         </Menu>
       )}
-
-      {showDeletePopup && <DeletePopup onClose={closeDeletePopup} />}
-      {showEditPopup && <EditPopup onClose={closeEditPopup} />}
     </DataActionsContainer>
   );
 };
