@@ -7,6 +7,7 @@ import { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Lab
 import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/UserSlice/userThunks"; 
 import { AppDispatch, RootState } from '../../store';
+import Swal from 'sweetalert2';
 
 export const UserForm: React.FC = () => {
   const { id:userId } = useParams<{ id: string }>(); 
@@ -14,7 +15,6 @@ export const UserForm: React.FC = () => {
   const navigate = useNavigate();
   const { single } = useSelector((state: RootState) => state.user); 
   
-  // State to manage form data
   const [formData, setFormData] = useState<UserFormInterface>({
     firstname: "",
     lastname: "",
@@ -27,19 +27,17 @@ export const UserForm: React.FC = () => {
     photoUrl: "",
     description: "",
   });
+  
   const parseDate = (dateString: Date | undefined) => {
     return dateString ? new Date(dateString) : new Date();
   };
 
-  // Fetch user data on mount if userId exists (for edit)
   useEffect(() => {
     if (userId) {
       dispatch(readOneThunk(userId));
     }
-    console.log(userId)
   }, [userId, dispatch]);
 
-  // Update formData when single user is fetched
   useEffect(() => {
     if (single && userId) {
       setFormData({
@@ -47,7 +45,7 @@ export const UserForm: React.FC = () => {
         lastname: single.lastname || "",
         email: single.email || "",
         phonenumber: single.phonenumber || "",
-        password: "", // Keep password field empty on edit
+        password: "",
         joindate: parseDate(single.joindate),
         status: single.status || false,
         jobdesk: single.jobdesk || "",
@@ -55,10 +53,8 @@ export const UserForm: React.FC = () => {
         description: single.description || "",
       });
     }
-    console.log(single)
   }, [single, userId]);
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -67,36 +63,57 @@ export const UserForm: React.FC = () => {
     });
   };
 
-  // Handle date picker changes
   const handleDateChange = (date: Date) => {
     setFormData({ ...formData, joindate: date });
   };
 
-  // Handle form submission for both create and update
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (userId) {
-      // If userId exists, it's an update
       dispatch(updateOneThunk({ id: userId, user: formData }))
         .then(() => {
-          alert("User updated successfully!");
-          navigate("/users"); 
+          navigate("/users");
+          Swal.fire({
+            title: 'User Updated!',
+            text: 'User has been updated successfully.',
+            icon: 'success',
+            timer: 2000, 
+            showConfirmButton: false, 
+          });
         })
         .catch(error => {
-          console.error("Failed to update user", error);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to update user. Please try again.',
+            icon: 'error',
+            timer: 3000,
+            showConfirmButton: false,
+          });
         });
     } else {
-      // If no userId, it's a create
       dispatch(createOneThunk(formData))
         .then(() => {
-          alert("User created successfully!");
-          navigate("/users"); 
+          navigate("/users");
+          Swal.fire({
+            title: 'User Created!',
+            text: 'User has been created successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+          });
         })
         .catch(error => {
-          console.error("Failed to create user", error);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to create user. Please try again.',
+            icon: 'error',
+            timer: 3000,
+            showConfirmButton: false,
+          });
         });
     }
+    
   };
 
   return (

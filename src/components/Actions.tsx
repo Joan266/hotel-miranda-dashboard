@@ -7,32 +7,56 @@ import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../styl
 import { useDispatch } from 'react-redux';
 import { deleteOneThunk } from "../slices/UserSlice/userThunks"; 
 import { AppDispatch } from '../store';
+import Swal from 'sweetalert2';
 
-const Actions = ({userId}) => { 
+const Actions = ({ userId }) => {
   const [showMenu, setShowMenu] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleToggleMenu = () => {
-    setShowMenu((prev) => !prev); 
+    setShowMenu((prev) => !prev);
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteOneThunk(userId))
-    .then(() => {
-      alert("User deleted successfully!");
-      navigate("/users"); 
-    })
-    .catch(error => {
-      console.error("Failed to delete user", error);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteOneThunk(userId))
+          .then(() => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'User has been deleted successfully.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            navigate("/users");
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete user. Please try again.',
+              icon: 'error',
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          });
+      }
     });
     setShowMenu(false);
   };
 
   const handleEditClick = () => {
-    setShowMenu(false); 
-    navigate(`/users/${userId}/update`); 
+    setShowMenu(false);
+    navigate(`/users/${userId}/update`);
   };
 
   useEffect(() => {
@@ -43,7 +67,6 @@ const Actions = ({userId}) => {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
