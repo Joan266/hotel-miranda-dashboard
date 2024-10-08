@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk } from './userThunks';
-import { User } from '../../interfaces/user';
+import { UserInterface } from '../../interfaces/user';
 
 interface UserState {
   status: 'idle' | 'loading' | 'fulfilled' | 'error';
-  items: User[];
-  single: User | null;
+  items: UserInterface[];
+  single: UserInterface | null;
   error: string | null;
 }
 
@@ -25,7 +25,7 @@ const UserSlice = createSlice({
       .addCase(readOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(readOneThunk.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(readOneThunk.fulfilled, (state, action: PayloadAction<UserInterface>) => {
         state.status = 'fulfilled';
         state.single = action.payload;
         state.error = null;
@@ -37,7 +37,7 @@ const UserSlice = createSlice({
       .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<User[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<UserInterface[]>) => {
         state.status = 'fulfilled';
         state.items = action.payload;
         state.error = null;
@@ -49,7 +49,7 @@ const UserSlice = createSlice({
       .addCase(createOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createOneThunk.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(createOneThunk.fulfilled, (state, action: PayloadAction<UserInterface>) => {
         state.status = 'fulfilled';
         state.items.push(action.payload);
         state.single = action.payload;
@@ -74,7 +74,7 @@ const UserSlice = createSlice({
       .addCase(updateOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updateOneThunk.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(updateOneThunk.fulfilled, (state, action: PayloadAction<UserInterface>) => {
         state.status = 'fulfilled';
         state.items = state.items.map(user => user._id === action.payload._id ? action.payload : user);
         state.single = action.payload;

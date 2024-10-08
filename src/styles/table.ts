@@ -160,26 +160,6 @@ const PaginationButton = styled.button`
   }
 `;
 
-const DateSorterSelector = styled.select`
-  padding: 0.5em 1em;
-  border: 1px solid ${props => props.theme.colors.darkGreen};
-  background-color: transparent;
-  color: ${props => props.theme.colors.darkGreen};
-  cursor: pointer;
-  font-size: 0.7rem;
-  border-radius: 0.4em;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Option = styled.option`
-  background-color: transparent;
-  color: ${props => props.theme.colors.darkGreen};
-  cursor: pointer;
-  padding: 1em;
-`;
-
 const DataModifiers = styled.div`
   margin-bottom: 1.5em;
   display: flex;
@@ -220,8 +200,6 @@ export {
   PaginationButton,
   PaginationControls,
   PaginationInput,
-  DateSorterSelector,
-  Option,
   DataModifiers,
   FilterStatusNav,
   NavStatusOptions

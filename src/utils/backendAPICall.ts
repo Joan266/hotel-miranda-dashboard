@@ -1,10 +1,13 @@
-import { User } from "../interfaces/user";
-
-export async function backendAPICall(path: string, method: string = 'GET', data: any = null) {
+export async function backendAPICall(
+  path: string, 
+  method: string = 'GET', 
+  data: any = null
+) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
 
+  // Retrieve user data from local storage
   const userString = localStorage.getItem('user');
-  const user: User | null = userString ? JSON.parse(userString) : null;
+  const user = userString ? JSON.parse(userString) : null;
 
   const token = user?.token;
   if (!token) {
@@ -25,12 +28,12 @@ export async function backendAPICall(path: string, method: string = 'GET', data:
   }
 
   const response = await fetch(url, options);
-  if ([401, 403].includes(response.status)) {
-    // toast.error('Login required');
-    location.reload();
-    return;
+
+  if (response.status === 401 || response.status === 403) {
+    // Clear user from local storage and return a flag for redirecting
+    localStorage.setItem('user', JSON.stringify(null)); // Clear the user
+    return { redirectToLogin: true }; // Indicate that redirection is needed
   } else if (!response.ok) {
-    //  toast.error(response.statusText);
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
