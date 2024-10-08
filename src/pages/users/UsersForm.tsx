@@ -69,9 +69,13 @@ export const UserForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const dataToSubmit = { ...formData };
+    if (!formData.password) {
+      delete dataToSubmit.password;
+    }
     
     if (userId) {
-      dispatch(updateOneThunk({ id: userId, user: formData }))
+      dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
         .then(() => {
           navigate("/users");
           Swal.fire({
@@ -92,7 +96,7 @@ export const UserForm: React.FC = () => {
           });
         });
     } else {
-      dispatch(createOneThunk(formData))
+      dispatch(createOneThunk(dataToSubmit))
         .then(() => {
           navigate("/users");
           Swal.fire({

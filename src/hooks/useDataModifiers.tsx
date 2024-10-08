@@ -4,6 +4,12 @@ const getNestedProperty = (obj: any, propertyPath: string): any => {
   return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
 };
 
+type SortConfig = {
+  type: "date "| "number "| "string"; 
+  property: string; 
+  direction: -1 | 1;
+};
+
 interface UseDataModifiersReturn<T> {
   dataCurrentPage: T[];
   goToPage: (pageNumber: number) => void;
@@ -17,39 +23,48 @@ interface UseDataModifiersReturn<T> {
 export const useDataModifiers = <T,>(
   items: any[],
   itemsPerPage: number,
-  activeStatus: string | boolean ,
-  dateSorter: string,
-  sorterProperty?: string
+  activeStatus: string | boolean,
+  sortConfig: SortConfig 
 ): UseDataModifiersReturn<T> => {
   const [page, setPage] = useState<number>(1);
 
   const { dataCurrentPage, totalPages, dataLength } = useMemo(() => {
     if (!items) return { dataCurrentPage: [], totalPages: 0, dataLength: 0 };
 
-    const sortedData = sorterProperty ? [...items].sort((a, b) => {
-      const dateA = new Date(getNestedProperty(a, sorterProperty));
-      const dateB = new Date(getNestedProperty(b, sorterProperty));
-      
-      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-        return 0;
-      }
-      
-      return dateSorter === 'newest' ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
-    }) : items;
+    const sortedData = sortConfig 
+      ? [...items].sort((a, b) => {
+          const valueA = getNestedProperty(a, sortConfig.property);
+          const valueB = getNestedProperty(b, sortConfig.property);
 
-    const filteredData = activeStatus === 'all'  
+          if (sortConfig.type === 'date') {
+            const dateA = new Date(valueA);
+            const dateB = new Date(valueB);
+            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+              return 0;
+            }
+            return (dateA.getTime() - dateB.getTime()) * sortConfig.direction; 
+          } else if (sortConfig.type === 'number') {
+            return (Number(valueA) - Number(valueB)) * sortConfig.direction; 
+          } else if (sortConfig.type === 'string') {
+            return (valueA.localeCompare(valueB)) * sortConfig.direction;
+          }
+          return 0; 
+        })
+      : items;
+
+    const filteredData = activeStatus === 'all'
       ? sortedData
       : sortedData.filter(item => item.status === activeStatus);
     
     const dataLength = filteredData.length;
     const totalPages = Math.ceil(dataLength / itemsPerPage);
-  
+
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const dataCurrentPage = filteredData.slice(startIndex, endIndex);
-  
+
     return { dataCurrentPage, totalPages, dataLength };
-  }, [items, dateSorter, activeStatus, sorterProperty, itemsPerPage, page]);
+  }, [items, sortConfig, activeStatus, itemsPerPage, page]);
 
   const goToPage = (pageNumber: number) => {
     setPage(pageNumber);

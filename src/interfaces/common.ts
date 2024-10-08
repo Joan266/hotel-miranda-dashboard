@@ -1,12 +1,17 @@
+type SortConfig = {
+  type: 'date' | 'number' | 'string'; 
+  property: string; 
+  direction: -1 | 1;
+};
 export interface TableComponentProps<T> {
   pageSize: number;
   data: T[];
   columns: Column<T>[];
   statuses?: Status[];
-  sorterProperty?: string;
+  sortConfig?: SortConfig;
 }
 export interface Column<T> {
-  label: string;
+  label: string | React.ReactNode; 
   display: (item: T) => React.ReactNode;
   sort?: string;
 }

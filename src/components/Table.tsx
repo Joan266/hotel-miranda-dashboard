@@ -1,17 +1,15 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
-  PaginationContainer, PaginationButton, PaginationControls, PaginationInput,
-  DateSorterSelector, Option, DataModifiers, FilterStatusNav, NavStatusOptions,
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions,
 } from '../styles/table';
 import { Text, SmallText } from '../styles/common';
 import { useDataModifiers } from '../hooks/useDataModifiers';
 import { TableComponentProps } from '../interfaces/common';
 
 
-export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterProperty }: TableComponentProps<T>) => {
+export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConfig }: TableComponentProps<T>) => {
   const [activeStatus, setActiveStatus] = useState<string | boolean>('all');
-  const [dateSorter, setDateSorter] = useState<string>('newest');
   const {
     page,
     dataCurrentPage,
@@ -20,19 +18,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
     goToPrevPage,
     totalPages,
     dataLength,
-  } = useDataModifiers<T>(data, pageSize, activeStatus, dateSorter, sorterProperty);
+  } = useDataModifiers<T>(data, pageSize, activeStatus, sortConfig);
 
   const [inputPage, setInputPage] = useState<number | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     setInputPage(value);
-  };
-
-  const handleDateSorterChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    setDateSorter(value);
-    goToPage(1);
   };
 
   const handleActiveStatusChange = (statusValue: string | boolean) => {
@@ -66,12 +58,6 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sorterPr
         )}
         <div>
           <button>Add one +</button>
-          {sorterProperty && (
-            <DateSorterSelector value={dateSorter} onChange={handleDateSorterChange}>
-              <Option value="newest">Newest</Option>
-              <Option value="oldest">Oldest</Option>
-            </DateSorterSelector>
-          )}
         </div>
       </DataModifiers>
 
