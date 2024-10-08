@@ -10,7 +10,7 @@ type SortConfig = {
   direction: -1 | 1;
 };
 
-interface UseDataModifiersReturn<T> {
+interface UseTableModifiersReturn<T> {
   dataCurrentPage: T[];
   goToPage: (pageNumber: number) => void;
   goToNextPage: () => void;
@@ -20,12 +20,12 @@ interface UseDataModifiersReturn<T> {
   dataLength: number;
 }
 
-export const useDataModifiers = <T,>(
+export const useTableModifiers = <T,>(
   items: any[],
   itemsPerPage: number,
   activeStatus: string | boolean,
   sortConfig: SortConfig 
-): UseDataModifiersReturn<T> => {
+): UseTableModifiersReturn<T> => {
   const [page, setPage] = useState<number>(1);
 
   const { dataCurrentPage, totalPages, dataLength } = useMemo(() => {

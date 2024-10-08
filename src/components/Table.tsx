@@ -4,7 +4,7 @@ import {
   PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions,
 } from '../styles/table';
 import { Text, SmallText } from '../styles/common';
-import { useDataModifiers } from '../hooks/useDataModifiers';
+import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
 
 
@@ -18,7 +18,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
     goToPrevPage,
     totalPages,
     dataLength,
-  } = useDataModifiers<T>(data, pageSize, activeStatus, sortConfig);
+  } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig);
 
   const [inputPage, setInputPage] = useState<number | null>(null);
 
