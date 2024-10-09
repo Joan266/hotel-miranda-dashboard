@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
 
 export const UserForm: React.FC = () => {
-  const { id:userId } = useParams<{ id: string }>(); 
+  const { id: userId } = useParams<{ id: string }>(); 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { single } = useSelector((state: RootState) => state.user); 
@@ -27,7 +27,9 @@ export const UserForm: React.FC = () => {
     photoUrl: "",
     description: "",
   });
-  
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({}); 
+
   const parseDate = (dateString: Date | undefined) => {
     return dateString ? new Date(dateString) : new Date();
   };
@@ -61,63 +63,83 @@ export const UserForm: React.FC = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleDateChange = (date: Date) => {
     setFormData({ ...formData, joindate: date });
   };
 
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    
+    if (!formData.firstname) newErrors.firstname = 'First Name is required';
+    if (!formData.lastname) newErrors.lastname = 'Last Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.phonenumber) newErrors.phonenumber = 'Phone Number is required';
+    if (!userId && !formData.password) newErrors.password = 'Password is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; 
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const dataToSubmit = { ...formData };
-    if (!formData.password) {
-      delete dataToSubmit.password;
+
+    if (validateForm()) {
+      const dataToSubmit = { ...formData };
+      if (!formData.password) {
+        delete dataToSubmit.password;
+      }
+
+      if (userId) {
+        dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
+          .unwrap()
+          .then(() => {
+            navigate("/users");
+            Swal.fire({
+              title: 'User Updated!',
+              text: 'User has been updated successfully.',
+              icon: 'success',
+              timer: 2000, 
+              showConfirmButton: false, 
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: error.message || 'Failed to update user. Please try again.',
+              icon: 'error',
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          });
+      } else {
+        dispatch(createOneThunk(dataToSubmit))
+          .unwrap()
+          .then(() => {
+            navigate("/users");
+            Swal.fire({
+              title: 'User Created!',
+              text: 'User has been created successfully.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: error.message || 'Failed to create user. Please try again.',
+              icon: 'error',
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          });
+      }
     }
-    
-    if (userId) {
-      dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
-        .then(() => {
-          navigate("/users");
-          Swal.fire({
-            title: 'User Updated!',
-            text: 'User has been updated successfully.',
-            icon: 'success',
-            timer: 2000, 
-            showConfirmButton: false, 
-          });
-        })
-        .catch(error => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to update user. Please try again.',
-            icon: 'error',
-            timer: 3000,
-            showConfirmButton: false,
-          });
-        });
-    } else {
-      dispatch(createOneThunk(dataToSubmit))
-        .then(() => {
-          navigate("/users");
-          Swal.fire({
-            title: 'User Created!',
-            text: 'User has been created successfully.',
-            icon: 'success',
-            timer: 2000,
-            showConfirmButton: false,
-          });
-        })
-        .catch(error => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to create user. Please try again.',
-            icon: 'error',
-            timer: 3000,
-            showConfirmButton: false,
-          });
-        });
-    }
-    
   };
 
   return (
@@ -133,6 +155,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.firstname || "" : "Enter first name"}
             />
+            {errors.firstname && <span className="error">{errors.firstname}</span>}
           </FormGroup>
 
           <FormGroup>
@@ -144,6 +167,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.lastname || "" : "Enter last name"}
             />
+            {errors.lastname && <span className="error">{errors.lastname}</span>}
           </FormGroup>
 
           <FormGroup>
@@ -155,6 +179,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.email || "" : "Enter email"}
             />
+            {errors.email && <span className="error">{errors.email}</span>}
           </FormGroup>
 
           <FormGroup>
@@ -166,6 +191,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.phonenumber || "" : "Enter phone number"}
             />
+            {errors.phonenumber && <span className="error">{errors.phonenumber}</span>}
           </FormGroup>
 
           <FormGroup>
@@ -177,6 +203,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder="Enter new password"
             />
+            {errors.password && <span className="error">{errors.password}</span>}
           </FormGroup>
 
           <FormGroup>

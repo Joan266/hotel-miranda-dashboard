@@ -6,6 +6,7 @@ import {
 import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
+import { useNavigate } from 'react-router-dom';
 
 
 export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConfig }: TableComponentProps<T>) => {
@@ -19,8 +20,8 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
     totalPages,
     dataLength,
   } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig);
-
   const [inputPage, setInputPage] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -40,7 +41,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
     }
   };
   const handleAddOneClick = () => {
-    navigate(`/${}/create`);
+    navigate(`create`); 
   };
   return (
     <>

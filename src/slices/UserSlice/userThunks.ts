@@ -20,7 +20,7 @@ const readOneThunk = createAsyncThunk<UserInterface, string>(
 const createOneThunk = createAsyncThunk<UserInterface, UserFormInterface>(
   "user/createOneThunk",
   async (newUser: UserFormInterface) => {
-    return await backendAPICall(`auth/newuser`, 'POST', newUser);
+    return await backendAPICall(`user/create`, 'POST', newUser);
   }
 );
 

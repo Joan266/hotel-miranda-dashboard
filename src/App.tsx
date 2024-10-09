@@ -48,6 +48,7 @@ export const App = () => {
             <Route path="rooms" element={<Rooms />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id/update" element={<UserForm />} />
+            <Route path="users/create" element={<UserForm />} />
             <Route path="users/:id" element={<UserDetails />} />
           </Route>
           <Route path="/login" element={<Login/>} />
