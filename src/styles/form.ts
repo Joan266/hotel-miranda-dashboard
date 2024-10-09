@@ -58,7 +58,7 @@ const SubmitButton = styled.button`
   justify-self: end;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: darkgreen;
   }
 `;
 

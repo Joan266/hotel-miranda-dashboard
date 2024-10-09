@@ -1,14 +1,10 @@
 import { useMemo, useState } from 'react';
+import { SortConfig } from '../interfaces/common';
 
 const getNestedProperty = (obj: any, propertyPath: string): any => {
   return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
 };
 
-type SortConfig = {
-  type: "date "| "number "| "string"; 
-  property: string; 
-  direction: -1 | 1;
-};
 
 interface UseTableModifiersReturn<T> {
   dataCurrentPage: T[];

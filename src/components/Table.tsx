@@ -3,7 +3,7 @@ import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
   PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions,
 } from '../styles/table';
-import { Text, SmallText } from '../styles/common';
+import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
 
@@ -39,7 +39,9 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
       setInputPage(null);
     }
   };
-
+  const handleAddOneClick = () => {
+    navigate(`/${}/create`);
+  };
   return (
     <>
       <DataModifiers>
@@ -57,7 +59,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           </FilterStatusNav>
         )}
         <div>
-          <button>Add one +</button>
+          <Button onClick={() => handleAddOneClick()}>Add One</Button>
         </div>
       </DataModifiers>
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface TextProps {
-  maxwidth?: string;
+  $maxwidth?: string;
 }
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Text = styled.div<TextProps>`
   font-size: 0.7rem;
   font-weight: 500;
   color: ${(props) => props.theme.colors.mediumBlack};
-  max-width: ${(props) => props.maxwidth ? props.maxwidth : "none"};
+  max-width: ${(props) => props.$maxwidth ? props.$maxwidth : "none"};
 `;
 
 const SmallText = styled.div`
@@ -30,4 +30,15 @@ const SmallText = styled.div`
   color: ${(props) => props.theme.colors.gray};
 `;
 
-export { Container, Title, Text, SmallText };
+const Button = styled.button`
+  background-color: ${(props) => props.theme.colors.darkGreen}; 
+  color: white; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  font-weight:bold;
+  cursor: pointer;
+  font-size: 16px; 
+`;
+
+
+export { Container, Title, Text, SmallText, Button };

@@ -5,7 +5,6 @@ export async function backendAPICall(
 ) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
 
-  // Retrieve user data from local storage
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
 
@@ -30,9 +29,8 @@ export async function backendAPICall(
   const response = await fetch(url, options);
 
   if (response.status === 401 || response.status === 403) {
-    // Clear user from local storage and return a flag for redirecting
-    localStorage.setItem('user', JSON.stringify(null)); // Clear the user
-    return { redirectToLogin: true }; // Indicate that redirection is needed
+    localStorage.setItem('user', JSON.stringify(null)); 
+    return { redirectToLogin: true }; 
   } else if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

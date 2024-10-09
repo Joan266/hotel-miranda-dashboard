@@ -1,8 +1,8 @@
-type SortConfig = {
+export type SortConfig = {
   type: 'date' | 'number' | 'string'; 
   property: string; 
   direction: -1 | 1;
-};
+} | null | undefined;
 export interface TableComponentProps<T> {
   pageSize: number;
   data: T[];

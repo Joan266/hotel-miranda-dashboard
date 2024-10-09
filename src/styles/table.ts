@@ -27,9 +27,11 @@ const TableHeaderCell = styled.div`
   text-align: left;
   padding: 1em;
   font-size: 0.7rem;
+  padding-left:2em;
   font-weight: 700;
   color: ${props => props.theme.colors.mediumBlack};
   border-bottom: 2px solid ${props => props.theme.colors.lightGray};
+  border-right: 1px solid whitesmoke;
 `;
 
 const TableRow = styled.div`

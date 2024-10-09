@@ -10,54 +10,46 @@ import { Column, Status } from '../../interfaces/common';
 import { IsTextActive } from '../../styles/users';
 import { AppDispatch, RootState } from '../../store';
 import UserActions from '../../components/Actions';
+import { SortConfig } from '../../interfaces/common';
 import styled from 'styled-components';
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },
   { label: 'Active Employee', value: true },
   { label: 'Inactive Employee', value: false },
 ];
-const Arrow = styled.span`
-  cursor: pointer;
-  margin-left: 5px;
+const LabelContainer = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
 `;
-type SortConfig = {
-  type: 'date' | 'number' | 'string'; 
-  property: string; 
-  direction: -1 | 1;
-};
 const ArrowContainer = styled.span`
   display: flex;
-  flex-direction: column; /* Align arrows vertically */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
-  margin-left: 5px;
 `;
 
-const Triangle = styled.div<{ isActive: boolean; isDirection: boolean }>`
+const Triangle = styled.div<{ $isActive: boolean; $isDirection: boolean }>`
   width: 0;
   height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
   cursor: pointer;
   margin: 1px 0; 
-
   border-bottom: ${(props) =>
-    props.isDirection && props.isActive ? '10px solid darkgreen' : '10px solid gray'};
-  transform: ${(props) => (props.isDirection ? 'rotate(0deg)' : 'rotate(180deg)')}; 
+    props.$isActive ? '8px solid darkgreen' : '8px solid gray'};
+  transform: ${(props) => (props.$isDirection ? 'rotate(0deg)' : 'rotate(180deg)')}; 
 `;
 export const Users = () => {
   const { items, status, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    property: 'joindate', 
-    direction: 1, 
-    type: "date",        
-  });
+  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
-  const handleSortChange = (property: string, type:'date' | 'number' | 'string') => {
-    let newDirection = 1;
+  const handleSortChange = (property: string, type:'date' | 'number' | 'string', direction: 1 | -1) => {
+    let newDirection = direction;
 
-    if (sortConfig.property === property) {
+    if (sortConfig?.property === property && sortConfig?.direction === direction) {
       newDirection = sortConfig.direction === 1 ? -1 : 1;
     }
 
@@ -70,21 +62,21 @@ export const Users = () => {
   const Columns: Column<UserInterface>[] = [
     {
       label: (
-        <span style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <LabelContainer>
           Name
           <ArrowContainer>
             <Triangle
-              isActive={sortConfig.property === "lastname"}
-              isDirection={true} 
-              onClick={() => handleSortChange("lastname", "string")}
+              $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("lastname", "string", 1)}
             />
             <Triangle
-              isActive={sortConfig.property === "lastname"}
-              isDirection={false} 
-              onClick={() => handleSortChange("lastname", "string")}
+              $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("lastname", "string", -1)}
             />
           </ArrowContainer>
-        </span>
+        </LabelContainer>
       ),
       display: (user) => (
         <CellContainer>
@@ -103,12 +95,21 @@ export const Users = () => {
     },
     {
       label: (
-        <span>
+        <LabelContainer>
           Join Date
-          <Arrow onClick={() => handleSortChange("joindate","date")}>
-            {sortConfig.property === "joindate" ? (sortConfig.direction === 1 ? '↑' : '↓') : ''}
-          </Arrow>
-        </span>
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("joindate", "date", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("joindate", "date", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
       ),
       display: (user) => (
         <Text>{new Date(user.joindate).toDateString()}</Text>
@@ -117,7 +118,7 @@ export const Users = () => {
     {
       label: "Job Desk",
       display: (user) => (
-        <Text maxwidth={"350px"}>{user.jobdesk}</Text>
+        <Text $maxwidth={"350px"}>{user.jobdesk}</Text>
       )
     },
     {
@@ -136,7 +137,7 @@ export const Users = () => {
       label: "Status",
       display: (user) => (
         <Text>
-          <IsTextActive status={user.status.toString()}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
+          <IsTextActive $status={user.status.toString()}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
         </Text>
       )
     },
@@ -159,7 +160,7 @@ export const Users = () => {
     <Container>
       {items.length > 0 && (
         <TableComponent
-          pageSize={8}
+          pageSize={6}
           data={items}
           columns={Columns}
           statuses={statuses}
