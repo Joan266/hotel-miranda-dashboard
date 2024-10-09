@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserFormInterface } from "../../interfaces/user";
-import { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container } from '../../styles/form';
+import { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container, ValidationError } from '../../styles/form';
 import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/UserSlice/userThunks"; 
 import { AppDispatch, RootState } from '../../store';
@@ -155,7 +155,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.firstname || "" : "Enter first name"}
             />
-            {errors.firstname && <span className="error">{errors.firstname}</span>}
+            {errors.firstname && <ValidationError className="error">{errors.firstname}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -167,7 +167,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.lastname || "" : "Enter last name"}
             />
-            {errors.lastname && <span className="error">{errors.lastname}</span>}
+            {errors.lastname && <ValidationError className="error">{errors.lastname}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -179,7 +179,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.email || "" : "Enter email"}
             />
-            {errors.email && <span className="error">{errors.email}</span>}
+            {errors.email && <ValidationError className="error">{errors.email}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -191,7 +191,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.phonenumber || "" : "Enter phone number"}
             />
-            {errors.phonenumber && <span className="error">{errors.phonenumber}</span>}
+            {errors.phonenumber && <ValidationError className="error">{errors.phonenumber}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -203,7 +203,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder="Enter new password"
             />
-            {errors.password && <span className="error">{errors.password}</span>}
+            {errors.password && <ValidationError className="error">{errors.password}</ValidationError>}
           </FormGroup>
 
           <FormGroup>

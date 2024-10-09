@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Form = styled.form`
-  padding: 2em 4em;
+  padding: 1.5em 4em;
   background-color: white;
   border-radius: 15px;
   box-shadow: 1px 1px 5px black;
@@ -20,12 +20,13 @@ const FormGrid = styled.div`
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 `;
 
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 `;
 
 const Input = styled.input`
@@ -61,5 +62,8 @@ const SubmitButton = styled.button`
     background-color: darkgreen;
   }
 `;
-
-export { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container };
+const ValidationError = styled.span`
+  color:red;
+  font-size:12px;
+`
+export { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container, ValidationError };
