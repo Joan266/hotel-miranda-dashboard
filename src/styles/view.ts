@@ -50,11 +50,18 @@ export const ProfileInfo = styled.div`
   }
 `;
 
-export const Image = styled.img`
-  width: 80px;
+export const ProfileImgContainer = styled.div`
   height: 80px;
-  border-radius: 10px;
-  object-fit: cover;
+  min-width: 80px;
+  background-color: ${props => props.theme.colors.lightGray};
+  border-radius: 0.3em;
+  margin-right: 1em;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    cover: fit-content;
+  }
 `;
 export const BigImage = styled.div`
   position:relative;

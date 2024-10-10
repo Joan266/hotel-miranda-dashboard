@@ -8,7 +8,7 @@ import { TableComponent } from '../../components/Table';
 import { UserInterface } from '../../interfaces/user';
 import { Column, Status } from '../../interfaces/common';
 import { AppDispatch, RootState } from '../../store';
-import UserActions from '../../components/Actions';
+import UserActions from './UserActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
 
 const searchConfig: SearchConfig = {
@@ -39,6 +39,14 @@ export const Users = () => {
       type
     });
   };
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(readAllThunk());
+    }
+    console.log(items, status, error);
+  }, [status, dispatch]);
+  
   const Columns: Column<UserInterface>[] = [
     {
       label: (
@@ -128,13 +136,6 @@ export const Users = () => {
       )
     },
   ];
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(readAllThunk());
-    }
-    console.log(items, status, error);
-  }, [status, dispatch]);
 
   return (
     <Container>

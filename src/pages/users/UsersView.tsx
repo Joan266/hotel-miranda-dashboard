@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk } from '../../slices/UserSlice/userThunks';
 import { AppDispatch, RootState } from '../../store';
-import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, Image, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
+import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
 import clientDefault from '../../assets/img/client_default.webp';
 
 export const UsersView: React.FC = () => {
@@ -31,7 +31,7 @@ export const UsersView: React.FC = () => {
     <Container>
       <ProfileWrapper>
         <ProfileHeader>
-          <Image src={single.photourl || clientDefault} alt="imagen de perfil" />
+          <ProfileImgContainer><img src={single.photourl || clientDefault} alt="imagen de perfil"/></ProfileImgContainer>
           <ProfileInfo>
             <h3>{single.firstname} {single.lastname}</h3>
             <small>#{single._id}</small>

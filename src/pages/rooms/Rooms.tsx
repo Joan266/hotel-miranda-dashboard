@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Text, SmallText, IsTextActive, LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
+import { Container, Text, SmallText, StatusColor, LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
 import { CellContainer, ProfileImgContainer } from '../../styles/table';
 import { readAllThunk } from '../../slices/RoomSlice/roomThunks'; 
 import { TableComponent } from '../../components/Table';
 import { RoomInterface } from '../../interfaces/rooms'; 
 import { Column, Status } from '../../interfaces/common';
-import roomDefault from '../../assets/img/deluxe_room.webp';
+import roomDefault from '../../assets/img/default_room.webp';
 import { AppDispatch, RootState } from '../../store';
-import RoomActions from '../../components/Actions'; 
+import RoomActions from './RoomActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
 
 const searchConfig: SearchConfig = {
@@ -43,6 +43,13 @@ export const Rooms = () => {
     });
   };
 
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(readAllThunk()); 
+    }
+    console.log(items, status, error);
+  }, [status, dispatch]);
+
   const Columns: Column<RoomInterface>[] = [
     {
       label: (
@@ -72,7 +79,7 @@ export const Rooms = () => {
           </ProfileImgContainer>
           <div>
             <Text><strong>{room.name}</strong></Text>
-            <SmallText>#{room.code}</SmallText>
+            <SmallText>#{room._id}</SmallText>
           </div>
         </CellContainer>
       ),
@@ -84,13 +91,45 @@ export const Rooms = () => {
       ),
     },
     {
-      label: "Rate",
+      label: (
+        <LabelContainer>
+          Rate
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("rate", "number", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("rate", "number", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
       display: (room) => (
         <Text>${room.rate.toFixed(2)}</Text>
       ),
     },
     {
-      label: "Offer",
+      label: (
+        <LabelContainer>
+          Offer
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("offer", "number", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("offer", "number", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
       display: (room) => (
         <Text>{room.offer}%</Text>
       ),
@@ -105,7 +144,7 @@ export const Rooms = () => {
       label: "Status",
       display: (room) => (
         <Text>
-          <IsTextActive $status={room.status}>{room.status.toUpperCase()}</IsTextActive>
+          <StatusColor $status={room.status}>{room.status.toUpperCase()}</StatusColor>
         </Text>
       )
     },
@@ -116,13 +155,6 @@ export const Rooms = () => {
       )
     },
   ];
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(readAllRoomsThunk()); // Ensure this thunk is defined in your RoomSlice
-    }
-    console.log(items, status, error);
-  }, [status, dispatch]);
 
   return (
     <Container>

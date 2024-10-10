@@ -2,7 +2,6 @@ export interface RoomInterface {
   _id: string;  
   name: string;                 
   bedtype: string;                 
-  code: string;                   
   facilities?: string[];          
   rate: number;                   
   offer: number;                   
@@ -11,8 +10,7 @@ export interface RoomInterface {
 }
 export interface RoomFormInterface {
   name: string;                 
-  bedtype: string;                 
-  code: string;                   
+  bedtype: string;                   
   facilities?: string[];          
   rate: number;                   
   offer: number;                   

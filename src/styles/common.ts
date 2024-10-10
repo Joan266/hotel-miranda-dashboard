@@ -42,7 +42,22 @@ const Button = styled.button`
 const IsTextActive = styled.div<{ $status: string }>`
   color: ${props => props.$status === "true" ? "#5AD07A" : "#E23428"};
 `;
-
+const StatusColor = styled.div<{ $status: string }>`
+  color: ${props => {
+    switch (props.$status) {
+      case "available":
+        return "#5AD07A";   
+      case "booked":
+        return "#F0A500";   
+      case "maintenance":
+        return "#1E90FF";   
+      case "unavailable":
+        return "#E23428";  
+      default:
+        return "#000";     
+    }
+  }};
+`;
 const LabelContainer = styled.div`
   display:flex;
   align-items:center;
@@ -67,4 +82,4 @@ const Triangle = styled.div<{ $isActive: boolean; $isDirection: boolean }>`
     props.$isActive ? '8px solid darkgreen' : '8px solid gray'};
   transform: ${(props) => (props.$isDirection ? 'rotate(0deg)' : 'rotate(180deg)')}; 
 `;
-export { Container, Title, Text, SmallText, Button, IsTextActive, LabelContainer, ArrowContainer, Triangle };
+export { Container, Title, Text, SmallText, Button, IsTextActive, LabelContainer, ArrowContainer, Triangle, StatusColor };

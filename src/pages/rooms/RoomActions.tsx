@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../styles/actions';
+import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../../styles/actions';
 import { useDispatch } from 'react-redux';
-import { deleteOneThunk } from "../slices/UserSlice/userThunks"; 
-import { AppDispatch } from '../store';
+import { deleteOneThunk } from "../../slices/RoomSlice/roomThunks"; 
+import { AppDispatch } from '../../store';
 import Swal from 'sweetalert2';
 
-const Actions = ({ userId }) => {
+const Actions = ({ roomId }) => {
   const [showMenu, setShowMenu] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
@@ -31,21 +31,21 @@ const Actions = ({ userId }) => {
       cancelButtonText: 'No, cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteOneThunk(userId))
+        dispatch(deleteOneThunk(roomId))
           .then(() => {
             Swal.fire({
               title: 'Deleted!',
-              text: 'User has been deleted successfully.',
+              text: 'Room has been deleted successfully.',
               icon: 'success',
               timer: 2000,
               showConfirmButton: false,
             });
-            navigate("/users");
+            navigate("/rooms");
           })
           .catch((error) => {
             Swal.fire({
               title: 'Error!',
-              text: 'Failed to delete user. Please try again.',
+              text: 'Failed to delete room. Please try again.',
               icon: 'error',
               timer: 3000,
               showConfirmButton: false,
@@ -59,7 +59,7 @@ const Actions = ({ userId }) => {
   const handleEditClick = (event) => {
     event.stopPropagation();
     setShowMenu(false);
-    navigate(`/users/${userId}/update`);
+    navigate(`/rooms/${roomId}/update`);
   };
 
   useEffect(() => {

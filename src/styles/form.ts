@@ -41,7 +41,7 @@ const TextArea = styled.textarea`
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: none; /* Prevents resizing the text area */
+  resize: none; 
 `;
 
 const Checkbox = styled.input`
@@ -50,16 +50,17 @@ const Checkbox = styled.input`
 
 const SubmitButton = styled.button`
   padding: 0.7rem 1.5rem;
-  background-color: black;
+  background-color: #222;
   color: white;
   border: none;
   width: 100%;
   border-radius: 4px;
   cursor: pointer;
+  font-weight:bold;
   justify-self: end;
-
+  transition: 0.3s background-color ease;
   &:hover {
-    background-color: darkgreen;
+    background-color: ${(props) => props.theme.colors.darkGreen};
   }
 `;
 const ValidationError = styled.span`
