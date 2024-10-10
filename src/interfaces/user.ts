@@ -7,7 +7,7 @@ export interface UserInterface {
   phonenumber: string;      
   joindate: Date;   
   password?: string;          
-  photoUrl?: string;
+  photourl?: string;
   description?: string;        
   jobdesk?: string;        
 }
@@ -21,7 +21,7 @@ export interface CreateUser {
   joindate: Date;
   status?: boolean;
   days?: string;
-  photoUrl?: string;
+  photourl?: string;
   description?: string;
   hours?: string;
   jobdesk?: string;
@@ -35,7 +35,7 @@ export interface UserFormInterface {
   joindate: Date;
   password?: string;      
   status?: boolean;
-  photoUrl?: string;
+  photourl?: string;
   description?: string;
   jobdesk?: string;
 }

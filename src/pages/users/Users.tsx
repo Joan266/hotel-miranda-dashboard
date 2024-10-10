@@ -10,8 +10,13 @@ import { Column, Status } from '../../interfaces/common';
 import { IsTextActive } from '../../styles/users';
 import { AppDispatch, RootState } from '../../store';
 import UserActions from '../../components/Actions';
-import { SortConfig } from '../../interfaces/common';
+import { SortConfig, SearchConfig } from '../../interfaces/common';
 import styled from 'styled-components';
+
+const searchConfig = {
+  query: "", 
+  param: "lastname",
+};
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },
   { label: 'Active Employee', value: true },
@@ -82,7 +87,7 @@ export const Users = () => {
         <CellContainer>
           <ProfileImgContainer>
             <img
-              src={user.photoUrl ? user.photoUrl : clientDefault}
+              src={user.photourl ? user.photourl : clientDefault}
               alt="employee"
             />
           </ProfileImgContainer>
@@ -165,6 +170,7 @@ export const Users = () => {
           columns={Columns}
           statuses={statuses}
           sortConfig={sortConfig}
+          searchConfig={searchConfig}
         />
       )}
     </Container>

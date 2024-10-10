@@ -36,7 +36,7 @@ const TableHeaderCell = styled.div`
 
 const TableRow = styled.div`
   display: contents;
-  cursor:default;
+  cursor:pointer;
   > div {
     position: relative;
     &::before,
@@ -189,7 +189,30 @@ const NavStatusOptions = styled.button<NavStatusOptionsProps>`
     border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
   }
 `;
+const SearchInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;  
+`;
 
+const SearchInput = styled.input`
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  width: 200px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: #007bff;  
+  }
+
+  &:hover {
+    border-color: #999;  
+  }
+`;
 export {
   Table,
   TableCell,
@@ -204,5 +227,7 @@ export {
   PaginationInput,
   DataModifiers,
   FilterStatusNav,
-  NavStatusOptions
+  NavStatusOptions,
+  SearchInput,
+  SearchInputContainer,
 };

@@ -1,16 +1,32 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
-  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions,
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions, SearchInputContainer, SearchInput,
 } from '../styles/table';
 import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
 import { useNavigate } from 'react-router-dom';
 
-
-export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConfig }: TableComponentProps<T>) => {
+export const TableComponent = <T extends { _id: string }>({
+  pageSize,
+  data,
+  columns,
+  statuses,
+  sortConfig,
+  searchConfig: initialSearchConfig,
+}: TableComponentProps<T>) => {
   const [activeStatus, setActiveStatus] = useState<string | boolean>('all');
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearchConfig?.query || ''); 
+  const [inputPage, setInputPage] = useState<number | null>(null);
+
+  const navigate = useNavigate();
+
+  const searchConfig = {
+    ...initialSearchConfig,
+    query: searchQuery, 
+  };
+
   const {
     page,
     dataCurrentPage,
@@ -19,9 +35,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
     goToPrevPage,
     totalPages,
     dataLength,
-  } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig);
-  const [inputPage, setInputPage] = useState<number | null>(null);
-  const navigate = useNavigate();
+  } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig, searchConfig);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -40,9 +54,20 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
       setInputPage(null);
     }
   };
+
   const handleAddOneClick = () => {
-    navigate(`create`); 
+    navigate(`create`);
   };
+
+  const handleRowClick = (rowId: string) => {
+    navigate(`${rowId}`);
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    goToPage(1); 
+  };
+
   return (
     <>
       <DataModifiers>
@@ -60,8 +85,17 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           </FilterStatusNav>
         )}
         <div>
-          <Button onClick={() => handleAddOneClick()}>Add One</Button>
+          <Button onClick={handleAddOneClick}>Add One</Button>
         </div>
+
+        <SearchInputContainer>
+          <SearchInput
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder="Search..."
+          />
+        </SearchInputContainer>
       </DataModifiers>
 
       <Table $columnscount={columns.length}>
@@ -71,7 +105,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           ))}
         </TableHeaderRow>
         {dataCurrentPage.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow key={rowIndex} onClick={() => handleRowClick(row._id)}>
             {columns.map((column, cellIndex) => (
               <TableCell key={cellIndex}>{column.display(row)}</TableCell>
             ))}
@@ -84,7 +118,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           Showing {pageSize} of {dataLength} entries
         </SmallText>
         <PaginationControls>
-          <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1}>
+          <PaginationButton
+            onClick={() => {
+              goToPrevPage();
+              setInputPage(null);
+            }}
+            disabled={page === 1}
+          >
             {"<"}
           </PaginationButton>
           <PaginationInput
@@ -97,7 +137,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
             max={totalPages}
           />
           <Text>/ {totalPages}</Text>
-          <PaginationButton onClick={() => { goToNextPage(); setInputPage(null); }} disabled={page === totalPages}>
+          <PaginationButton
+            onClick={() => {
+              goToNextPage();
+              setInputPage(null);
+            }}
+            disabled={page === totalPages}
+          >
             {">"}
           </PaginationButton>
         </PaginationControls>

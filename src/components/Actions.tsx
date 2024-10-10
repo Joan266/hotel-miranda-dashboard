@@ -15,11 +15,13 @@ const Actions = ({ userId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleToggleMenu = () => {
+  const handleToggleMenu = (event) => {
+    event.stopPropagation();
     setShowMenu((prev) => !prev);
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (event) => {
+    event.stopPropagation();
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -54,7 +56,8 @@ const Actions = ({ userId }) => {
     setShowMenu(false);
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (event) => {
+    event.stopPropagation();
     setShowMenu(false);
     navigate(`/users/${userId}/update`);
   };

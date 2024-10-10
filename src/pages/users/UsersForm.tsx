@@ -24,7 +24,7 @@ export const UserForm: React.FC = () => {
     joindate: new Date(),
     status: false,
     jobdesk: "",
-    photoUrl: "",
+    photourl: "",
     description: "",
   });
 
@@ -51,7 +51,7 @@ export const UserForm: React.FC = () => {
         joindate: parseDate(single.joindate),
         status: single.status || false,
         jobdesk: single.jobdesk || "",
-        photoUrl: single.photoUrl || "",
+        photourl: single.photourl || "",
         description: single.description || "",
       });
     }
@@ -231,10 +231,10 @@ export const UserForm: React.FC = () => {
             <Label>Photo URL:</Label>
             <Input
               type="text"
-              name="photoUrl"
-              value={formData.photoUrl}
+              name="photourl"
+              value={formData.photourl}
               onChange={handleChange}
-              placeholder={userId ? single?.photoUrl || "" : "Enter photo URL"}
+              placeholder={userId ? single?.photourl || "" : "Enter photo URL"}
             />
           </FormGroup>
 

@@ -6,7 +6,7 @@ import { Reviews } from './pages/reviews/Reviews';
 import { Rooms } from './pages/rooms/Rooms';
 import { Users } from './pages/users/Users';
 import { UserForm } from './pages/users/UsersForm';
-import { UserDetails } from './pages/users/UserDetails';
+import { UsersView } from './pages/users/UsersView';
 import { Login } from './pages/Login';
 import { Layout } from './pages/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -49,7 +49,7 @@ export const App = () => {
             <Route path="users" element={<Users />} />
             <Route path="users/:id/update" element={<UserForm />} />
             <Route path="users/create" element={<UserForm />} />
-            <Route path="users/:id" element={<UserDetails />} />
+            <Route path="users/:id" element={<UsersView />} />
           </Route>
           <Route path="/login" element={<Login/>} />
         </Routes>
