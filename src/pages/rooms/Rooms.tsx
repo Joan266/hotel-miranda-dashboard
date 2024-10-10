@@ -1,113 +1,139 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CellContainer } from '../../styles/table';
-import { Container, SmallText, Text } from '../../styles/common';
-import { ReadAllThunk, DeleteOneThunk } from '../../slices/RoomSlice/roomThunks';
-import standardRoomImg from '../../assets/img/standard_room.webp';
-import deluxeRoomImg from '../../assets/img/deluxe_room.webp';
+import { Container, Text, SmallText, IsTextActive, LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
+import { CellContainer, ProfileImgContainer } from '../../styles/table';
+import { readAllThunk } from '../../slices/RoomSlice/roomThunks'; 
 import { TableComponent } from '../../components/Table';
-import { toast } from 'react-toastify';
-import { Bounce } from 'react-toastify';
-import { Room, RoomState } from '../../interfaces/rooms';
+import { RoomInterface } from '../../interfaces/rooms'; 
 import { Column, Status } from '../../interfaces/common';
-import { RoomImgContainer, StatusButton } from '../../styles/rooms';
+import roomDefault from '../../assets/img/deluxe_room.webp';
+import { AppDispatch, RootState } from '../../store';
+import RoomActions from '../../components/Actions'; 
+import { SortConfig, SearchConfig } from '../../interfaces/common';
+
+const searchConfig: SearchConfig = {
+  query: "", 
+  param: "name", 
+};
+
 const statuses: Status[] = [
   { label: 'All Rooms', value: 'all' },
-  { label: 'Available Rooms', value: 'available' },
-  { label: 'Booked Rooms', value: 'booked' },
+  { label: 'Available', value: 'available' },
+  { label: 'Booked', value: 'booked' },
+  { label: 'Maintenance', value: 'maintenance' },
+  { label: 'Unavailable', value: 'unavailable' },
 ];
 
 export const Rooms = () => {
-  const { items, status, error } = useSelector(
-    (state: { room: RoomState }) => state.room
-  );
-  const dispatch = useDispatch();
-  const [roomData, setRoomData] = useState<Room[] | null>(null);
+  const { items, status, error } = useSelector((state: RootState) => state.room);
+  const dispatch = useDispatch<AppDispatch>();
+  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
-  const Columns: Column<Room>[] = [
+  const handleSortChange = (property: string, type: 'date' | 'number' | 'string', direction: 1 | -1) => {
+    let newDirection = direction;
+
+    if (sortConfig?.property === property && sortConfig?.direction === direction) {
+      newDirection = sortConfig.direction === 1 ? -1 : 1;
+    }
+
+    setSortConfig({
+      property,
+      direction: newDirection,
+      type
+    });
+  };
+
+  const Columns: Column<RoomInterface>[] = [
     {
-      label: "RoomName",
+      label: (
+        <LabelContainer>
+          Room Name
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "name" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("name", "string", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "name" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("name", "string", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
       display: (room) => (
         <CellContainer>
-          <RoomImgContainer>
+          <ProfileImgContainer>
             <img
-              src={room.room_type.startsWith("Standard") ? standardRoomImg : deluxeRoomImg}
-              alt={room.room_type}
+              src={room.photourl ? room.photourl : roomDefault} 
+              alt="room"
             />
-          </RoomImgContainer>
+          </ProfileImgContainer>
           <div>
-            <SmallText>#{room.id}</SmallText>
-            <Text>{room.room_type}</Text>
+            <Text><strong>{room.name}</strong></Text>
+            <SmallText>#{room.code}</SmallText>
           </div>
         </CellContainer>
       ),
-      sort: "name",
     },
     {
       label: "Bed Type",
       display: (room) => (
-        <Text>{room.bed_type}</Text>
-      ),
-    },
-    {
-      label: "Room Floor",
-      display: (room) => (
-        <>
-          <Text>Floor {room.floor_room}</Text>
-        </>
-      ),
-    },
-    {
-      label: "Facilities",
-      display: (room) => (
-        <Text>{room.facilities.map((item, index) => (index !== 0 ? `, ${item}` : item))}</Text>
+        <Text>{room.bedtype}</Text>
       ),
     },
     {
       label: "Rate",
       display: (room) => (
-        <CellContainer>
-          <Text><strong>${room.rate}</strong></Text>
-          <SmallText>/night</SmallText>
-        </CellContainer>
+        <Text>${room.rate.toFixed(2)}</Text>
+      ),
+    },
+    {
+      label: "Offer",
+      display: (room) => (
+        <Text>{room.offer}%</Text>
+      ),
+    },
+    {
+      label: "Facilities",
+      display: (room) => (
+        <Text>{room.facilities?.join(', ')}</Text>
       ),
     },
     {
       label: "Status",
       display: (room) => (
-        <StatusButton status={room.status}>{room.status}</StatusButton>
-      ),
+        <Text>
+          <IsTextActive $status={room.status}>{room.status.toUpperCase()}</IsTextActive>
+        </Text>
+      )
+    },
+    {
+      label: "",
+      display: (room) => (
+        <RoomActions roomId={room._id}/>
+      )
     },
   ];
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(ReadAllThunk());
-    } else if (status === 'fulfilled') {
-      setRoomData(items);
-    } else if (status === 'rejected' && error) {
-      toast.error('API request limit reached, try searching for photos again in 1 hour', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      dispatch(readAllRoomsThunk()); // Ensure this thunk is defined in your RoomSlice
     }
-  }, [status, items, error, dispatch]);
+    console.log(items, status, error);
+  }, [status, dispatch]);
 
   return (
     <Container>
-      {roomData && (
+      {items.length > 0 && (
         <TableComponent
           pageSize={7}
-          data={roomData}
+          data={items}
           columns={Columns}
           statuses={statuses}
+          sortConfig={sortConfig}
+          searchConfig={searchConfig}
         />
       )}
     </Container>

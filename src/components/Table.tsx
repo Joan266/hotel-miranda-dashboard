@@ -48,8 +48,17 @@ export const TableComponent = <T extends { _id: string }>({
 
   const handleInputSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (inputPage === null || inputPage > totalPages || inputPage === 0) return;
+      if (typeof inputPage !== 'number' || isNaN(inputPage)) {
+        console.warn('Invalid input: Input is not a valid number.');
+        return;
+      }
+      if (inputPage < 1 || inputPage > totalPages) {
+        console.warn(`Invalid input: Page number must be between 1 and ${totalPages}.`);
+        return;
+      }
+  
       goToPage(inputPage);
+  
       setInputPage(null);
     }
   };

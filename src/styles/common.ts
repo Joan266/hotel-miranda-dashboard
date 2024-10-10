@@ -39,6 +39,32 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 16px; 
 `;
+const IsTextActive = styled.div<{ $status: string }>`
+  color: ${props => props.$status === "true" ? "#5AD07A" : "#E23428"};
+`;
 
+const LabelContainer = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+`;
+const ArrowContainer = styled.span`
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+`;
 
-export { Container, Title, Text, SmallText, Button };
+const Triangle = styled.div<{ $isActive: boolean; $isDirection: boolean }>`
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  cursor: pointer;
+  margin: 1px 0; 
+  border-bottom: ${(props) =>
+    props.$isActive ? '8px solid darkgreen' : '8px solid gray'};
+  transform: ${(props) => (props.$isDirection ? 'rotate(0deg)' : 'rotate(180deg)')}; 
+`;
+export { Container, Title, Text, SmallText, Button, IsTextActive, LabelContainer, ArrowContainer, Triangle };

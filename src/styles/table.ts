@@ -84,8 +84,8 @@ const TableCell = styled.div`
 `;
 
 const ProfileImgContainer = styled.div`
-  height: 60px;
-  min-width: 60px;
+  height: 50px;
+  min-width: 50px;
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 0.3em;
   margin-right: 1em;

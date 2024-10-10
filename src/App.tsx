@@ -4,6 +4,8 @@ import { Bookings } from './pages/bookings/Bookings';
 import { BookingDetails } from './pages/bookings/BookingDetails';
 import { Reviews } from './pages/reviews/Reviews';
 import { Rooms } from './pages/rooms/Rooms';
+import { RoomForm } from './pages/rooms/Rooms';
+import { RoomsView } from './pages/rooms/Rooms';
 import { Users } from './pages/users/Users';
 import { UserForm } from './pages/users/UsersForm';
 import { UsersView } from './pages/users/UsersView';
@@ -46,6 +48,9 @@ export const App = () => {
             <Route path="bookings/:id" element={<BookingDetails />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="rooms" element={<Rooms />} />
+            <Route path="rooms/:id/update" element={<RoomForm />} />
+            <Route path="rooms/create" element={<RoomForm />} />
+            <Route path="rooms/:id" element={<RoomsView />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id/update" element={<UserForm />} />
             <Route path="users/create" element={<UserForm />} />
