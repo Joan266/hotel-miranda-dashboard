@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
-  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions, SearchInputContainer, SearchInput,
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, TableModifiers, TableModifiersContainer, FilterStatusNav, NavStatusOptions, SearchInputContainer, SearchInput,
 } from '../styles/table';
 import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
@@ -22,10 +22,9 @@ export const TableComponent = <T extends { _id: string }>({
 
   const navigate = useNavigate();
 
-  const searchConfig = {
-    ...initialSearchConfig,
-    query: searchQuery, 
-  };
+  const searchConfig = initialSearchConfig
+  ? { ...initialSearchConfig, query: searchQuery } 
+  : null; 
 
   const {
     page,
@@ -70,7 +69,7 @@ export const TableComponent = <T extends { _id: string }>({
 
   return (
     <>
-      <DataModifiers>
+      <TableModifiers>
         {statuses && (
           <FilterStatusNav>
             {statuses.map((status, index) => (
@@ -84,19 +83,21 @@ export const TableComponent = <T extends { _id: string }>({
             ))}
           </FilterStatusNav>
         )}
-        <div>
+        <TableModifiersContainer>
+          {initialSearchConfig && (
+            <SearchInputContainer>
+              <SearchInput
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                placeholder="Search..."
+              />
+            </SearchInputContainer>
+          )}
           <Button onClick={handleAddOneClick}>Add One</Button>
-        </div>
+        </TableModifiersContainer>
 
-        <SearchInputContainer>
-          <SearchInput
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search..."
-          />
-        </SearchInputContainer>
-      </DataModifiers>
+      </TableModifiers>
 
       <Table $columnscount={columns.length}>
         <TableHeaderRow>

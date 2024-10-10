@@ -13,7 +13,7 @@ import UserActions from '../../components/Actions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
 import styled from 'styled-components';
 
-const searchConfig = {
+const searchConfig: SearchConfig = {
   query: "", 
   param: "lastname",
 };

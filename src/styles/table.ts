@@ -127,15 +127,12 @@ const PaginationInput = styled.input`
     outline: none;
     box-shadow: none;
   }
-  /* Hide the spinners in input type number */
-  /* For Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* For Firefox */
   &[type="number"] {
     -moz-appearance: textfield;
   }
@@ -162,7 +159,7 @@ const PaginationButton = styled.button`
   }
 `;
 
-const DataModifiers = styled.div`
+const TableModifiers = styled.div`
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
@@ -171,6 +168,10 @@ const DataModifiers = styled.div`
 
 const FilterStatusNav = styled.nav`
   display: flex;
+`;
+const TableModifiersContainer = styled.div`
+  display: flex;
+  gap: 0.5em;
 `;
 
 const NavStatusOptions = styled.button<NavStatusOptionsProps>`
@@ -206,7 +207,7 @@ const SearchInput = styled.input`
   transition: border-color 0.3s ease;
 
   &:focus {
-    border-color: #007bff;  
+    border-color:  ${props => props.theme.colors.darkGreen};  
   }
 
   &:hover {
@@ -225,7 +226,8 @@ export {
   PaginationButton,
   PaginationControls,
   PaginationInput,
-  DataModifiers,
+  TableModifiers,
+  TableModifiersContainer,
   FilterStatusNav,
   NavStatusOptions,
   SearchInput,
