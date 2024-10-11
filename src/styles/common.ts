@@ -43,21 +43,28 @@ const IsTextActive = styled.div<{ $status: string }>`
   color: ${props => props.$status === "true" ? "#5AD07A" : "#E23428"};
 `;
 const StatusColor = styled.div<{ $status: string }>`
-  color: ${props => {
+  color: ${(props) => {
     switch (props.$status) {
       case "available":
-        return "#5AD07A";   
+        return "#5AD07A";   // Green
       case "booked":
-        return "#F0A500";   
+        return "#F0A500";   // Yellow 
       case "maintenance":
-        return "#1E90FF";   
+        return "#1E90FF";   // Blue 
       case "unavailable":
-        return "#E23428";  
+        return "#E23428";   // Red 
+      case "cancelled":
+        return "#FF6347";   // Tomato 
+      case "refund":
+        return "#FF4500";   // OrangeRed 
+      case "pending":
+        return "#FFB347";   // Light Orange 
       default:
-        return "#000";     
+        return "#000";      // Default black
     }
   }};
 `;
+
 const LabelContainer = styled.div`
   display:flex;
   align-items:center;

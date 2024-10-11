@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { DashBoard } from './pages/DashBoard';
 import { Bookings } from './pages/bookings/Bookings';
-import { BookingDetails } from './pages/bookings/BookingDetails';
+import { BookingForm } from './pages/bookings/BookingsForm';
+import { BookingView } from './pages/bookings/BookingsView';
 import { Reviews } from './pages/reviews/Reviews';
 import { Rooms } from './pages/rooms/Rooms';
 import { RoomForm } from './pages/rooms/RoomsForm';
@@ -44,9 +45,11 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<PrivateRoute><Layout/></PrivateRoute>}>
             <Route index element={<DashBoard />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="bookings/:id" element={<BookingDetails />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="bookings/:id/update" element={<BookingForm />} />
+            <Route path="bookings/create" element={<BookingForm />} />
+            <Route path="bookings/:id" element={<BookingView />} />
             <Route path="rooms" element={<Rooms />} />
             <Route path="rooms/:id/update" element={<RoomForm />} />
             <Route path="rooms/create" element={<RoomForm />} />

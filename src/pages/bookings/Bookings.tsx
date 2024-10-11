@@ -1,122 +1,183 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Container, Text, SmallText, StatusColor, LabelContainer, ArrowContainer, Triangle } from '../../styles/common';
 import { CellContainer, ProfileImgContainer } from '../../styles/table';
-import { Container, Text, SmallText } from '../../styles/common';
-import { toast } from 'react-toastify';
-import { Bounce } from 'react-toastify';
-import { ReadAllThunk, DeleteOneThunk } from '../../slices/BookingSlice/bookingThunks';
+import { readAllThunk } from '../../slices/BookingSlice/bookingThunks';
 import { TableComponent } from '../../components/Table';
-import clientDefault from '../../assets/img/client_default.webp';
-import { Booking, BookingState } from '../../interfaces/bookings';
-import { StatusButton } from '../../styles/bookings';
+import { BookingInterface } from '../../interfaces/bookings';
+import { Column, Status } from '../../interfaces/common';
+import bookingDefault from '../../assets/img/default_room.webp';
+import { AppDispatch, RootState } from '../../store';
+import BookingActions from './BookingActions';
+import { SortConfig, SearchConfig } from '../../interfaces/common';
 
-const statuses = [
+const searchConfig: SearchConfig = {
+  query: "",
+  param: "lastname",
+};
+
+const statuses: Status[] = [
   { label: 'All Bookings', value: 'all' },
-  { label: 'Pending', value: 'pending' },
   { label: 'Booked', value: 'booked' },
   { label: 'Cancelled', value: 'cancelled' },
-  { label: 'Refund', value: 'refund' }
+  { label: 'Pending', value: 'pending' },
+  { label: 'Refund', value: 'refund' },
 ];
 
-const sorterProperty = 'order_date.datetime';
-
 export const Bookings = () => {
-  const { items, status, error } = useSelector((state: { booking: BookingState }) => state.booking);
-  const dispatch = useDispatch();
-  const [bookingsData, setBookingsData] = useState<Booking[] | null>(null);
+  const { items, status, error } = useSelector((state: RootState) => state.booking);
+  const dispatch = useDispatch<AppDispatch>();
+  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
-  const Columns = [
-    {
-      label: "Guest",
-      display: (booking: Booking) => (
-        <CellContainer>
-          <ProfileImgContainer>
-            <img
-              src={booking.img ? booking.img : clientDefault}
-              alt="employee"
-            />
-          </ProfileImgContainer>
-          <div>
-            <Text><strong>{booking.first_name} {booking.last_name}</strong></Text>
-            <SmallText>#{booking.id}</SmallText>
-          </div>
-        </CellContainer>
-      ),
-      sort: "name"
-    },
-    {
-      label: "Order Date",
-      display: (booking: Booking) => (
-        <>
-          <Text>{booking.order_date.date}</Text>
-          <SmallText>{booking.order_date.time}</SmallText>
-        </>
-      )
-    },
-    {
-      label: "Check in",
-      display: (booking: Booking) => (
-        <>
-          <Text>{booking.check_in.date}</Text>
-          <SmallText>{booking.check_in.time}</SmallText>
-        </>
-      )
-    },
-    {
-      label: "Check out",
-      display: (booking: Booking) => (
-        <>
-          <Text>{booking.check_out.date}</Text>
-          <SmallText>{booking.check_out.time}</SmallText>
-        </>
-      )
-    },
-    {
-      label: "Room type",
-      display: (booking: Booking) => (
-        <Text>{booking.room_type}</Text>
-      )
-    },
-    {
-      label: "Status",
-      display: (booking: Booking) => (
-        <StatusButton $status={booking.status}>{booking.status}</StatusButton>
-      )
-    },
-    {
-      label: "Actions",
-      display: (booking: Booking) => (
-        <>
-          <button onClick={() => console.log(`edit ${booking.id}`)}>edit</button>
-          <button onClick={() => dispatch(DeleteOneThunk(booking.id))}>delete</button>
-        </>
-      )
+  const handleSortChange = (property: string, type: 'date' | 'number' | 'string', direction: 1 | -1) => {
+    let newDirection = direction;
+
+    if (sortConfig?.property === property && sortConfig?.direction === direction) {
+      newDirection = sortConfig.direction === 1 ? -1 : 1;
     }
-  ];
+
+    setSortConfig({
+      property,
+      direction: newDirection,
+      type
+    });
+  };
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(ReadAllThunk());
-    } else if (status === 'fulfilled') {
-      setBookingsData(items);
-    } else if (status === 'rejected' && error) {
-      toast.error('API request limit reached, try searching for photos again in 1 hour', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      dispatch(readAllThunk());
     }
-  }, [status, items, error, dispatch]);
+    console.log(items, status, error);
+  }, [status, dispatch]);
+
+  const Columns: Column<BookingInterface>[] = [
+    {
+      label: (
+        <LabelContainer>
+          Customer Name
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "firstname" && sortConfig?.direction === 1}
+              $isDirection={true}
+              onClick={() => handleSortChange("firstname", "string", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "firstname" && sortConfig?.direction === -1}
+              $isDirection={false}
+              onClick={() => handleSortChange("firstname", "string", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
+      display: (booking) => (
+        <CellContainer>
+          <ProfileImgContainer>
+            <img
+              src={booking.photourl ? booking.photourl : bookingDefault} 
+              alt="booking"
+            />
+          </ProfileImgContainer>
+          <div>
+            <Text><strong>{booking.firstname} {booking.lastname}</strong></Text>
+            <SmallText>#{booking._id}</SmallText>
+          </div>
+        </CellContainer>
+      ),
+    },
+    {
+      label: (
+        <LabelContainer>
+          Check-in
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === 1}
+              $isDirection={true}
+              onClick={() => handleSortChange("checkin", "date", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === -1}
+              $isDirection={false}
+              onClick={() => handleSortChange("checkin", "date", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
+      display: (booking) => (
+        <Text>{new Date(booking.checkin).toLocaleDateString()}</Text>
+      ),
+    },
+    {
+      label: (
+        <LabelContainer>
+          Check-out
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "checkout" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("checkout", "date", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "firstname" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("checkout", "date", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
+      display: (booking) => (
+        <Text>{new Date(booking.checkout).toLocaleDateString()}</Text> 
+      ),
+    },
+    {
+      label: (
+        <LabelContainer>
+          Order Date
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === 1}
+              $isDirection={true}
+              onClick={() => handleSortChange("orderdate", "date", 1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === -1}
+              $isDirection={false}
+              onClick={() => handleSortChange("orderdate", "date", -1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
+      ),
+      display: (booking) => (
+        <Text>{new Date(booking.orderdate).toLocaleDateString()}</Text> // Format the order date
+      ),
+    },
+    {
+      label: "Status",
+      display: (booking) => (
+        <Text>
+          <StatusColor $status={booking.status}>{booking.status.toUpperCase()}</StatusColor> // Display the status in uppercase
+        </Text>
+      ),
+    },
+    {
+      label: "",
+      display: (booking) => (
+        <BookingActions bookingId={booking._id} /> 
+      )
+    },
+  ];
 
   return (
     <Container>
-      {bookingsData && <TableComponent pageSize={8} data={bookingsData} columns={Columns} statuses={statuses} sorterProperty={sorterProperty}></TableComponent>}
+      {items.length > 0 && (
+        <TableComponent
+          pageSize={7} 
+          data={items}
+          columns={Columns}
+          statuses={statuses}
+          sortConfig={sortConfig}
+          searchConfig={searchConfig}
+        />
+      )}
     </Container>
   );
 };
