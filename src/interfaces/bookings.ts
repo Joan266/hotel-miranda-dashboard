@@ -1,20 +1,32 @@
+export interface BookingInterface {
+  _id: string;  
+  firstname: string;
+  lastname: string;       
+  orderdate: Date;
+  checkin: Date,
+  checkout: Date,                    
+  photourl?: string;                   
+  description?: string;                   
+  status: 'cancelled' | 'booked' | 'pending' | 'refund'; 
+}
+export interface BookingFormInterface {
+  firstname: string;
+  lastname: string;       
+  orderdate: Date;
+  checkin: Date,
+  checkout: Date,                    
+  photourl?: string;                   
+  description?: string;                   
+  status: 'cancelled' | 'booked' | 'pending' | 'refund'; 
+}
+
+export interface BookingState {
+  items: BookingInterface[];
+  status: 'idle' | 'loading' | 'fulfilled' | 'rejected';
+  error: string | null;
+}
+
 export interface StatusButtonProps {
   $status: string;
 }
 
-export interface Booking {
-  id: number;
-  first_name: string;
-  last_name: string;
-  img: string | null;
-  order_date: { date: string; time: string };
-  check_in: { date: string; time: string };
-  check_out: { date: string; time: string };
-  room_type: string;
-  status: string;
-}
-export interface BookingState {
-  items: Booking[];
-  status: string;
-  error: string | null;
-}

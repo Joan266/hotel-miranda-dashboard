@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk } from './roomThunks';
-import { RoomInterface, RoomFormInterface } from "../../interfaces/rooms";
+import { RoomInterface } from "../../interfaces/rooms";
 interface RoomState {
   status: 'idle' | 'loading' | 'fulfilled' | 'error';
   items: RoomInterface[];
@@ -82,7 +82,7 @@ const RoomSlice = createSlice({
       })
       .addCase(updateOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message || 'Failed to update user';
+        state.error = action.error.message || 'Failed to update room';
       });
   }
 });
