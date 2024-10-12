@@ -96,14 +96,14 @@ export const Rooms = () => {
           Rate
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === -1}
               $isDirection={true} 
-              onClick={() => handleSortChange("rate", "number", 1)}
+              onClick={() => handleSortChange("rate", "number", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "rate" && sortConfig?.direction === 1}
               $isDirection={false} 
-              onClick={() => handleSortChange("rate", "number", -1)}
+              onClick={() => handleSortChange("rate", "number", 1)}
             />
           </ArrowContainer>
         </LabelContainer>
@@ -118,14 +118,14 @@ export const Rooms = () => {
           Offer
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === -1}
               $isDirection={true} 
-              onClick={() => handleSortChange("offer", "number", 1)}
+              onClick={() => handleSortChange("offer", "number", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "offer" && sortConfig?.direction === 1}
               $isDirection={false} 
-              onClick={() => handleSortChange("offer", "number", -1)}
+              onClick={() => handleSortChange("offer", "number", 1)}
             />
           </ArrowContainer>
         </LabelContainer>

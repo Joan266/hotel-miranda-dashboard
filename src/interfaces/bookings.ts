@@ -12,7 +12,7 @@ export interface BookingInterface {
 export interface BookingFormInterface {
   firstname: string;
   lastname: string;       
-  orderdate: Date;
+  orderdate?: Date;
   checkin: Date,
   checkout: Date,                    
   photourl?: string;                   

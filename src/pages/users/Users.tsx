@@ -87,14 +87,14 @@ export const Users = () => {
           Join Date
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === -1}
               $isDirection={true} 
-              onClick={() => handleSortChange("joindate", "date", 1)}
+              onClick={() => handleSortChange("joindate", "date", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === 1}
               $isDirection={false} 
-              onClick={() => handleSortChange("joindate", "date", -1)}
+              onClick={() => handleSortChange("joindate", "date", 1)}
             />
           </ArrowContainer>
         </LabelContainer>

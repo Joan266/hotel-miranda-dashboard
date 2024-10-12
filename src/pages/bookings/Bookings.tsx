@@ -90,20 +90,20 @@ export const Bookings = () => {
           Check-in
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === -1}
               $isDirection={true}
-              onClick={() => handleSortChange("checkin", "date", 1)}
+              onClick={() => handleSortChange("checkin", "date", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "checkin" && sortConfig?.direction === 1}
               $isDirection={false}
-              onClick={() => handleSortChange("checkin", "date", -1)}
+              onClick={() => handleSortChange("checkin", "date", 1)}
             />
           </ArrowContainer>
         </LabelContainer>
       ),
       display: (booking) => (
-        <Text>{new Date(booking.checkin).toLocaleDateString()}</Text>
+        <Text>{new Date(booking.checkin).toDateString()}</Text>
       ),
     },
     {
@@ -112,20 +112,20 @@ export const Bookings = () => {
           Check-out
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "checkout" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "checkout" && sortConfig?.direction === -1}
               $isDirection={true} 
-              onClick={() => handleSortChange("checkout", "date", 1)}
+              onClick={() => handleSortChange("checkout", "date", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "firstname" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "checkout" && sortConfig?.direction === 1}
               $isDirection={false} 
-              onClick={() => handleSortChange("checkout", "date", -1)}
+              onClick={() => handleSortChange("checkout", "date", 1)}
             />
           </ArrowContainer>
         </LabelContainer>
       ),
       display: (booking) => (
-        <Text>{new Date(booking.checkout).toLocaleDateString()}</Text> 
+        <Text>{new Date(booking.checkout).toDateString()}</Text> 
       ),
     },
     {
@@ -134,27 +134,27 @@ export const Bookings = () => {
           Order Date
           <ArrowContainer>
             <Triangle
-              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === 1}
+              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === -1}
               $isDirection={true}
-              onClick={() => handleSortChange("orderdate", "date", 1)}
+              onClick={() => handleSortChange("orderdate", "date", -1)}
             />
             <Triangle
-              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === -1}
+              $isActive={sortConfig?.property === "orderdate" && sortConfig?.direction === 1}
               $isDirection={false}
-              onClick={() => handleSortChange("orderdate", "date", -1)}
+              onClick={() => handleSortChange("orderdate", "date", 1)}
             />
           </ArrowContainer>
         </LabelContainer>
       ),
       display: (booking) => (
-        <Text>{new Date(booking.orderdate).toLocaleDateString()}</Text> // Format the order date
+        <Text>{new Date(booking.orderdate).toDateString()}</Text> 
       ),
     },
     {
       label: "Status",
       display: (booking) => (
         <Text>
-          <StatusColor $status={booking.status}>{booking.status.toUpperCase()}</StatusColor> // Display the status in uppercase
+          <StatusColor $status={booking.status}>{booking.status.toUpperCase()}</StatusColor> 
         </Text>
       ),
     },

@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from 'react-router-dom';
-import { BookingFormInterface } from "../../interfaces/bookings"; 
+import { BookingFormInterface } from "../../interfaces/bookings";
 import { Form, FormGrid, FormGroup, SubmitButton, Input, Label, Container, ValidationError } from '../../styles/form';
 import { useDispatch, useSelector } from 'react-redux';
-import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/BookingSlice/bookingThunks"; // Adjusted to use Booking thunks
+import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/BookingSlice/bookingThunks";
 import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
 
 export const BookingForm: React.FC = () => {
-  const { id: bookingId } = useParams<{ id: string }>(); 
+  const { id: bookingId } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { single } = useSelector((state: RootState) => state.booking); 
-  
+  const { single } = useSelector((state: RootState) => state.booking);
+
   const [formData, setFormData] = useState<BookingFormInterface>({
     firstname: "",
     lastname: "",
-    orderdate: new Date(),
     checkin: new Date(),
     checkout: new Date(),
     photourl: "",
@@ -28,7 +29,7 @@ export const BookingForm: React.FC = () => {
 
   useEffect(() => {
     if (bookingId) {
-      dispatch(readOneThunk(bookingId)); 
+      dispatch(readOneThunk(bookingId));
     }
   }, [bookingId, dispatch]);
 
@@ -37,7 +38,6 @@ export const BookingForm: React.FC = () => {
       setFormData({
         firstname: single.firstname || "",
         lastname: single.lastname || "",
-        orderdate: single.orderdate || new Date(),
         checkin: single.checkin || new Date(),
         checkout: single.checkout || new Date(),
         photourl: single.photourl || "",
@@ -48,7 +48,7 @@ export const BookingForm: React.FC = () => {
   }, [single, bookingId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
@@ -56,6 +56,15 @@ export const BookingForm: React.FC = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
+  };
+
+  const handleDateRangeChange = (dates: [Date, Date]) => {
+    const [start, end] = dates;
+    setFormData({
+      ...formData,
+      checkin: start,
+      checkout: end || new Date(),
+    });
   };
 
   const validateForm = () => {
@@ -68,8 +77,14 @@ export const BookingForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
-      const dataToSubmit = { ...formData };
+      const currentDate = new Date();
+      const dataToSubmit = {
+        ...formData,
+        orderdate: bookingId ? single?.orderdate : currentDate,  // Set orderdate for new bookings
+      };
+
       if (bookingId) {
         dispatch(updateOneThunk({ id: bookingId, booking: dataToSubmit }))
           .unwrap()
@@ -147,36 +162,6 @@ export const BookingForm: React.FC = () => {
           </FormGroup>
 
           <FormGroup>
-            <Label>Order Date:</Label>
-            <Input
-              type="date"
-              name="orderdate"
-              value={formData.orderdate.toISOString().split('T')[0]}
-              onChange={handleChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label>Check-in Date:</Label>
-            <Input
-              type="date"
-              name="checkin"
-              value={formData.checkin.toISOString().split('T')[0]}
-              onChange={handleChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label>Check-out Date:</Label>
-            <Input
-              type="date"
-              name="checkout"
-              value={formData.checkout.toISOString().split('T')[0]}
-              onChange={handleChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
             <Label>Photo URL:</Label>
             <Input
               type="text"
@@ -199,6 +184,18 @@ export const BookingForm: React.FC = () => {
           </FormGroup>
 
           <FormGroup>
+            <Label>Booking Dates:</Label>
+            <DatePicker
+              selected={formData.checkin}
+              onChange={handleDateRangeChange}
+              startDate={formData.checkin}
+              endDate={formData.checkout}
+              selectsRange
+              inline
+            />
+          </FormGroup>
+
+          <FormGroup>
             <Label>Status:</Label>
             <select
               name="status"
@@ -212,6 +209,7 @@ export const BookingForm: React.FC = () => {
             </select>
           </FormGroup>
 
+          <div></div>
           <div>
             <SubmitButton type="submit">
               {bookingId ? "Update Booking" : "Create Booking"}

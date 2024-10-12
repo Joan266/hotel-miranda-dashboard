@@ -41,15 +41,17 @@ export const BookingView: React.FC = () => {
         <InfoGroup>
           <span>
             <Label>Order Date:</Label>
-            <Field>{new Date(single.orderdate).toLocaleDateString()}</Field>
+            <Field>{new Date(single.orderdate).toDateString()}</Field>
           </span>
+        </InfoGroup>
+        <InfoGroup>
           <span>
             <Label>Check-in Date:</Label>
-            <Field>{new Date(single.checkin).toLocaleDateString()}</Field>
+            <Field>{new Date(single.checkin).toDateString()}</Field>
           </span>
           <span>
             <Label>Check-out Date:</Label>
-            <Field>{new Date(single.checkout).toLocaleDateString()}</Field>
+            <Field>{new Date(single.checkout).toDateString()}</Field>
           </span>
         </InfoGroup>
 

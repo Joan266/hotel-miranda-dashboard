@@ -46,24 +46,25 @@ const StatusColor = styled.div<{ $status: string }>`
   color: ${(props) => {
     switch (props.$status) {
       case "available":
-        return "#5AD07A";   // Green
+        return "#28A745";   // Dark Green
       case "booked":
-        return "#F0A500";   // Yellow 
+        return "#FFC107";   // Amber
       case "maintenance":
-        return "#1E90FF";   // Blue 
+        return "#007BFF";   // Bright Blue
       case "unavailable":
-        return "#E23428";   // Red 
+        return "#DC3545";   // Red
       case "cancelled":
-        return "#FF6347";   // Tomato 
+        return "#6C757D";   // Gray
       case "refund":
-        return "#FF4500";   // OrangeRed 
+        return "#FF5722";   // Deep Orange
       case "pending":
-        return "#FFB347";   // Light Orange 
+        return "#17A2B8";   // Teal
       default:
         return "#000";      // Default black
     }
   }};
 `;
+
 
 const LabelContainer = styled.div`
   display:flex;
