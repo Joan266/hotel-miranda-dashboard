@@ -1,70 +1,41 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import reviewData from '../../data/reviews.json';
+import { ReviewInterface, ReviewFormInterface } from '../../interfaces/review'
+import { backendAPICall } from "../../utils/backendAPICall";
 
-import { delayedRequest } from "../../utils/delayRequest";
-
-interface Review {
-  id: string;
-  order_id: string;
-  review_date: {
-    text: string;
-    date: string;
-  };
-  comment: string;
-  rating: number;
-  customer_name: string;
-}
-
-const data: Review[] = reviewData as Review[];
-
-const ReadOneThunk = createAsyncThunk<Review | null, string>(
-  "review/readOneThunk",
-  async (id) => {
-    try {
-      const response = await delayedRequest(
-        data.find(review => review.id === id) || null,
-        500
-      );
-      return response;
-    } catch (error) {
-      return null;
-    }
-  }
-);
-
-const ReadAllThunk = createAsyncThunk<Review[], void>(
+const readAllThunk = createAsyncThunk<{ reviews: ReviewInterface[] }, void>(
   "review/readAllThunk",
   async () => {
-    try {
-      return delayedRequest(data, 500);
-    } catch (error) {
-      return [];
-    }
+    const data = await backendAPICall('review');
+    return data.reviews;
   }
 );
 
-const CreateOneThunk = createAsyncThunk<Review | null, Review>(
+const readOneThunk = createAsyncThunk<ReviewInterface, string>(
+  "review/readOneThunk",
+  async (id) => {
+    return await backendAPICall(`review/${id}`);
+  }
+);
+
+const createOneThunk = createAsyncThunk<ReviewInterface, ReviewFormInterface>(
   "review/createOneThunk",
-  async (newReview) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return newReview;
-    } catch (error) {
-      return null;
-    }
+  async (newReview: ReviewFormInterface) => {
+    return await backendAPICall(`review/create`, 'POST', newReview);
   }
 );
 
-const DeleteOneThunk = createAsyncThunk<string | null, string>(
+const deleteOneThunk = createAsyncThunk<string, string>(
   "review/deleteOneThunk",
   async (id) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return id;
-    } catch (error) {
-      return null;
-    }
+    return await backendAPICall(`review/${id}`, 'DELETE');
   }
 );
 
-export { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk };
+const updateOneThunk = createAsyncThunk<ReviewInterface, { id: string, review: Partial<ReviewInterface> }>(
+  "review/updateOneThunk",
+  async ({ id, review }) => {
+    return await backendAPICall(`review/${id}`, 'PUT', review);
+  }
+);
+
+export { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk };
