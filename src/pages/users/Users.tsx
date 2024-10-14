@@ -1,63 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Text, SmallText } from '../../styles/common';
+import { Container, Text, SmallText,IsTextActive,LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
 import { CellContainer, ProfileImgContainer } from '../../styles/table';
 import { readAllThunk } from '../../slices/UserSlice/userThunks';
 import clientDefault from '../../assets/img/client_default.webp';
 import { TableComponent } from '../../components/Table';
 import { UserInterface } from '../../interfaces/user';
 import { Column, Status } from '../../interfaces/common';
-import { IsTextActive } from '../../styles/users';
 import { AppDispatch, RootState } from '../../store';
-import UserActions from '../../components/Actions';
-import styled from 'styled-components';
+import UserActions from './UserActions';
+import { SortConfig, SearchConfig } from '../../interfaces/common';
+
+const searchConfig: SearchConfig = {
+  query: "", 
+  param: "lastname",
+};
 const statuses: Status[] = [
   { label: 'All Employees', value: 'all' },
   { label: 'Active Employee', value: true },
   { label: 'Inactive Employee', value: false },
 ];
-const Arrow = styled.span`
-  cursor: pointer;
-  margin-left: 5px;
-`;
-type SortConfig = {
-  type: 'date' | 'number' | 'string'; 
-  property: string; 
-  direction: -1 | 1;
-};
-const ArrowContainer = styled.span`
-  display: flex;
-  flex-direction: column; /* Align arrows vertically */
-  justify-content: center;
-  align-items: center;
-  margin-left: 5px;
-`;
 
-const Triangle = styled.div<{ isActive: boolean; isDirection: boolean }>`
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  cursor: pointer;
-  margin: 1px 0; 
-
-  border-bottom: ${(props) =>
-    props.isDirection && props.isActive ? '10px solid darkgreen' : '10px solid gray'};
-  transform: ${(props) => (props.isDirection ? 'rotate(0deg)' : 'rotate(180deg)')}; 
-`;
 export const Users = () => {
   const { items, status, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    property: 'joindate', 
-    direction: 1, 
-    type: "date",        
-  });
+  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
-  const handleSortChange = (property: string, type:'date' | 'number' | 'string') => {
-    let newDirection = 1;
+  const handleSortChange = (property: string, type:'date' | 'number' | 'string', direction: 1 | -1) => {
+    let newDirection = direction;
 
-    if (sortConfig.property === property) {
+    if (sortConfig?.property === property && sortConfig?.direction === direction) {
       newDirection = sortConfig.direction === 1 ? -1 : 1;
     }
 
@@ -67,30 +39,38 @@ export const Users = () => {
       type
     });
   };
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(readAllThunk());
+    }
+    console.log(items, status, error);
+  }, [status, dispatch]);
+  
   const Columns: Column<UserInterface>[] = [
     {
       label: (
-        <span style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <LabelContainer>
           Name
           <ArrowContainer>
             <Triangle
-              isActive={sortConfig.property === "lastname"}
-              isDirection={true} 
-              onClick={() => handleSortChange("lastname", "string")}
+              $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === 1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("lastname", "string", 1)}
             />
             <Triangle
-              isActive={sortConfig.property === "lastname"}
-              isDirection={false} 
-              onClick={() => handleSortChange("lastname", "string")}
+              $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === -1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("lastname", "string", -1)}
             />
           </ArrowContainer>
-        </span>
+        </LabelContainer>
       ),
       display: (user) => (
         <CellContainer>
           <ProfileImgContainer>
             <img
-              src={user.photoUrl ? user.photoUrl : clientDefault}
+              src={user.photourl ? user.photourl : clientDefault}
               alt="employee"
             />
           </ProfileImgContainer>
@@ -103,12 +83,21 @@ export const Users = () => {
     },
     {
       label: (
-        <span>
+        <LabelContainer>
           Join Date
-          <Arrow onClick={() => handleSortChange("joindate","date")}>
-            {sortConfig.property === "joindate" ? (sortConfig.direction === 1 ? '↑' : '↓') : ''}
-          </Arrow>
-        </span>
+          <ArrowContainer>
+            <Triangle
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === -1}
+              $isDirection={true} 
+              onClick={() => handleSortChange("joindate", "date", -1)}
+            />
+            <Triangle
+              $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === 1}
+              $isDirection={false} 
+              onClick={() => handleSortChange("joindate", "date", 1)}
+            />
+          </ArrowContainer>
+        </LabelContainer>
       ),
       display: (user) => (
         <Text>{new Date(user.joindate).toDateString()}</Text>
@@ -117,7 +106,7 @@ export const Users = () => {
     {
       label: "Job Desk",
       display: (user) => (
-        <Text maxwidth={"350px"}>{user.jobdesk}</Text>
+        <Text $maxwidth={"350px"}>{user.jobdesk}</Text>
       )
     },
     {
@@ -136,7 +125,7 @@ export const Users = () => {
       label: "Status",
       display: (user) => (
         <Text>
-          <IsTextActive status={user.status.toString()}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
+          <IsTextActive $status={user.status.toString()}>{user.status ? "ACTIVE" : "INACTIVE"}</IsTextActive>
         </Text>
       )
     },
@@ -148,22 +137,16 @@ export const Users = () => {
     },
   ];
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(readAllThunk());
-    }
-    console.log(items, status, error);
-  }, [status, dispatch]);
-
   return (
     <Container>
       {items.length > 0 && (
         <TableComponent
-          pageSize={8}
+          pageSize={7}
           data={items}
           columns={Columns}
           statuses={statuses}
           sortConfig={sortConfig}
+          searchConfig={searchConfig}
         />
       )}
     </Container>

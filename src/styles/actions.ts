@@ -8,7 +8,7 @@ const EllipsisContainer = styled.div`
   cursor: pointer;
   .ellipsis-icon {
     color: grey;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   &:hover .ellipsis-icon {

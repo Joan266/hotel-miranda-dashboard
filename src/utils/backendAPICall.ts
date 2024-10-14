@@ -5,7 +5,6 @@ export async function backendAPICall(
 ) {
   const url = `${import.meta.env.VITE_PUBLIC_API_DOMAIN}/${path}`;
 
-  // Retrieve user data from local storage
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
 
@@ -27,16 +26,25 @@ export async function backendAPICall(
     options.body = JSON.stringify(data);
   }
 
-  const response = await fetch(url, options);
+  try {
+    const response = await fetch(url, options);
+    if (response.status === 401 || response.status === 403) {
+      localStorage.setItem('user', JSON.stringify(null)); 
+      return { redirectToLogin: true };
+    }
 
-  if (response.status === 401 || response.status === 403) {
-    // Clear user from local storage and return a flag for redirecting
-    localStorage.setItem('user', JSON.stringify(null)); // Clear the user
-    return { redirectToLogin: true }; // Indicate that redirection is needed
-  } else if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      const errorResponse = await response.json(); 
+      const errorMessage = errorResponse?.message || `HTTP error! status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const json = await response.json();
+    return json;
+
+  } catch (error: any) {
+    
+    console.error('API Call Failed:', error.message);
+    throw new Error(`${error.message}`);
   }
-
-  const json = await response.json();
-  return json;
 }

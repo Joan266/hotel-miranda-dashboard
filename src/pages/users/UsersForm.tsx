@@ -3,14 +3,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserFormInterface } from "../../interfaces/user";
-import { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container } from '../../styles/form';
+import { Form, FormGrid, FormGroup, SubmitButton, Checkbox, TextArea, Input, Label, Container, ValidationError } from '../../styles/form';
 import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/UserSlice/userThunks"; 
 import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
 
 export const UserForm: React.FC = () => {
-  const { id:userId } = useParams<{ id: string }>(); 
+  const { id: userId } = useParams<{ id: string }>(); 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { single } = useSelector((state: RootState) => state.user); 
@@ -24,10 +24,12 @@ export const UserForm: React.FC = () => {
     joindate: new Date(),
     status: false,
     jobdesk: "",
-    photoUrl: "",
+    photourl: "",
     description: "",
   });
-  
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({}); 
+
   const parseDate = (dateString: Date | undefined) => {
     return dateString ? new Date(dateString) : new Date();
   };
@@ -49,7 +51,7 @@ export const UserForm: React.FC = () => {
         joindate: parseDate(single.joindate),
         status: single.status || false,
         jobdesk: single.jobdesk || "",
-        photoUrl: single.photoUrl || "",
+        photourl: single.photourl || "",
         description: single.description || "",
       });
     }
@@ -61,63 +63,83 @@ export const UserForm: React.FC = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleDateChange = (date: Date) => {
     setFormData({ ...formData, joindate: date });
   };
 
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    
+    if (!formData.firstname) newErrors.firstname = 'First Name is required';
+    if (!formData.lastname) newErrors.lastname = 'Last Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.phonenumber) newErrors.phonenumber = 'Phone Number is required';
+    if (!userId && !formData.password) newErrors.password = 'Password is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; 
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const dataToSubmit = { ...formData };
-    if (!formData.password) {
-      delete dataToSubmit.password;
+
+    if (validateForm()) {
+      const dataToSubmit = { ...formData };
+      if (!formData.password) {
+        delete dataToSubmit.password;
+      }
+
+      if (userId) {
+        dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
+          .unwrap()
+          .then(() => {
+            navigate("/users");
+            Swal.fire({
+              title: 'User Updated!',
+              text: 'User has been updated successfully.',
+              icon: 'success',
+              timer: 2000, 
+              showConfirmButton: false, 
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: error.message || 'Failed to update user. Please try again.',
+              icon: 'error',
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          });
+      } else {
+        dispatch(createOneThunk(dataToSubmit))
+          .unwrap()
+          .then(() => {
+            navigate("/users");
+            Swal.fire({
+              title: 'User Created!',
+              text: 'User has been created successfully.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: error.message || 'Failed to create user. Please try again.',
+              icon: 'error',
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          });
+      }
     }
-    
-    if (userId) {
-      dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
-        .then(() => {
-          navigate("/users");
-          Swal.fire({
-            title: 'User Updated!',
-            text: 'User has been updated successfully.',
-            icon: 'success',
-            timer: 2000, 
-            showConfirmButton: false, 
-          });
-        })
-        .catch(error => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to update user. Please try again.',
-            icon: 'error',
-            timer: 3000,
-            showConfirmButton: false,
-          });
-        });
-    } else {
-      dispatch(createOneThunk(dataToSubmit))
-        .then(() => {
-          navigate("/users");
-          Swal.fire({
-            title: 'User Created!',
-            text: 'User has been created successfully.',
-            icon: 'success',
-            timer: 2000,
-            showConfirmButton: false,
-          });
-        })
-        .catch(error => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to create user. Please try again.',
-            icon: 'error',
-            timer: 3000,
-            showConfirmButton: false,
-          });
-        });
-    }
-    
   };
 
   return (
@@ -133,6 +155,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.firstname || "" : "Enter first name"}
             />
+            {errors.firstname && <ValidationError className="error">{errors.firstname}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -144,6 +167,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.lastname || "" : "Enter last name"}
             />
+            {errors.lastname && <ValidationError className="error">{errors.lastname}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -155,6 +179,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.email || "" : "Enter email"}
             />
+            {errors.email && <ValidationError className="error">{errors.email}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -166,6 +191,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder={userId ? single?.phonenumber || "" : "Enter phone number"}
             />
+            {errors.phonenumber && <ValidationError className="error">{errors.phonenumber}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -177,6 +203,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               placeholder="Enter new password"
             />
+            {errors.password && <ValidationError className="error">{errors.password}</ValidationError>}
           </FormGroup>
 
           <FormGroup>
@@ -204,10 +231,10 @@ export const UserForm: React.FC = () => {
             <Label>Photo URL:</Label>
             <Input
               type="text"
-              name="photoUrl"
-              value={formData.photoUrl}
+              name="photourl"
+              value={formData.photourl}
               onChange={handleChange}
-              placeholder={userId ? single?.photoUrl || "" : "Enter photo URL"}
+              placeholder={userId ? single?.photourl || "" : "Enter photo URL"}
             />
           </FormGroup>
 

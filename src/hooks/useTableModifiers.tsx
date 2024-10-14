@@ -1,14 +1,10 @@
 import { useMemo, useState } from 'react';
+import { SortConfig, SearchConfig } from '../interfaces/common';
 
 const getNestedProperty = (obj: any, propertyPath: string): any => {
   return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
 };
 
-type SortConfig = {
-  type: "date "| "number "| "string"; 
-  property: string; 
-  direction: -1 | 1;
-};
 
 interface UseTableModifiersReturn<T> {
   dataCurrentPage: T[];
@@ -24,7 +20,8 @@ export const useTableModifiers = <T,>(
   items: any[],
   itemsPerPage: number,
   activeStatus: string | boolean,
-  sortConfig: SortConfig 
+  sortConfig?: SortConfig,
+  searchConfig?: SearchConfig, 
 ): UseTableModifiersReturn<T> => {
   const [page, setPage] = useState<number>(1);
 
@@ -55,16 +52,24 @@ export const useTableModifiers = <T,>(
     const filteredData = activeStatus === 'all'
       ? sortedData
       : sortedData.filter(item => item.status === activeStatus);
+
+      const searchedData = searchConfig && searchConfig.param && searchConfig.param.trim() !== ""
+      ? filteredData.filter(item => {
+          const searchValue = getNestedProperty(item, searchConfig.param)?.toString().toLowerCase();
+          return searchValue && searchValue.includes(searchConfig.query.toLowerCase());
+        })
+      : filteredData;
     
-    const dataLength = filteredData.length;
+
+    const dataLength = searchedData.length;
     const totalPages = Math.ceil(dataLength / itemsPerPage);
 
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const dataCurrentPage = filteredData.slice(startIndex, endIndex);
+    const dataCurrentPage = searchedData.slice(startIndex, endIndex);
 
     return { dataCurrentPage, totalPages, dataLength };
-  }, [items, sortConfig, activeStatus, itemsPerPage, page]);
+  }, [items, sortConfig, activeStatus, itemsPerPage, page, searchConfig]);
 
   const goToPage = (pageNumber: number) => {
     setPage(pageNumber);

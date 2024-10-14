@@ -1,35 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './bookingThunks';
-
-interface BookingItem {
-  id: string;
-  first_name: string;
-  last_name: string;
-  order_date: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  check_in: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  check_out: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  room_type: string;
-  status: string;
-}
-
+import { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk } from './bookingThunks';
+import { BookingInterface } from "../../interfaces/bookings";
 interface BookingState {
   status: 'idle' | 'loading' | 'fulfilled' | 'error';
-  items: BookingItem[];
-  single: BookingItem | null;
+  items: BookingInterface[];
+  single: BookingInterface | null;
   error: string | null;
 }
+
 
 const initialState: BookingState = {
   status: "idle",
@@ -39,61 +17,75 @@ const initialState: BookingState = {
 };
 
 const BookingSlice = createSlice({
-  name: 'booking',
+  name: 'Booking',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(ReadOneThunk.pending, (state) => {
+      .addCase(readOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadOneThunk.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(readOneThunk.fulfilled, (state, action: PayloadAction<BookingInterface>) => {
         state.status = 'fulfilled';
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(ReadOneThunk.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(readOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error?.message ?? 'Unknown error';
+        state.error = action.error.message || 'Failed to fetch booking';
       })
-      .addCase(ReadAllThunk.pending, (state) => {
+      .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<any[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<BookingInterface[]>) => {
         state.status = 'fulfilled';
         state.items = action.payload;
         state.error = null;
       })
-      .addCase(ReadAllThunk.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(readAllThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error?.message ?? 'Unknown error';
+        state.error = action.error.message || "Failed to fetch bookings";
       })
-      .addCase(CreateOneThunk.pending, (state) => {
+      .addCase(createOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(CreateOneThunk.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(createOneThunk.fulfilled, (state, action: PayloadAction<BookingInterface>) => {
         state.status = 'fulfilled';
         state.items.push(action.payload);
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(CreateOneThunk.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(createOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error?.message ?? 'Unknown error';
+        state.error = action.error.message || "Failed to create booking";
       })
-      .addCase(DeleteOneThunk.pending, (state) => {
+      .addCase(deleteOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(DeleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(deleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
         state.status = 'fulfilled';
-        state.items = state.items.filter(item => item.id !== action.payload);
+        state.items = state.items.filter(item => item._id !== action.payload);
         state.error = null;
       })
-      .addCase(DeleteOneThunk.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(deleteOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error?.message ?? 'Unknown error';
+        state.error = action.error.message || "Failed to delete booking";
+      })
+      .addCase(updateOneThunk.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateOneThunk.fulfilled, (state, action: PayloadAction<BookingInterface>) => {
+        state.status = 'fulfilled';
+        state.items = state.items.map(booking => booking._id === action.payload._id ? action.payload : booking);
+        state.single = action.payload;
+        state.error = null;
+      })
+      .addCase(updateOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message || 'Failed to update booking';
       });
   }
 });
 
-export const BookingSliceReducer = BookingSlice.reducer;
+
+export const { reducer: BookingSliceReducer } = BookingSlice;

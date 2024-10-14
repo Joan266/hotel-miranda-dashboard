@@ -1,15 +1,32 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
-  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, DataModifiers, FilterStatusNav, NavStatusOptions,
+  PaginationContainer, PaginationButton, PaginationControls, PaginationInput, TableModifiers, TableModifiersContainer, FilterStatusNav, NavStatusOptions, SearchInputContainer, SearchInput,
 } from '../styles/table';
-import { Text, SmallText } from '../styles/common';
+import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-
-export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConfig }: TableComponentProps<T>) => {
+export const TableComponent = <T extends { _id: string }>({
+  pageSize,
+  data,
+  columns,
+  statuses,
+  sortConfig,
+  searchConfig: initialSearchConfig,
+}: TableComponentProps<T>) => {
   const [activeStatus, setActiveStatus] = useState<string | boolean>('all');
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearchConfig?.query || ''); 
+  const [inputPage, setInputPage] = useState<number | null>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchConfig = initialSearchConfig
+  ? { ...initialSearchConfig, query: searchQuery } 
+  : null; 
+
   const {
     page,
     dataCurrentPage,
@@ -18,9 +35,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
     goToPrevPage,
     totalPages,
     dataLength,
-  } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig);
-
-  const [inputPage, setInputPage] = useState<number | null>(null);
+  } = useTableModifiers<T>(data, pageSize, activeStatus, sortConfig, searchConfig);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -34,15 +49,37 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
 
   const handleInputSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (inputPage === null || inputPage > totalPages || inputPage === 0) return;
+      if (typeof inputPage !== 'number' || isNaN(inputPage)) {
+        console.warn('Invalid input: Input is not a valid number.');
+        return;
+      }
+      if (inputPage < 1 || inputPage > totalPages) {
+        console.warn(`Invalid input: Page number must be between 1 and ${totalPages}.`);
+        return;
+      }
+  
       goToPage(inputPage);
+  
       setInputPage(null);
     }
   };
 
+  const handleAddOneClick = () => {
+    navigate(`create`);
+  };
+
+  const handleRowClick = (rowId: string) => {
+    !location.pathname.includes('reviews') && navigate(`${rowId}`);
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    goToPage(1); 
+  };
+
   return (
     <>
-      <DataModifiers>
+      <TableModifiers>
         {statuses && (
           <FilterStatusNav>
             {statuses.map((status, index) => (
@@ -56,10 +93,23 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
             ))}
           </FilterStatusNav>
         )}
-        <div>
-          <button>Add one +</button>
-        </div>
-      </DataModifiers>
+        <TableModifiersContainer>
+          {initialSearchConfig && (
+            <SearchInputContainer>
+              <SearchInput
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                placeholder="Search..."
+              />
+            </SearchInputContainer>
+          )}
+           {location.pathname.includes('reviews') ? null : (
+            <Button onClick={handleAddOneClick}>Add One</Button>
+          )}
+        </TableModifiersContainer>
+
+      </TableModifiers>
 
       <Table $columnscount={columns.length}>
         <TableHeaderRow>
@@ -68,7 +118,7 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           ))}
         </TableHeaderRow>
         {dataCurrentPage.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow key={rowIndex} onClick={() => handleRowClick(row._id)}>
             {columns.map((column, cellIndex) => (
               <TableCell key={cellIndex}>{column.display(row)}</TableCell>
             ))}
@@ -81,7 +131,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
           Showing {pageSize} of {dataLength} entries
         </SmallText>
         <PaginationControls>
-          <PaginationButton onClick={() => { goToPrevPage(); setInputPage(null); }} disabled={page === 1}>
+          <PaginationButton
+            onClick={() => {
+              goToPrevPage();
+              setInputPage(null);
+            }}
+            disabled={page === 1}
+          >
             {"<"}
           </PaginationButton>
           <PaginationInput
@@ -94,7 +150,13 @@ export const TableComponent = <T,>({ pageSize, data, columns, statuses, sortConf
             max={totalPages}
           />
           <Text>/ {totalPages}</Text>
-          <PaginationButton onClick={() => { goToNextPage(); setInputPage(null); }} disabled={page === totalPages}>
+          <PaginationButton
+            onClick={() => {
+              goToNextPage();
+              setInputPage(null);
+            }}
+            disabled={page === totalPages}
+          >
             {">"}
           </PaginationButton>
         </PaginationControls>

@@ -1,15 +1,25 @@
-export interface Room {
-  id: number;
-  room_type: string;
-  bed_type: string;
-  floor_room: number;
-  facilities: string[];
-  rate: number;
-  status: string;
+export interface RoomInterface {
+  _id: string;  
+  name: string;                 
+  bedtype: string;                 
+  facilities?: string[];          
+  rate: number;                   
+  offer: number;                   
+  photourl?: string;                   
+  status: 'available' | 'booked' | 'maintenance' | 'unavailable'; 
+}
+export interface RoomFormInterface {
+  name: string;                 
+  bedtype: string;                   
+  facilities?: string[];          
+  rate: number;                   
+  offer: number;                   
+  photourl?: string;                   
+  status: 'available' | 'booked' | 'maintenance' | 'unavailable'; 
 }
 
 export interface RoomState {
-  items: Room[];
+  items: RoomInterface[];
   status: 'idle' | 'loading' | 'fulfilled' | 'rejected';
   error: string | null;
 }

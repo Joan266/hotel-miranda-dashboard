@@ -27,14 +27,16 @@ const TableHeaderCell = styled.div`
   text-align: left;
   padding: 1em;
   font-size: 0.7rem;
+  padding-left:2em;
   font-weight: 700;
   color: ${props => props.theme.colors.mediumBlack};
   border-bottom: 2px solid ${props => props.theme.colors.lightGray};
+  border-right: 1px solid whitesmoke;
 `;
 
 const TableRow = styled.div`
   display: contents;
-  cursor:default;
+  cursor:pointer;
   > div {
     position: relative;
     &::before,
@@ -82,8 +84,8 @@ const TableCell = styled.div`
 `;
 
 const ProfileImgContainer = styled.div`
-  height: 60px;
-  min-width: 60px;
+  height: 50px;
+  min-width: 50px;
   background-color: ${props => props.theme.colors.lightGray};
   border-radius: 0.3em;
   margin-right: 1em;
@@ -125,15 +127,12 @@ const PaginationInput = styled.input`
     outline: none;
     box-shadow: none;
   }
-  /* Hide the spinners in input type number */
-  /* For Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* For Firefox */
   &[type="number"] {
     -moz-appearance: textfield;
   }
@@ -160,7 +159,7 @@ const PaginationButton = styled.button`
   }
 `;
 
-const DataModifiers = styled.div`
+const TableModifiers = styled.div`
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
@@ -169,6 +168,10 @@ const DataModifiers = styled.div`
 
 const FilterStatusNav = styled.nav`
   display: flex;
+`;
+const TableModifiersContainer = styled.div`
+  display: flex;
+  gap: 0.5em;
 `;
 
 const NavStatusOptions = styled.button<NavStatusOptionsProps>`
@@ -187,7 +190,30 @@ const NavStatusOptions = styled.button<NavStatusOptionsProps>`
     border-bottom: 2px solid ${props => props.theme.colors.darkGreen};
   }
 `;
+const SearchInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;  
+`;
 
+const SearchInput = styled.input`
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  width: 200px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color:  ${props => props.theme.colors.darkGreen};  
+  }
+
+  &:hover {
+    border-color: #999;  
+  }
+`;
 export {
   Table,
   TableCell,
@@ -200,7 +226,10 @@ export {
   PaginationButton,
   PaginationControls,
   PaginationInput,
-  DataModifiers,
+  TableModifiers,
+  TableModifiersContainer,
   FilterStatusNav,
-  NavStatusOptions
+  NavStatusOptions,
+  SearchInput,
+  SearchInputContainer,
 };
