@@ -9,11 +9,12 @@ export const LayoutContainer = styled.div`
 
 export const NavContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
-  padding: 3em 0;
-  height: 100%;
-  width: 350px;
-  min-width: 250px;
+  padding: 0.5em 0;
+  min-height: 100%;
+  width: 400px;
+  min-width: 350px;
   box-sizing: border-box;
+  border-right: 5px solid ${(props) => props.theme.colors.primaryRed};
 `;
 
 export const Nav = styled.nav`
@@ -28,14 +29,14 @@ export const NavLink = styled(Link)<NavLinkProps>`
   text-decoration: none;
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
-  font-size: 0.8rem;
-  border-left: 4px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
+  font-size: 1rem;
+  border-left: 6px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
   width: 100%;
   padding-left: 3em;
   font-weight: ${(props) => (props.$active === "true" ? "bold" : "500")}; 
   &:hover {
     color: ${(props) => props.theme.colors.primaryRed};
-    border-left: 4px solid ${(props) => props.theme.colors.primaryRed};
+    border-left: 6px solid ${(props) => props.theme.colors.primaryRed};
     font-weight: bold;
   }
 `;
@@ -74,3 +75,17 @@ export const Title = styled.h1`
   font-size: 1.15rem;
   margin-left: 1.5em;
 `;
+export const ImageLogo = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+    margin-bottom:2em;
+    >img {
+      width: 140px;
+    }  
+    h1 {
+      font-size: 1.5rem; 
+      color: #333; 
+      margin: 0;
+    }
+`

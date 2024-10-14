@@ -1,7 +1,10 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; 
 import React from 'react';
-import { LayoutContainer,NavContainer,Nav, NavLink,LogoutButton, ContentContainer, Header, Title } from '../styles/layout';
+import { AuthStatus } from '../components/AuthStatus';
+import { LayoutContainer,NavContainer,Nav, NavLink,LogoutButton, ContentContainer, Header, Title, ImageLogo } from '../styles/layout';
+import travl from "../assets/img/vista.png";
+
 export const Layout: React.FC = () => {
   const { logout } = useAuth(); 
   const location = useLocation();
@@ -19,6 +22,7 @@ export const Layout: React.FC = () => {
   return (
     <LayoutContainer>
       <NavContainer>
+        <ImageLogo><img src={travl} alt="imagen del logotipo"/><h1>Hotel Miranda</h1></ImageLogo>
         <Nav>
           <NavLink to="/" $active={location.pathname.endsWith('/').toString()}>
             Dashboard
@@ -35,7 +39,7 @@ export const Layout: React.FC = () => {
           <NavLink to="/users" $active={location.pathname.includes('/users').toString()}>
             Users
           </NavLink>
-          <LogoutButton onClick={logout}>Logout</LogoutButton>
+          <AuthStatus></AuthStatus>
         </Nav>
       </NavContainer>
       <ContentContainer>
@@ -45,3 +49,4 @@ export const Layout: React.FC = () => {
     </LayoutContainer>
   );
 };
+

@@ -5,6 +5,7 @@ import { readOneThunk } from '../../slices/UserSlice/userThunks';
 import { AppDispatch, RootState } from '../../store';
 import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
 import clientDefault from '../../assets/img/client_default.webp';
+import UserActions from './UserActions';
 
 export const UsersView: React.FC = () => {
   const { id } = useParams();
@@ -37,6 +38,7 @@ export const UsersView: React.FC = () => {
             <small>#{single._id}</small>
             <p><small>({single.jobdesk})</small></p>
           </ProfileInfo>
+          <UserActions userId={id}/>
         </ProfileHeader>
 
         <InfoGroup>

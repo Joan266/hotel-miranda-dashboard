@@ -5,6 +5,7 @@ import { readOneThunk } from '../../slices/RoomSlice/roomThunks';
 import { AppDispatch, RootState } from '../../store';
 import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
 import roomDefault from '../../assets/img/default_room.webp';
+import RoomActions from './RoomActions';
 
 export const RoomsView: React.FC = () => {
   const { id } = useParams();
@@ -38,6 +39,8 @@ export const RoomsView: React.FC = () => {
             <h3>{single.name}</h3>
             <small>#{single._id}</small>
           </ProfileInfo>
+          
+        <RoomActions roomId={id}/>
         </ProfileHeader>
 
         <InfoGroup>

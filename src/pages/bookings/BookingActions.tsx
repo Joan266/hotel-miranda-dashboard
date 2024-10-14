@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { DataActionsContainer, EllipsisContainer, Menu, MenuItem } from '../../styles/actions';
+import { ActionsContainer, EllipsisContainer, Menu, MenuItem } from '../../styles/actions';
 import { useDispatch } from 'react-redux';
 import { deleteOneThunk } from "../../slices/BookingSlice/bookingThunks"; 
 import { AppDispatch } from '../../store';
@@ -76,7 +76,7 @@ const Actions = ({ bookingId }) => {
   }, [containerRef]);
 
   return (
-    <DataActionsContainer ref={containerRef}>
+    <ActionsContainer ref={containerRef}>
       <EllipsisContainer onClick={handleToggleMenu}>
         <FontAwesomeIcon icon={faEllipsisVertical} className="ellipsis-icon" />
       </EllipsisContainer>
@@ -87,7 +87,7 @@ const Actions = ({ bookingId }) => {
           <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
         </Menu>
       )}
-    </DataActionsContainer>
+    </ActionsContainer>
   );
 };
 

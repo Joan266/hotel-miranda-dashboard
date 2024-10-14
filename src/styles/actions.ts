@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const DataActionsContainer = styled.div`
+const ActionsContainer = styled.div`
   position: relative;
 `;
 
@@ -9,6 +9,7 @@ const EllipsisContainer = styled.div`
   .ellipsis-icon {
     color: grey;
     font-size: 1.2rem;
+     margin-left:2em;
   }
 
   &:hover .ellipsis-icon {
@@ -37,4 +38,4 @@ const MenuItem = styled.div`
   }
 `;
 
-export { DataActionsContainer, EllipsisContainer, Menu, MenuItem };
+export { ActionsContainer, EllipsisContainer, Menu, MenuItem };

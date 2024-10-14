@@ -1,4 +1,6 @@
 export interface AuthInterface {
+  token:string,
+  user:{
   _id: string;               
   firstname: string;        
   lastname: string;         
@@ -10,5 +12,5 @@ export interface AuthInterface {
   photoUrl?: string;
   token?: string;
   description?: string;        
-  jobdesk?: string;        
+  jobdesk?: string;     }   
 }

@@ -5,6 +5,7 @@ import { readOneThunk } from '../../slices/BookingSlice/bookingThunks';
 import { AppDispatch, RootState } from '../../store';
 import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Divider } from '../../styles/view';
 import bookingDefault from '../../assets/img/default_room.webp';
+import BookingActions from './BookingActions';
 
 export const BookingView: React.FC = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ export const BookingView: React.FC = () => {
             <h3>{single.firstname} {single.lastname}</h3>
             <small>#{single._id}</small>
           </ProfileInfo>
+          <BookingActions bookingId={id} />
         </ProfileHeader>
 
         <InfoGroup>
