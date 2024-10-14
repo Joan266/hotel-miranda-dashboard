@@ -14,7 +14,6 @@ export const NavContainer = styled.div`
   width: 400px;
   min-width: 350px;
   box-sizing: border-box;
-  border-right:2px solid ${(props) => props.theme.colors.darkGreen};
 `;
 
 export const Nav = styled.nav`
@@ -51,20 +50,7 @@ export const ContentContainer = styled.div`
   background-color: ${(props) => props.theme.colors.lightGray};
 `;
 
-export const Header = styled.header`
-  padding: 0 1em;
-  height: 5em;
-  display: flex;
-  flex-direction:row;
-  align-items: center;
-  justify-content:space-between;
-  background-color: #FFFFFF;
-`;
 
-export const Title = styled.h1`
-  font-weight: 600;
-  font-size: 1.15rem;
-`;
 export const ImageLogo = styled.div`
     display: flex;
     align-items: center;
@@ -75,7 +61,7 @@ export const ImageLogo = styled.div`
     }  
     h1 {
       font-size: 1.5rem; 
-      color: #333; 
+      color: #222; 
       margin: 0;
     }
 `

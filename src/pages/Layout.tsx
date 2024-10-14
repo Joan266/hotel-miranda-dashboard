@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import React from 'react';
 import { AuthStatus } from '../components/AuthStatus';
-import { HeaderNav } from '../components/HeaderNav';
+import HeaderNav from '../components/HeaderNav';
 import { LayoutContainer, NavContainer, Nav, NavLink, ContentContainer, ImageLogo } from '../styles/layout';
 import travl from "../assets/img/vista.png";
 

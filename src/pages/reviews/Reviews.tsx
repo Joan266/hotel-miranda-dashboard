@@ -167,7 +167,7 @@ export const Reviews = () => {
     <Container>
       {items.length > 0 && (
         <TableComponent
-          pageSize={7}
+          pageSize={8}
           data={items}
           columns={Columns}
           statuses={statuses}
