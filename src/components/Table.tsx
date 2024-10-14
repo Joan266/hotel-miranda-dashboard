@@ -6,7 +6,7 @@ import {
 import { Text, SmallText, Button } from '../styles/common';
 import { useTableModifiers } from '../hooks/useTableModifiers';
 import { TableComponentProps } from '../interfaces/common';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const TableComponent = <T extends { _id: string }>({
   pageSize,
@@ -21,6 +21,7 @@ export const TableComponent = <T extends { _id: string }>({
   const [inputPage, setInputPage] = useState<number | null>(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const searchConfig = initialSearchConfig
   ? { ...initialSearchConfig, query: searchQuery } 
@@ -68,7 +69,7 @@ export const TableComponent = <T extends { _id: string }>({
   };
 
   const handleRowClick = (rowId: string) => {
-    navigate(`${rowId}`);
+    !location.pathname.includes('reviews') && navigate(`${rowId}`);
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +104,9 @@ export const TableComponent = <T extends { _id: string }>({
               />
             </SearchInputContainer>
           )}
-          <Button onClick={handleAddOneClick}>Add One</Button>
+           {location.pathname.includes('reviews') ? null : (
+            <Button onClick={handleAddOneClick}>Add One</Button>
+          )}
         </TableModifiersContainer>
 
       </TableModifiers>
