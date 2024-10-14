@@ -14,7 +14,7 @@ export const NavContainer = styled.div`
   width: 400px;
   min-width: 350px;
   box-sizing: border-box;
-  border-right: 5px solid ${(props) => props.theme.colors.primaryRed};
+  border-right:2px solid ${(props) => props.theme.colors.darkGreen};
 `;
 
 export const Nav = styled.nav`
@@ -30,30 +30,19 @@ export const NavLink = styled(Link)<NavLinkProps>`
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
   font-size: 1rem;
-  border-left: 6px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
+  border-right: 8px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
   width: 100%;
   padding-left: 3em;
+  background-color:${(props) => (props.$active === "true" ? "rgba(255, 0, 0, 0.02)" : "transparent")};
   font-weight: ${(props) => (props.$active === "true" ? "bold" : "500")}; 
   &:hover {
     color: ${(props) => props.theme.colors.primaryRed};
-    border-left: 6px solid ${(props) => props.theme.colors.primaryRed};
-    font-weight: bold;
+    border-right: 8px solid ${(props) => props.theme.colors.primaryRed};
+    background-color:rgba(255, 0, 0, 0.02);
   }
 `;
 
-export const LogoutButton = styled.div`
-  cursor: pointer;
-  padding: 0.5em 1em;
-  font-size: 0.85rem;
-  margin-left: 3em;
-  margin-top: 5em;
-  background-color: ${(props) => props.theme.colors.primaryRed};
-  color: ${(props) => props.theme.colors.white};
-  border-radius: 0.4em;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.black};
-  }
-`;
+
 
 export const ContentContainer = styled.div`
   width: 100%;
@@ -63,17 +52,18 @@ export const ContentContainer = styled.div`
 `;
 
 export const Header = styled.header`
-  padding: 0 0.5em;
+  padding: 0 1em;
   height: 5em;
   display: flex;
+  flex-direction:row;
   align-items: center;
+  justify-content:space-between;
   background-color: #FFFFFF;
 `;
 
 export const Title = styled.h1`
   font-weight: 600;
   font-size: 1.15rem;
-  margin-left: 1.5em;
 `;
 export const ImageLogo = styled.div`
     display: flex;

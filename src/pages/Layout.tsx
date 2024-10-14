@@ -1,28 +1,17 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth'; 
 import React from 'react';
 import { AuthStatus } from '../components/AuthStatus';
-import { LayoutContainer,NavContainer,Nav, NavLink,LogoutButton, ContentContainer, Header, Title, ImageLogo } from '../styles/layout';
+import { HeaderNav } from '../components/HeaderNav';
+import { LayoutContainer, NavContainer, Nav, NavLink, ContentContainer, ImageLogo } from '../styles/layout';
 import travl from "../assets/img/vista.png";
 
 export const Layout: React.FC = () => {
-  const { logout } = useAuth(); 
   const location = useLocation();
-
-  const getPageName = (pathname: string): string => {
-    if (pathname === '/') {
-      return 'Dashboard';
-    }
-    const pageName = pathname.replace('/', '');
-    return pageName.charAt(0).toUpperCase() + pageName.slice(1);
-  };
-
-  const pageName = getPageName(location.pathname);
 
   return (
     <LayoutContainer>
       <NavContainer>
-        <ImageLogo><img src={travl} alt="imagen del logotipo"/><h1>Hotel Miranda</h1></ImageLogo>
+        <ImageLogo><img src={travl} alt="imagen del logotipo" /><h1>Hotel Miranda</h1></ImageLogo>
         <Nav>
           <NavLink to="/" $active={location.pathname.endsWith('/').toString()}>
             Dashboard
@@ -43,7 +32,7 @@ export const Layout: React.FC = () => {
         </Nav>
       </NavContainer>
       <ContentContainer>
-        <Header><Title>{pageName}</Title></Header>
+        <HeaderNav/>
         <Outlet />
       </ContentContainer>
     </LayoutContainer>
