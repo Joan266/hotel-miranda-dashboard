@@ -26,6 +26,8 @@ export async function backendAPICall(
     options.body = JSON.stringify(data);
   }
 
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
   try {
     const response = await fetch(url, options);
     if (response.status === 401 || response.status === 403) {

@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/BookingSlice/bookingThunks";
 import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../components/Loader';
 
 export const BookingForm: React.FC = () => {
   const { id: bookingId } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { single } = useSelector((state: RootState) => state.booking);
+  const { single, status } = useSelector((state: RootState) => state.booking);
 
   const [formData, setFormData] = useState<BookingFormInterface>({
     firstname: "",
@@ -135,88 +136,91 @@ export const BookingForm: React.FC = () => {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <FormGrid>
-          <FormGroup>
-            <Label>First Name:</Label>
-            <Input
-              type="text"
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange}
-              placeholder={bookingId ? single?.firstname || "" : "Enter first name"}
-            />
-            {errors.firstname && <ValidationError className="error">{errors.firstname}</ValidationError>}
-          </FormGroup>
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (
+        <Form onSubmit={handleSubmit}>
+          <FormGrid>
+            <FormGroup>
+              <Label>First Name:</Label>
+              <Input
+                type="text"
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange}
+                placeholder={bookingId ? single?.firstname || "" : "Enter first name"}
+              />
+              {errors.firstname && <ValidationError className="error">{errors.firstname}</ValidationError>}
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Last Name:</Label>
-            <Input
-              type="text"
-              name="lastname"
-              value={formData.lastname}
-              onChange={handleChange}
-              placeholder={bookingId ? single?.lastname || "" : "Enter last name"}
-            />
-            {errors.lastname && <ValidationError className="error">{errors.lastname}</ValidationError>}
-          </FormGroup>
+            <FormGroup>
+              <Label>Last Name:</Label>
+              <Input
+                type="text"
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+                placeholder={bookingId ? single?.lastname || "" : "Enter last name"}
+              />
+              {errors.lastname && <ValidationError className="error">{errors.lastname}</ValidationError>}
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Photo URL:</Label>
-            <Input
-              type="text"
-              name="photourl"
-              value={formData.photourl}
-              onChange={handleChange}
-              placeholder="Enter photo URL (optional)"
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label>Photo URL:</Label>
+              <Input
+                type="text"
+                name="photourl"
+                value={formData.photourl}
+                onChange={handleChange}
+                placeholder="Enter photo URL (optional)"
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Description:</Label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter a description (optional)"
-              rows={3}
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label>Description:</Label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Enter a description (optional)"
+                rows={3}
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Booking Dates:</Label>
-            <DatePicker
-              selected={formData.checkin}
-              onChange={handleDateRangeChange}
-              startDate={formData.checkin}
-              endDate={formData.checkout}
-              selectsRange
-              inline
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label>Booking Dates:</Label>
+              <DatePicker
+                selected={formData.checkin}
+                onChange={handleDateRangeChange}
+                startDate={formData.checkin}
+                endDate={formData.checkout}
+                selectsRange
+                inline
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Status:</Label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="pending">Pending</option>
-              <option value="booked">Booked</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="refund">Refund</option>
-            </select>
-          </FormGroup>
+            <FormGroup>
+              <Label>Status:</Label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+              >
+                <option value="pending">Pending</option>
+                <option value="booked">Booked</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="refund">Refund</option>
+              </select>
+            </FormGroup>
 
-          <div></div>
-          <div>
-            <SubmitButton type="submit">
-              {bookingId ? "Update Booking" : "Create Booking"}
-            </SubmitButton>
-          </div>
-        </FormGrid>
-      </Form>
+            <div></div>
+            <div>
+              <SubmitButton type="submit">
+                {bookingId ? "Update Booking" : "Create Booking"}
+              </SubmitButton>
+            </div>
+          </FormGrid>
+        </Form>)}
     </Container>
   );
 };

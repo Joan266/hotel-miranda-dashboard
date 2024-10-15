@@ -6,10 +6,22 @@ const CardsContainer = styled.div`
   overflow-x: scroll;
   gap: 1.5em;
   align-items: center;
-  margin-bottom: 2em;
   position: relative;
   height: 100%;
   padding-bottom: 0.5em;
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content:left;
+`;
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content:left;
 `;
 
 const ReviewCard = styled.div`
@@ -35,4 +47,4 @@ const BottomContainer = styled.div`
   align-items: center;
 `;
 
-export { CardsContainer, ReviewCard, BottomContainer };
+export { CardsContainer, ReviewCard, BottomContainer, InfoContainer, ProfileContainer };

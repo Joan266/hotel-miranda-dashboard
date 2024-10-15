@@ -10,7 +10,7 @@ import bookingDefault from '../../assets/img/default_room.webp';
 import { AppDispatch, RootState } from '../../store';
 import BookingActions from './BookingActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
-
+import { LoaderComponent } from '../../components/Loader';
 const searchConfig: SearchConfig = {
   query: "",
   param: "lastname",
@@ -168,7 +168,10 @@ export const Bookings = () => {
 
   return (
     <Container>
-      {items.length > 0 && (
+    {status === 'loading' ? (
+      <LoaderComponent />
+    ) : (
+      items.length > 0 && (
         <TableComponent
           pageSize={7} 
           data={items}
@@ -177,7 +180,8 @@ export const Bookings = () => {
           sortConfig={sortConfig}
           searchConfig={searchConfig}
         />
-      )}
-    </Container>
+      )
+    )}
+  </Container>
   );
 };

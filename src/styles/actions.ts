@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const DataActionsContainer = styled.div`
+const ActionsContainer = styled.div`
   position: relative;
 `;
 
@@ -9,6 +9,7 @@ const EllipsisContainer = styled.div`
   .ellipsis-icon {
     color: grey;
     font-size: 1.2rem;
+     margin-left:2em;
   }
 
   &:hover .ellipsis-icon {
@@ -18,11 +19,12 @@ const EllipsisContainer = styled.div`
 
 const Menu = styled.div`
   position: absolute;
-  top: 25px;
+  top: 0;
   right: 0;
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 4px;
+  transform:translate(0,-100%);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
 `;
@@ -37,4 +39,4 @@ const MenuItem = styled.div`
   }
 `;
 
-export { DataActionsContainer, EllipsisContainer, Menu, MenuItem };
+export { ActionsContainer, EllipsisContainer, Menu, MenuItem };

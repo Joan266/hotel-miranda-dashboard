@@ -6,14 +6,24 @@ export const LayoutContainer = styled.div`
   display: flex;
   min-height: 100%;
 `;
-
 export const NavContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
-  padding: 3em 0;
-  height: 100%;
-  width: 350px;
-  min-width: 250px;
-  box-sizing: border-box;
+  padding: 0.5em 0;
+  min-height: 100%;
+  width: 300px;
+  min-width: 300px;
+  box-sizing: border-box; 
+  position: relative; 
+
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   right: 0; 
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 1px;
+  //   background-color: ${(props) => props.theme.colors.gray};
+  // }
 `;
 
 export const Nav = styled.nav`
@@ -24,35 +34,25 @@ export const Nav = styled.nav`
   width: 100%;
 `;
 
-export const NavLink = styled(Link)<NavLinkProps>`
+export const NavLink = styled(Link) <NavLinkProps>`
   text-decoration: none;
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
-  font-size: 0.8rem;
-  border-left: 4px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
+  font-size: 1rem;
+  border-left: 8px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
   width: 100%;
   padding-left: 3em;
+  background-color:${(props) => (props.$active === "true" ? "rgba(255, 0, 0, 0.02)" : "transparent")};
   font-weight: ${(props) => (props.$active === "true" ? "bold" : "500")}; 
+  z-index:2;
   &:hover {
     color: ${(props) => props.theme.colors.primaryRed};
-    border-left: 4px solid ${(props) => props.theme.colors.primaryRed};
-    font-weight: bold;
+    border-left: 8px solid ${(props) => props.theme.colors.primaryRed};
+    background-color:rgba(255, 0, 0, 0.02);
   }
 `;
 
-export const LogoutButton = styled.div`
-  cursor: pointer;
-  padding: 0.5em 1em;
-  font-size: 0.85rem;
-  margin-left: 3em;
-  margin-top: 5em;
-  background-color: ${(props) => props.theme.colors.primaryRed};
-  color: ${(props) => props.theme.colors.white};
-  border-radius: 0.4em;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.black};
-  }
-`;
+
 
 export const ContentContainer = styled.div`
   width: 100%;
@@ -61,16 +61,18 @@ export const ContentContainer = styled.div`
   background-color: ${(props) => props.theme.colors.lightGray};
 `;
 
-export const Header = styled.header`
-  padding: 0 0.5em;
-  height: 5em;
-  display: flex;
-  align-items: center;
-  background-color: #FFFFFF;
-`;
 
-export const Title = styled.h1`
-  font-weight: 600;
-  font-size: 1.15rem;
-  margin-left: 1.5em;
-`;
+export const ImageLogo = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+    margin-bottom:2em;
+    >img {
+      width: 140px;
+    }  
+    h1 {
+      font-size: 1.5rem; 
+      color: ${(props) => props.theme.colors.primaryRed};
+      margin: 0;
+    }
+`
