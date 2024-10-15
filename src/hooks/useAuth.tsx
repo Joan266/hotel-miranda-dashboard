@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { AuthInterface } from "../interfaces/auth";
 import { authenticateUser } from "../utils/authenticateUser";
+import Swal from "sweetalert2"; // Import SweetAlert2
+
 interface AuthContextType {
   user: AuthInterface | null;
   login: (email: string, password: string) => Promise<void>;
@@ -20,9 +22,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const user = await authenticateUser(email, password);
-    setUser(user);
-    navigate("/");
+    try {
+      const user = await authenticateUser(email, password);
+      setUser(user);
+      Swal.fire({
+        title: 'Login Successful!',
+        text: 'Welcome back!',
+        icon: 'success',
+        timer: 1000,
+        showConfirmButton: false,
+      });
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        title: 'Login Failed',
+        text: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: true,
+      });
+    }
   };
 
   const logout = () => {
