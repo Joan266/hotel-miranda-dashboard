@@ -1,10 +1,8 @@
-import React, { createContext, useContext, useMemo, ReactNode } from "react";
+import React, { createContext, useContext, useMemo, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { AuthInterface } from "../interfaces/auth";
 import { authenticateUser } from "../utils/authenticateUser";
-import Swal from "sweetalert2"; // Import SweetAlert2
-
 interface AuthContextType {
   user: AuthInterface | null;
   login: (email: string, password: string) => Promise<void>;
@@ -19,29 +17,13 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
+  const [isFirstVisit, setIsFistVisit] = useState(true);
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    try {
-      const user = await authenticateUser(email, password);
-      setUser(user);
-      Swal.fire({
-        title: 'Login Successful!',
-        text: 'Welcome back!',
-        icon: 'success',
-        timer: 1000,
-        showConfirmButton: false,
-      });
-      navigate("/");
-    } catch (error) {
-      Swal.fire({
-        title: 'Login Failed',
-        text: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.',
-        icon: 'error',
-        timer: 2000,
-        showConfirmButton: true,
-      });
-    }
+    const user = await authenticateUser(email, password);
+    setUser(user);
+    navigate("/");
   };
 
   const logout = () => {
@@ -57,6 +39,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }),
     [user]
   );
+  useEffect(() => {
+    if (isFirstVisit && !user) {
+      const demoEmail = "admin@example.com";
+      const demoPassword = "securepassword?5A!@";
+      setIsFistVisit(false);
+      login(demoEmail, demoPassword);
+    }
+  }, [user, login, isFirstVisit]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
