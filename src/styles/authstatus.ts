@@ -11,7 +11,7 @@ export const UserProfileContainer = styled.div`
   background-color: #FFFFFF;
   padding: 2rem 1rem 1rem 1rem;
   border-radius: 1rem;
-  margin: 0 1.5rem;
+  margin: 0 0.5rem;
   margin-bottom: 3rem;
   text-align: center;
   cursor: pointer;

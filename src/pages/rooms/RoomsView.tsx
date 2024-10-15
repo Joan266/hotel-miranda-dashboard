@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../store';
 import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
 import roomDefault from '../../assets/img/default_room.webp';
 import RoomActions from './RoomActions';
+import { LoaderComponent } from '../../components/Loader';
 
 export const RoomsView: React.FC = () => {
   const { id } = useParams();
@@ -18,67 +19,64 @@ export const RoomsView: React.FC = () => {
     }
   }, [id, dispatch]);
 
-  if (status.loading) {
-    return "loading";
-  }
 
-  if (!single) {
-    return <Container>
-      <h1>Room Not Found</h1>
-    </Container>;
-  }
 
   const discountedPrice = single.rate * (1 - single.offer / 100);
 
   return (
-    <Container>
-      <ProfileWrapper>
-        <ProfileHeader>
-          <ProfileImgContainer ><img src={single.photourl || roomDefault} alt="Room image"/></ProfileImgContainer>
-          <ProfileInfo>
-            <h3>{single.name}</h3>
-            <small>#{single._id}</small>
-          </ProfileInfo>
-          
-        <RoomActions roomId={id}/>
-        </ProfileHeader>
+    <>
+      {status === 'loading' || !single ? (
+        <LoaderComponent />
+      ) : (
+        <Container>
+          <ProfileWrapper>
+            <ProfileHeader>
+              <ProfileImgContainer ><img src={single.photourl || roomDefault} alt="Room image" /></ProfileImgContainer>
+              <ProfileInfo>
+                <h3>{single.name}</h3>
+                <small>#{single._id}</small>
+              </ProfileInfo>
 
-        <InfoGroup>
-          <span>
-            <Label>Bed Type:</Label>
-            <Field>{single.bedtype}</Field>
-          </span>
-        </InfoGroup>
+              <RoomActions roomId={id} />
+            </ProfileHeader>
 
-        <InfoGroup>
-          <span>
-            <Label>Rate:</Label>
-            <Field>${single.rate.toFixed(2)}</Field>
-          </span>
-          <span>
-            <Label>Offer:</Label>
-            <Field>{single.offer}%</Field>
-          </span>
-          <span>
-            <Label>Final Price:</Label>
-            <Field>${discountedPrice.toFixed(2)}</Field>
-          </span>
-        </InfoGroup>
+            <InfoGroup>
+              <span>
+                <Label>Bed Type:</Label>
+                <Field>{single.bedtype}</Field>
+              </span>
+            </InfoGroup>
 
-        <Divider />
+            <InfoGroup>
+              <span>
+                <Label>Rate:</Label>
+                <Field>${single.rate.toFixed(2)}</Field>
+              </span>
+              <span>
+                <Label>Offer:</Label>
+                <Field>{single.offer}%</Field>
+              </span>
+              <span>
+                <Label>Final Price:</Label>
+                <Field>${discountedPrice.toFixed(2)}</Field>
+              </span>
+            </InfoGroup>
 
-        <InfoGroup>
-          <span>
-            <Label>Facilities:</Label>
-            <Field>{single.facilities?.join(', ') || 'No facilities listed'}</Field>
-          </span>
-        </InfoGroup>
-      </ProfileWrapper>
+            <Divider />
 
-      <BigImage>
-        <Status>{single.status === 'available' ? 'Available' : single.status.charAt(0).toUpperCase() + single.status.slice(1)}</Status>
-        <img src={single.photourl || roomDefault} alt="Room image" />
-      </BigImage>
-    </Container>
+            <InfoGroup>
+              <span>
+                <Label>Facilities:</Label>
+                <Field>{single.facilities?.join(', ') || 'No facilities listed'}</Field>
+              </span>
+            </InfoGroup>
+          </ProfileWrapper>
+
+          <BigImage>
+            <Status>{single.status === 'available' ? 'Available' : single.status.charAt(0).toUpperCase() + single.status.slice(1)}</Status>
+            <img src={single.photourl || roomDefault} alt="Room image" />
+          </BigImage>
+        </Container>)}
+    </>
   );
 };

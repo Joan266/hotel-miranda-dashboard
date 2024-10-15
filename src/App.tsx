@@ -14,33 +14,15 @@ import { Login } from './pages/Login';
 import { Layout } from './pages/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import './App.css'
 import { theme } from './styles/theme';
 import React from 'react';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: ${props => props.theme.fontFamily};
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  #root {
-    width: 100%;
-    height: 100vh;
-  }
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-`;
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
       <AuthProvider>
         <Routes>
           <Route path="/" element={<PrivateRoute><Layout/></PrivateRoute>}>

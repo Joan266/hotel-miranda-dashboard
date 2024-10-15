@@ -10,8 +10,8 @@ export const NavContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
   padding: 0.5em 0;
   min-height: 100%;
-  width: 400px;
-  min-width: 350px;
+  width: 300px;
+  min-width: 300px;
   box-sizing: border-box; 
   position: relative; 
 
@@ -21,7 +21,7 @@ export const NavContainer = styled.div`
   //   right: 0; 
   //   top: 0;
   //   bottom: 0;
-  //   width: 8px;
+  //   width: 1px;
   //   background-color: ${(props) => props.theme.colors.gray};
   // }
 `;
@@ -39,7 +39,7 @@ export const NavLink = styled(Link) <NavLinkProps>`
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
   font-size: 1rem;
-  border-right: 8px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
+  border-left: 8px solid ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : "transparent")};
   width: 100%;
   padding-left: 3em;
   background-color:${(props) => (props.$active === "true" ? "rgba(255, 0, 0, 0.02)" : "transparent")};
@@ -47,7 +47,7 @@ export const NavLink = styled(Link) <NavLinkProps>`
   z-index:2;
   &:hover {
     color: ${(props) => props.theme.colors.primaryRed};
-    border-right: 8px solid ${(props) => props.theme.colors.primaryRed};
+    border-left: 8px solid ${(props) => props.theme.colors.primaryRed};
     background-color:rgba(255, 0, 0, 0.02);
   }
 `;
@@ -72,7 +72,7 @@ export const ImageLogo = styled.div`
     }  
     h1 {
       font-size: 1.5rem; 
-      color: #222; 
+      color: ${(props) => props.theme.colors.primaryRed};
       margin: 0;
     }
 `

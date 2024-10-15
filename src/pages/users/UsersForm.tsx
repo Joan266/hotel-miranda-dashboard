@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/UserSlice/userThunks"; 
 import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../components/Loader';
+
 
 export const UserForm: React.FC = () => {
   const { id: userId } = useParams<{ id: string }>(); 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { single } = useSelector((state: RootState) => state.user); 
+  const { single, status } = useSelector((state: RootState) => state.user); 
   
   const [formData, setFormData] = useState<UserFormInterface>({
     firstname: "",
@@ -144,6 +146,9 @@ export const UserForm: React.FC = () => {
 
   return (
     <Container>
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (
       <Form onSubmit={handleSubmit}>
         <FormGrid>
           <FormGroup>
@@ -266,7 +271,7 @@ export const UserForm: React.FC = () => {
             </SubmitButton>
           </div>
         </FormGrid>
-      </Form>
+      </Form>)}
     </Container>
   );
 };

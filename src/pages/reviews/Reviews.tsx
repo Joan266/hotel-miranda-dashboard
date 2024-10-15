@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Text, SmallText, IsTextActive, LabelContainer, ArrowContainer, Triangle } from '../../styles/common';
 import { CellContainer } from '../../styles/table';
-import { readAllThunk as readAllReviewsThunk } from '../../slices/ReviewSlice/reviewThunks'; 
+import { readAllThunk as readAllReviewsThunk } from '../../slices/ReviewSlice/reviewThunks';
 import { TableComponent } from '../../components/Table';
 import { ReviewInterface } from '../../interfaces/review';
 import { Column, Status } from '../../interfaces/common';
 import { AppDispatch, RootState } from '../../store';
-import ReviewActions from './ReviewActions'; 
+import ReviewActions from './ReviewActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'; 
-import { faStar as faStarRegular, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'; 
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons';
+import { LoaderComponent } from '../../components/Loader';
 
 const searchConfig: SearchConfig = {
   query: "",
@@ -25,7 +26,7 @@ const statuses: Status[] = [
 ];
 
 export const Reviews = () => {
-  const { items, status, error } = useSelector((state: RootState) => state.review); 
+  const { items, status, error } = useSelector((state: RootState) => state.review);
   const dispatch = useDispatch<AppDispatch>();
   const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
@@ -58,9 +59,9 @@ export const Reviews = () => {
     return (
       <>
         {Array.from({ length: fullStars }).map((_, idx) => (
-          <FontAwesomeIcon key={idx} icon={faStarSolid} color='#FFD43B'/>
+          <FontAwesomeIcon key={idx} icon={faStarSolid} color='#FFD43B' />
         ))}
-        {hasHalfStar && <FontAwesomeIcon icon={faStarHalfStroke} color='#FFD43B'/>}
+        {hasHalfStar && <FontAwesomeIcon icon={faStarHalfStroke} color='#FFD43B' />}
         {Array.from({ length: emptyStars }).map((_, idx) => (
           <FontAwesomeIcon key={idx} icon={faStarRegular} color='#FFD43B' />
         ))}
@@ -75,12 +76,12 @@ export const Reviews = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === 1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("lastname", "string", 1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === -1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("lastname", "string", -1)}
             />
           </ArrowContainer>
@@ -102,12 +103,12 @@ export const Reviews = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "reviewdate" && sortConfig?.direction === -1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("reviewdate", "date", -1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "reviewdate" && sortConfig?.direction === 1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("reviewdate", "date", 1)}
             />
           </ArrowContainer>
@@ -130,12 +131,12 @@ export const Reviews = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "rate" && sortConfig?.direction === -1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("rate", "number", -1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "rate" && sortConfig?.direction === 1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("rate", "number", 1)}
             />
           </ArrowContainer>
@@ -158,14 +159,16 @@ export const Reviews = () => {
     {
       label: "",
       display: (review) => (
-        <ReviewActions reviewId={review._id}/>  
+        <ReviewActions reviewId={review._id} />
       )
     },
   ];
 
   return (
     <Container>
-      {items.length > 0 && (
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (items.length > 0 && (
         <TableComponent
           pageSize={8}
           data={items}
@@ -174,7 +177,7 @@ export const Reviews = () => {
           sortConfig={sortConfig}
           searchConfig={searchConfig}
         />
-      )}
+      ))}
     </Container>
   );
 };

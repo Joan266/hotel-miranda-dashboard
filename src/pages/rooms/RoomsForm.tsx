@@ -3,16 +3,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { RoomFormInterface } from "../../interfaces/rooms";
 import { Form, FormGrid, FormGroup, SubmitButton, Input, Label, Container, ValidationError } from '../../styles/form';
 import { useDispatch, useSelector } from 'react-redux';
-import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/RoomSlice/roomThunks"; 
+import { readOneThunk, updateOneThunk, createOneThunk } from "../../slices/RoomSlice/roomThunks";
 import { AppDispatch, RootState } from '../../store';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../components/Loader';
 
 export const RoomForm: React.FC = () => {
   const { id: roomId } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { single } = useSelector((state: RootState) => state.room);
-  
+  const { single, status } = useSelector((state: RootState) => state.room);
+
   const [formData, setFormData] = useState<RoomFormInterface>({
     name: "",
     bedtype: "",
@@ -119,89 +120,92 @@ export const RoomForm: React.FC = () => {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <FormGrid>
-          <FormGroup>
-            <Label>Room Name:</Label>
-            <Input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder={roomId ? single?.name || "" : "Enter room name"}
-            />
-            {errors.name && <ValidationError className="error">{errors.name}</ValidationError>}
-          </FormGroup>
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (
+        <Form onSubmit={handleSubmit}>
+          <FormGrid>
+            <FormGroup>
+              <Label>Room Name:</Label>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder={roomId ? single?.name || "" : "Enter room name"}
+              />
+              {errors.name && <ValidationError className="error">{errors.name}</ValidationError>}
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Bed Type:</Label>
-            <Input
-              type="text"
-              name="bedtype"
-              value={formData.bedtype}
-              onChange={handleChange}
-              placeholder={roomId ? single?.bedtype || "" : "Enter bed type"}
-            />
-            {errors.bedtype && <ValidationError className="error">{errors.bedtype}</ValidationError>}
-          </FormGroup>
+            <FormGroup>
+              <Label>Bed Type:</Label>
+              <Input
+                type="text"
+                name="bedtype"
+                value={formData.bedtype}
+                onChange={handleChange}
+                placeholder={roomId ? single?.bedtype || "" : "Enter bed type"}
+              />
+              {errors.bedtype && <ValidationError className="error">{errors.bedtype}</ValidationError>}
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Rate:</Label>
-            <Input
-              type="number"
-              name="rate"
-              value={formData.rate}
-              onChange={handleChange}
-              placeholder="Enter rate"
-              min="0"
-            />
-            {errors.rate && <ValidationError className="error">{errors.rate}</ValidationError>}
-          </FormGroup>
+            <FormGroup>
+              <Label>Rate:</Label>
+              <Input
+                type="number"
+                name="rate"
+                value={formData.rate}
+                onChange={handleChange}
+                placeholder="Enter rate"
+                min="0"
+              />
+              {errors.rate && <ValidationError className="error">{errors.rate}</ValidationError>}
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Offer (%):</Label>
-            <Input
-              type="number"
-              name="offer"
-              value={formData.offer}
-              onChange={handleChange}
-              placeholder="Enter offer percentage"
-              min="0"
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label>Offer (%):</Label>
+              <Input
+                type="number"
+                name="offer"
+                value={formData.offer}
+                onChange={handleChange}
+                placeholder="Enter offer percentage"
+                min="0"
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Photo URL:</Label>
-            <Input
-              type="text"
-              name="photourl"
-              value={formData.photourl}
-              onChange={handleChange}
-              placeholder={roomId ? single?.photourl || "" : "Enter photo URL"}
-            />
-          </FormGroup>
+            <FormGroup>
+              <Label>Photo URL:</Label>
+              <Input
+                type="text"
+                name="photourl"
+                value={formData.photourl}
+                onChange={handleChange}
+                placeholder={roomId ? single?.photourl || "" : "Enter photo URL"}
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <Label>Status:</Label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="available">Available</option>
-              <option value="booked">Booked</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="unavailable">Unavailable</option>
-            </select>
-          </FormGroup>
+            <FormGroup>
+              <Label>Status:</Label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+              >
+                <option value="available">Available</option>
+                <option value="booked">Booked</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </FormGroup>
 
-          <div>
-            <SubmitButton type="submit">
-              {roomId ? "Update Room" : "Create Room"}
-            </SubmitButton>
-          </div>
-        </FormGrid>
-      </Form>
+            <div>
+              <SubmitButton type="submit">
+                {roomId ? "Update Room" : "Create Room"}
+              </SubmitButton>
+            </div>
+          </FormGrid>
+        </Form>)}
     </Container>
   );
 };

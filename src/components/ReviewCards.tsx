@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import React from "react";
 import ReviewActions from '../pages/reviews/ReviewActions';
 import { readAllThunk as readAllReviewsThunk } from '../slices/ReviewSlice/reviewThunks';
-
+import { LoaderComponent } from './Loader';
 export const ReviewCards = () => {
   const { items, status, error } = useSelector((state: RootState) => state.review);
   const dispatch = useDispatch<AppDispatch>();
@@ -41,10 +41,10 @@ export const ReviewCards = () => {
     console.log(items, status, error);
   }, [status, dispatch]);
 
-  if (status === 'loading') return <div>Loading reviews...</div>;
-  if (status === 'error') return <div>Error: {error}</div>;
+  if (status === 'loading') return <LoaderComponent/>;
 
   return (
+    
     <CardsContainer>
       {items?.map((item: ReviewInterface) => (
         <ReviewCard key={`card-${item._id}`}>

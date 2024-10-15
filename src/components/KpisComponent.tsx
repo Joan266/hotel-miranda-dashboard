@@ -8,7 +8,7 @@ const KpisComponent: React.FC = () => {
   return (
     <>
       <ButtonsContainer>
-        <ButtonContent to={'/dashboard/bookings'}>
+        <ButtonContent to={'/bookings'}>
           <ButtonImage>
             <MdOutlineBed />
           </ButtonImage>
@@ -18,7 +18,7 @@ const KpisComponent: React.FC = () => {
           </ButtonTextContainer>
         </ButtonContent>
 
-        <ButtonContent to={'/dashboard/rooms'}>
+        <ButtonContent to={'/rooms'}>
           <ButtonImage>
             <LuCalendarCheck2 />
           </ButtonImage>
@@ -28,7 +28,7 @@ const KpisComponent: React.FC = () => {
           </ButtonTextContainer>
         </ButtonContent>
 
-        <ButtonContent to={'/dashboard/bookings'}>
+        <ButtonContent to={'/bookings'}>
           <ButtonImage>
             <RiLoginBoxLine />
           </ButtonImage>
@@ -38,7 +38,7 @@ const KpisComponent: React.FC = () => {
           </ButtonTextContainer>
         </ButtonContent>
 
-        <ButtonContent to={'/dashboard/bookings'}>
+        <ButtonContent to={'/bookings'}>
           <ButtonImage>
             <RiLogoutBoxLine />
           </ButtonImage>

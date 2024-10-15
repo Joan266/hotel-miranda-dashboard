@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Text, SmallText, StatusColor, LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
+import { Container, Text, SmallText, StatusColor, LabelContainer, ArrowContainer, Triangle } from '../../styles/common';
 import { CellContainer, ProfileImgContainer } from '../../styles/table';
-import { readAllThunk } from '../../slices/RoomSlice/roomThunks'; 
+import { readAllThunk } from '../../slices/RoomSlice/roomThunks';
 import { TableComponent } from '../../components/Table';
-import { RoomInterface } from '../../interfaces/rooms'; 
+import { RoomInterface } from '../../interfaces/rooms';
 import { Column, Status } from '../../interfaces/common';
 import roomDefault from '../../assets/img/default_room.webp';
 import { AppDispatch, RootState } from '../../store';
 import RoomActions from './RoomActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
-
+import { LoaderComponent } from '../../components/Loader';
 const searchConfig: SearchConfig = {
-  query: "", 
-  param: "name", 
+  query: "",
+  param: "name",
 };
 
 const statuses: Status[] = [
@@ -45,7 +45,7 @@ export const Rooms = () => {
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(readAllThunk()); 
+      dispatch(readAllThunk());
     }
     console.log(items, status, error);
   }, [status, dispatch]);
@@ -58,12 +58,12 @@ export const Rooms = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "name" && sortConfig?.direction === 1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("name", "string", 1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "name" && sortConfig?.direction === -1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("name", "string", -1)}
             />
           </ArrowContainer>
@@ -73,7 +73,7 @@ export const Rooms = () => {
         <CellContainer>
           <ProfileImgContainer>
             <img
-              src={room.photourl ? room.photourl : roomDefault} 
+              src={room.photourl ? room.photourl : roomDefault}
               alt="room"
             />
           </ProfileImgContainer>
@@ -97,12 +97,12 @@ export const Rooms = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "rate" && sortConfig?.direction === -1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("rate", "number", -1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "rate" && sortConfig?.direction === 1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("rate", "number", 1)}
             />
           </ArrowContainer>
@@ -119,12 +119,12 @@ export const Rooms = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "offer" && sortConfig?.direction === -1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("offer", "number", -1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "offer" && sortConfig?.direction === 1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("offer", "number", 1)}
             />
           </ArrowContainer>
@@ -151,14 +151,16 @@ export const Rooms = () => {
     {
       label: "",
       display: (room) => (
-        <RoomActions roomId={room._id}/>
+        <RoomActions roomId={room._id} />
       )
     },
   ];
 
   return (
     <Container>
-      {items.length > 0 && (
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (items.length > 0 && (
         <TableComponent
           pageSize={7}
           data={items}
@@ -167,7 +169,7 @@ export const Rooms = () => {
           sortConfig={sortConfig}
           searchConfig={searchConfig}
         />
-      )}
+      ))}
     </Container>
   );
 };

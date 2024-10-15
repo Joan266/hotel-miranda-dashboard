@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Text, SmallText,IsTextActive,LabelContainer, ArrowContainer,Triangle } from '../../styles/common';
+import { Container, Text, SmallText, IsTextActive, LabelContainer, ArrowContainer, Triangle } from '../../styles/common';
 import { CellContainer, ProfileImgContainer } from '../../styles/table';
 import { readAllThunk } from '../../slices/UserSlice/userThunks';
 import clientDefault from '../../assets/img/client_default.webp';
@@ -10,9 +10,10 @@ import { Column, Status } from '../../interfaces/common';
 import { AppDispatch, RootState } from '../../store';
 import UserActions from './UserActions';
 import { SortConfig, SearchConfig } from '../../interfaces/common';
+import { LoaderComponent } from '../../components/Loader';
 
 const searchConfig: SearchConfig = {
-  query: "", 
+  query: "",
   param: "lastname",
 };
 const statuses: Status[] = [
@@ -26,7 +27,7 @@ export const Users = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
-  const handleSortChange = (property: string, type:'date' | 'number' | 'string', direction: 1 | -1) => {
+  const handleSortChange = (property: string, type: 'date' | 'number' | 'string', direction: 1 | -1) => {
     let newDirection = direction;
 
     if (sortConfig?.property === property && sortConfig?.direction === direction) {
@@ -46,7 +47,7 @@ export const Users = () => {
     }
     console.log(items, status, error);
   }, [status, dispatch]);
-  
+
   const Columns: Column<UserInterface>[] = [
     {
       label: (
@@ -55,12 +56,12 @@ export const Users = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === 1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("lastname", "string", 1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "lastname" && sortConfig?.direction === -1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("lastname", "string", -1)}
             />
           </ArrowContainer>
@@ -88,12 +89,12 @@ export const Users = () => {
           <ArrowContainer>
             <Triangle
               $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === -1}
-              $isDirection={true} 
+              $isDirection={true}
               onClick={() => handleSortChange("joindate", "date", -1)}
             />
             <Triangle
               $isActive={sortConfig?.property === "joindate" && sortConfig?.direction === 1}
-              $isDirection={false} 
+              $isDirection={false}
               onClick={() => handleSortChange("joindate", "date", 1)}
             />
           </ArrowContainer>
@@ -132,14 +133,16 @@ export const Users = () => {
     {
       label: "",
       display: (user) => (
-        <UserActions userId={user._id}/>
+        <UserActions userId={user._id} />
       )
     },
   ];
 
   return (
     <Container>
-      {items.length > 0 && (
+      {status === 'loading' ? (
+        <LoaderComponent />
+      ) : (items.length > 0 && (
         <TableComponent
           pageSize={7}
           data={items}
@@ -148,7 +151,7 @@ export const Users = () => {
           sortConfig={sortConfig}
           searchConfig={searchConfig}
         />
-      )}
+      ))}
     </Container>
   );
 };
