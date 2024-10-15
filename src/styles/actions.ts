@@ -19,11 +19,12 @@ const EllipsisContainer = styled.div`
 
 const Menu = styled.div`
   position: absolute;
-  top: 25px;
+  top: 0;
   right: 0;
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 4px;
+  transform:translate(0,-100%);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
 `;

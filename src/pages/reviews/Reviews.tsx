@@ -158,7 +158,7 @@ export const Reviews = () => {
     {
       label: "",
       display: (review) => (
-        <ReviewActions reviewId={review._id}/>  // Use your own review actions component
+        <ReviewActions reviewId={review._id}/>  
       )
     },
   ];

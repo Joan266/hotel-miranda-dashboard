@@ -8,16 +8,15 @@ export const AuthContainer = styled.div`
 
 export const UserProfileContainer = styled.div`
   position: relative;
-  background-color: ${({ theme }) => theme.menuBox};
-  box-shadow: 0px 20px 30px #00000014;
+  background-color: #FFFFFF;
   padding: 2rem 1rem 1rem 1rem;
   border-radius: 1rem;
   margin: 0 1.5rem;
   margin-bottom: 3rem;
   text-align: center;
   cursor: pointer;
+  box-shadow: 0px 20px 30px #00000014;
   transition: transform 0.1s ease-in-out;
-
   &:hover {
     transform: scale(1.06);
   }
@@ -62,17 +61,17 @@ export const LogoutButton = styled.div`
 export const DashboardTitle = styled.p`
   font-size: 13px;
   font-weight: 600;
-  color: ${({ theme }) => theme.text};
+  color: #3b3b3b;
   margin-bottom: 0.2rem;
 `;
 
 export const CopyrightText = styled.p`
   font-size: 12px;
-  color: ${({ theme }) => theme.menuText};
+  color: #799283;
   margin-bottom: 1rem;
 `;
 
 export const MadeWithLove = styled.p`
   font-size: 13px;
-  color: ${({ theme }) => theme.menuText};
+  color: #799283;
 `;

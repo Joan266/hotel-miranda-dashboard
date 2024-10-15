@@ -6,14 +6,24 @@ export const LayoutContainer = styled.div`
   display: flex;
   min-height: 100%;
 `;
-
 export const NavContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
   padding: 0.5em 0;
   min-height: 100%;
   width: 400px;
   min-width: 350px;
-  box-sizing: border-box;
+  box-sizing: border-box; 
+  position: relative; 
+
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   right: 0; 
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 8px;
+  //   background-color: ${(props) => props.theme.colors.gray};
+  // }
 `;
 
 export const Nav = styled.nav`
@@ -24,7 +34,7 @@ export const Nav = styled.nav`
   width: 100%;
 `;
 
-export const NavLink = styled(Link)<NavLinkProps>`
+export const NavLink = styled(Link) <NavLinkProps>`
   text-decoration: none;
   color: ${(props) => (props.$active === "true" ? props.theme.colors.primaryRed : props.theme.colors.gray)};
   padding: 1em 0;
@@ -34,6 +44,7 @@ export const NavLink = styled(Link)<NavLinkProps>`
   padding-left: 3em;
   background-color:${(props) => (props.$active === "true" ? "rgba(255, 0, 0, 0.02)" : "transparent")};
   font-weight: ${(props) => (props.$active === "true" ? "bold" : "500")}; 
+  z-index:2;
   &:hover {
     color: ${(props) => props.theme.colors.primaryRed};
     border-right: 8px solid ${(props) => props.theme.colors.primaryRed};

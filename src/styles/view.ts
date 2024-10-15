@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  margin-top:3em;
+  margin-top:4em;
   padding: 1em 1.5em;
   border:2px solid darkgreen;
   background-color: white;

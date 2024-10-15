@@ -8,9 +8,9 @@ const Form = styled.form`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 3em 0;
+  padding: 4em 0 3em 0;
 `;
 
 const FormGrid = styled.div`
