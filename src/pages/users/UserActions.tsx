@@ -35,17 +35,17 @@ const Actions: React.FC<{ userId: string | undefined }> = ({ userId }) => {
           .then(() => {
             Swal.fire({
               title: 'Deleted!',
-              text: 'User has been deleted successfully.',
+              text: 'Employee has been deleted successfully.',
               icon: 'success',
               timer: 2000,
               showConfirmButton: false,
             });
-            navigate("/users");
+            navigate("/employees");
           })
           .catch(() => {
             Swal.fire({
               title: 'Error!',
-              text: 'Failed to delete user. Please try again.',
+              text: 'Failed to delete employee. Please try again.',
               icon: 'error',
               timer: 3000,
               showConfirmButton: false,
@@ -59,7 +59,7 @@ const Actions: React.FC<{ userId: string | undefined }> = ({ userId }) => {
   const handleEditClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu(false);
-    navigate(`/users/${userId}/update`);
+    navigate(`/employees/${userId}/update`);
   };
 
   useEffect(() => {

@@ -35,10 +35,10 @@ export const App = () => {
             <Route path="rooms/:id/update" element={<RoomForm />} />
             <Route path="rooms/create" element={<RoomForm />} />
             <Route path="rooms/:id" element={<RoomsView />} />
-            <Route path="users" element={<Users />} />
-            <Route path="users/:id/update" element={<UserForm />} />
-            <Route path="users/create" element={<UserForm />} />
-            <Route path="users/:id" element={<UsersView />} />
+            <Route path="employees" element={<Users />} />
+            <Route path="employees/:id/update" element={<UserForm />} />
+            <Route path="employees/create" element={<UserForm />} />
+            <Route path="employees/:id" element={<UsersView />} />
           </Route>
           <Route path="/login" element={<Login/>} />
         </Routes>

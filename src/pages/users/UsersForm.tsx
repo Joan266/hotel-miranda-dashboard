@@ -62,20 +62,18 @@ export const UserForm: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
   
-    // Handle checkbox specifically
     if (e.target instanceof HTMLInputElement && type === "checkbox") {
       setFormData({
         ...formData,
-        [name]: e.target.checked, // Only access 'checked' for checkboxes
+        [name]: e.target.checked, 
       });
     } else {
       setFormData({
         ...formData,
-        [name]: value, // For other input types, use 'value'
+        [name]: value, 
       });
     }
   
-    // Clear validation errors if any
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -113,10 +111,10 @@ export const UserForm: React.FC = () => {
         dispatch(updateOneThunk({ id: userId, user: dataToSubmit }))
           .unwrap()
           .then(() => {
-            navigate("/users");
+            navigate("/employees");
             Swal.fire({
-              title: 'User Updated!',
-              text: 'User has been updated successfully.',
+              title: 'Employee Updated!',
+              text: 'Employee has been updated successfully.',
               icon: 'success',
               timer: 2000, 
               showConfirmButton: false, 
@@ -125,7 +123,7 @@ export const UserForm: React.FC = () => {
           .catch((error) => {
             Swal.fire({
               title: 'Error!',
-              text: error.message || 'Failed to update user. Please try again.',
+              text: error.message || 'Failed to update employee. Please try again.',
               icon: 'error',
               timer: 3000,
               showConfirmButton: false,
@@ -135,10 +133,10 @@ export const UserForm: React.FC = () => {
         dispatch(createOneThunk(dataToSubmit))
           .unwrap()
           .then(() => {
-            navigate("/users");
+            navigate("/employees");
             Swal.fire({
-              title: 'User Created!',
-              text: 'User has been created successfully.',
+              title: 'Employee Created!',
+              text: 'Employee has been created successfully.',
               icon: 'success',
               timer: 2000,
               showConfirmButton: false,
@@ -147,7 +145,7 @@ export const UserForm: React.FC = () => {
           .catch((error) => {
             Swal.fire({
               title: 'Error!',
-              text: error.message || 'Failed to create user. Please try again.',
+              text: error.message || 'Failed to create employee. Please try again.',
               icon: 'error',
               timer: 3000,
               showConfirmButton: false,
