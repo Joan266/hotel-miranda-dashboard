@@ -37,9 +37,9 @@ const RoomSlice = createSlice({
       .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<RoomInterface[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<{ rooms: RoomInterface[] }>) => {
         state.status = 'fulfilled';
-        state.items = action.payload;
+        state.items = action.payload.rooms;
         state.error = null;
       })
       .addCase(readAllThunk.rejected, (state, action) => {

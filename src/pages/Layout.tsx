@@ -16,19 +16,19 @@ export const Layout: React.FC = () => {
           <NavLink to="/" $active={location.pathname.endsWith('/').toString()}>
             Dashboard
           </NavLink>
+          <NavLink to="/rooms" $active={location.pathname.includes('/rooms').toString()}>
+            Rooms
+          </NavLink>
           <NavLink to="/bookings" $active={location.pathname.includes('/bookings').toString()}>
             Bookings
           </NavLink>
           <NavLink to="/reviews" $active={location.pathname.includes('/reviews').toString()}>
             Reviews
           </NavLink>
-          <NavLink to="/rooms" $active={location.pathname.includes('/rooms').toString()}>
-            Rooms
+          <NavLink to="/employees" $active={location.pathname.includes('/employees').toString()}>
+            Employees
           </NavLink>
-          <NavLink to="/users" $active={location.pathname.includes('/users').toString()}>
-            Users
-          </NavLink>
-          <AuthStatus></AuthStatus>
+          <AuthStatus/>
         </Nav>
       </NavContainer>
       <ContentContainer>

@@ -6,7 +6,7 @@ const readAllThunk = createAsyncThunk<{ users: UserInterface[] }, void>(
   "user/readAllThunk",
   async () => {
     const data = await backendAPICall('user');
-    return data.users;
+    return data;
   }
 );
 

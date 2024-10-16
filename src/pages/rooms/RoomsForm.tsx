@@ -47,15 +47,25 @@ export const RoomForm: React.FC = () => {
   }, [single, roomId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    const { name, value, type } = e.target;
+  
+    if (e.target instanceof HTMLInputElement && type === "checkbox") {
+      setFormData({
+        ...formData,
+        [name]: e.target.checked, 
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value, 
+      });
+    }
+  
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
+  
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};

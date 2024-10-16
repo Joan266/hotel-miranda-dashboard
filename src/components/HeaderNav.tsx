@@ -14,7 +14,7 @@ const routeTitles: RouteTitles = {
   '/reviews': 'Reviews',
   '/bookings': 'Bookings',
   '/rooms': 'Rooms',
-  '/users': 'Users',
+  '/employees': 'Employees',
 };
 
 const getBaseRouteTitle = (pathSegments: string[]): string => {
@@ -33,7 +33,6 @@ const HeaderNav: React.FC = () => {
     const pathSegments = location.pathname.split('/').filter(Boolean);
     
     if (pathSegments.length === 0) {
-      // Handle the root route "/"
       setTitle(routeTitles['/']);
       setIsSecondaryRoute(false);
       return;

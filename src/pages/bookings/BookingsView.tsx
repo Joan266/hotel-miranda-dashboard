@@ -9,7 +9,7 @@ import BookingActions from './BookingActions';
 import { LoaderComponent } from '../../components/Loader';
 
 export const BookingView: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const { single, status } = useSelector((state: RootState) => state.booking);
 

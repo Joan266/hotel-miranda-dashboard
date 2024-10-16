@@ -17,7 +17,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
-  const [isFirstVisit, setIsFistVisit] = useState(true);
+  const [isFirstVisit, setIsFirstVisit] = useState(true);
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
@@ -40,13 +40,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     [user]
   );
   useEffect(() => {
-    if (isFirstVisit && !user) {
-      const demoEmail = "admin@example.com";
-      const demoPassword = "securepassword?5A!@";
-      setIsFistVisit(false);
-      login(demoEmail, demoPassword);
+    if (isFirstVisit) {
+      if (!user) {
+        const demoEmail = "admin@example.com";
+        const demoPassword = "securepassword?5A!@";
+        login(demoEmail, demoPassword);
+      }
+      setIsFirstVisit(false);
     }
   }, [user, login, isFirstVisit]);
+  
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

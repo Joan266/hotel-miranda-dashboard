@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
@@ -9,19 +8,20 @@ import { deleteOneThunk } from "../../slices/UserSlice/userThunks";
 import { AppDispatch } from '../../store';
 import Swal from 'sweetalert2';
 
-const Actions = ({ userId }) => {
+const Actions: React.FC<{ userId: string | undefined }> = ({ userId }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleToggleMenu = (event) => {
+  const handleToggleMenu = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu((prev) => !prev);
   };
 
-  const handleDeleteClick = (event) => {
+  const handleDeleteClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
+    if(!userId) return;
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -35,17 +35,17 @@ const Actions = ({ userId }) => {
           .then(() => {
             Swal.fire({
               title: 'Deleted!',
-              text: 'User has been deleted successfully.',
+              text: 'Employee has been deleted successfully.',
               icon: 'success',
               timer: 2000,
               showConfirmButton: false,
             });
-            navigate("/users");
+            navigate("/employees");
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire({
               title: 'Error!',
-              text: 'Failed to delete user. Please try again.',
+              text: 'Failed to delete employee. Please try again.',
               icon: 'error',
               timer: 3000,
               showConfirmButton: false,
@@ -56,14 +56,14 @@ const Actions = ({ userId }) => {
     setShowMenu(false);
   };
 
-  const handleEditClick = (event) => {
+  const handleEditClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu(false);
-    navigate(`/users/${userId}/update`);
+    navigate(`/employees/${userId}/update`);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: { target: any; }) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setShowMenu(false);
       }

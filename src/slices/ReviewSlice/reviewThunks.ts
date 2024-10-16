@@ -6,7 +6,7 @@ const readAllThunk = createAsyncThunk<{ reviews: ReviewInterface[] }, void>(
   "review/readAllThunk",
   async () => {
     const data = await backendAPICall('review');
-    return data.reviews;
+    return data;
   }
 );
 

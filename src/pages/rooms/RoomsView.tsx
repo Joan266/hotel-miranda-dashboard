@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readOneThunk } from '../../slices/RoomSlice/roomThunks';
 import { AppDispatch, RootState } from '../../store';
-import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Description, Divider } from '../../styles/view';
+import { Container, ProfileWrapper, ProfileHeader, ProfileInfo, ProfileImgContainer, BigImage, Status, InfoGroup, Label, Field, Divider } from '../../styles/view';
 import roomDefault from '../../assets/img/default_room.webp';
 import RoomActions from './RoomActions';
 import { LoaderComponent } from '../../components/Loader';
@@ -21,7 +21,7 @@ export const RoomsView: React.FC = () => {
 
 
 
-  const discountedPrice = single.rate * (1 - single.offer / 100);
+  const discountedPrice = single && single.rate * (1 - single.offer / 100);
 
   return (
     <>
@@ -58,7 +58,7 @@ export const RoomsView: React.FC = () => {
               </span>
               <span>
                 <Label>Final Price:</Label>
-                <Field>${discountedPrice.toFixed(2)}</Field>
+                <Field>${discountedPrice?.toFixed(2)}</Field>
               </span>
             </InfoGroup>
 

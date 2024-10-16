@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
@@ -9,19 +8,20 @@ import { deleteOneThunk } from "../../slices/BookingSlice/bookingThunks";
 import { AppDispatch } from '../../store';
 import Swal from 'sweetalert2';
 
-const Actions = ({ bookingId }) => {
+const Actions: React.FC<{ bookingId: string | undefined }> = ({ bookingId }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleToggleMenu = (event) => {
+  const handleToggleMenu = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu((prev) => !prev);
   };
 
-  const handleDeleteClick = (event) => {
+  const handleDeleteClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
+    if(!bookingId)return;
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -42,7 +42,7 @@ const Actions = ({ bookingId }) => {
             });
             navigate("/bookings");
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire({
               title: 'Error!',
               text: 'Failed to delete room. Please try again.',
@@ -56,15 +56,15 @@ const Actions = ({ bookingId }) => {
     setShowMenu(false);
   };
 
-  const handleEditClick = (event) => {
+  const handleEditClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu(false);
     navigate(`/bookings/${bookingId}/update`);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+    const handleClickOutside = (event: { target: any; }) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setShowMenu(false);
       }
     };

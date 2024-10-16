@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { NavLinkProps } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+interface NavLinkProps {
+  $active?: string; // Optional prop; you can adjust this type as necessary (string | boolean)
+}
 export const LayoutContainer = styled.div`
   display: flex;
   min-height: 100%;

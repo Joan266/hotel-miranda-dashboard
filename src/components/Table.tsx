@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Table, TableCell, TableHeaderRow, TableHeaderCell, TableRow,
   PaginationContainer, PaginationButton, PaginationControls, PaginationInput, TableModifiers, TableModifiersContainer, FilterStatusNav, NavStatusOptions, SearchInputContainer, SearchInput,

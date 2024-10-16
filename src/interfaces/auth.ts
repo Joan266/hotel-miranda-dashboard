@@ -9,8 +9,9 @@ export interface AuthInterface {
   password: string;          
   phonenumber: string;      
   joindate: Date;   
-  photoUrl?: string;
+  photourl?: string;
   token?: string;
   description?: string;        
-  jobdesk?: string;     }   
+  jobdesk?: string;     
+}   
 }
