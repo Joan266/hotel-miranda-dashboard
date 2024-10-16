@@ -4,7 +4,6 @@ import { StrictMode } from 'react';
 import { App } from './App';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import React from 'react';
 
 const root = document.getElementById('root') as HTMLElement;
 const app = ReactDOM.createRoot(root);

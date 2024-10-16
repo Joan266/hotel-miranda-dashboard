@@ -60,17 +60,30 @@ export const UserForm: React.FC = () => {
   }, [single, userId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    const { name, value, type } = e.target;
+  
+    // Handle checkbox specifically
+    if (e.target instanceof HTMLInputElement && type === "checkbox") {
+      setFormData({
+        ...formData,
+        [name]: e.target.checked, // Only access 'checked' for checkboxes
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value, // For other input types, use 'value'
+      });
+    }
+  
+    // Clear validation errors if any
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
+  
 
-  const handleDateChange = (date: Date) => {
+  const handleDateChange = (date: Date | null) => {
+    if(!date) return;
     setFormData({ ...formData, joindate: date });
   };
 

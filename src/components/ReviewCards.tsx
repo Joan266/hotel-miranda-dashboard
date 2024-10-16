@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarSolid, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { useEffect } from "react";
-import React from "react";
 import ReviewActions from '../pages/reviews/ReviewActions';
 import { readAllThunk as readAllReviewsThunk } from '../slices/ReviewSlice/reviewThunks';
 import { LoaderComponent } from './Loader';

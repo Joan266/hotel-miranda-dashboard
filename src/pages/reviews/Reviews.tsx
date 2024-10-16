@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Text, SmallText, IsTextActive, LabelContainer, ArrowContainer, Triangle } from '../../styles/common';
 import { CellContainer } from '../../styles/table';

@@ -17,7 +17,6 @@ import { AuthProvider } from './hooks/useAuth';
 import { ThemeProvider } from 'styled-components';
 import './App.css'
 import { theme } from './styles/theme';
-import React from 'react';
 
 
 export const App = () => {

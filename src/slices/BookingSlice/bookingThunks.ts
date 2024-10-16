@@ -6,7 +6,7 @@ const readAllThunk = createAsyncThunk<{ bookings: BookingInterface[] }, void>(
   "booking/readAllThunk",
   async () => {
     const data = await backendAPICall('booking');
-    return data.bookings;
+    return data;
   }
 );
 

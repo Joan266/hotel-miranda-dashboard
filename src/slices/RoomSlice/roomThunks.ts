@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RoomInterface, RoomFormInterface } from '../../interfaces/rooms'
 import { backendAPICall } from "../../utils/backendAPICall";
 
-const readAllThunk = createAsyncThunk<{ users: RoomInterface[] }, void>(
+const readAllThunk = createAsyncThunk<{ rooms: RoomInterface[] }, void>(
   "room/readAllThunk",
   async () => {
     const data = await backendAPICall('room');
-    return data.rooms;
+    return data;
   }
 );
 

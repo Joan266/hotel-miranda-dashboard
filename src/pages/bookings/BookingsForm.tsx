@@ -59,13 +59,16 @@ export const BookingForm: React.FC = () => {
     }
   };
 
-  const handleDateRangeChange = (dates: [Date, Date]) => {
-    const [start, end] = dates;
-    setFormData({
-      ...formData,
-      checkin: start,
-      checkout: end || new Date(),
-    });
+  // Updated handleDateRangeChange
+  const handleDateRangeChange = (dates: [Date | null, Date | null] | null) => {
+    if (dates && Array.isArray(dates)) {
+      const [start, end] = dates;
+      setFormData({
+        ...formData,
+        checkin: start || new Date() || null, 
+        checkout: end || new Date()|| null, 
+      });
+    } 
   };
 
   const validateForm = () => {
@@ -83,7 +86,7 @@ export const BookingForm: React.FC = () => {
       const currentDate = new Date();
       const dataToSubmit = {
         ...formData,
-        orderdate: bookingId ? single?.orderdate : currentDate,  // Set orderdate for new bookings
+        orderdate: bookingId ? single?.orderdate : currentDate,
       };
 
       if (bookingId) {
@@ -213,14 +216,14 @@ export const BookingForm: React.FC = () => {
               </select>
             </FormGroup>
 
-            <div></div>
             <div>
               <SubmitButton type="submit">
                 {bookingId ? "Update Booking" : "Create Booking"}
               </SubmitButton>
             </div>
           </FormGrid>
-        </Form>)}
+        </Form>
+      )}
     </Container>
   );
 };

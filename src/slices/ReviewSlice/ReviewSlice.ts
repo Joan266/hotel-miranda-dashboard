@@ -37,9 +37,9 @@ const ReviewSlice = createSlice({
       .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<ReviewInterface[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<{ reviews: ReviewInterface[] }>) => {
         state.status = 'fulfilled';
-        state.items = action.payload;
+        state.items = action.payload.reviews;
         state.error = null;
       })
       .addCase(readAllThunk.rejected, (state, action) => {

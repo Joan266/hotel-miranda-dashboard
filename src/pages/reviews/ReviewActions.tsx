@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect, useRef } from 'react';
+
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
@@ -9,19 +9,20 @@ import { deleteOneThunk, updateOneThunk } from "../../slices/ReviewSlice/reviewT
 import { AppDispatch } from '../../store';
 import Swal from 'sweetalert2';
 
-const Actions = ({ reviewId }) => {
+const Actions: React.FC<{ reviewId: string | undefined }> = ({ reviewId }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleToggleMenu = (event) => {
+  const handleToggleMenu = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
     setShowMenu((prev) => !prev);
   };
 
-  const handleDeleteClick = (event) => {
+  const handleDeleteClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
+    if(!reviewId) return;
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -42,7 +43,7 @@ const Actions = ({ reviewId }) => {
             });
             navigate("/reviews");
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire({
               title: 'Error!',
               text: 'Failed to delete review. Please try again.',
@@ -56,8 +57,9 @@ const Actions = ({ reviewId }) => {
     setShowMenu(false);
   };
 
-  const handleArchiveClick = (event) => {
+  const handleArchiveClick = (event: { stopPropagation: () => void; }) => {
     event.stopPropagation();
+    if(!reviewId)return;
     Swal.fire({
       title: 'Are you sure?',
       text: "You are about to archive this review.",
@@ -78,7 +80,7 @@ const Actions = ({ reviewId }) => {
             });
             navigate("/reviews");
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire({
               title: 'Error!',
               text: 'Failed to archive review. Please try again.',
@@ -93,7 +95,7 @@ const Actions = ({ reviewId }) => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: { target: any; }) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setShowMenu(false);
       }

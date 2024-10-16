@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { SortConfig, SearchConfig } from '../interfaces/common';
 
-const getNestedProperty = (obj: any, propertyPath: string): any => {
+const getNestedProperty = (obj: any, propertyPath: string | undefined): any => {
+  if(propertyPath ===undefined) return;
   return propertyPath.split('.').reduce((acc, part) => acc && acc[part], obj);
 };
 
