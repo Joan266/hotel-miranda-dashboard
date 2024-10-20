@@ -1,81 +1,41 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import bookingsData from '../../data/bookings.json';
-import { delayedRequest } from "../../utils/delayRequest";
+import { BookingInterface, BookingFormInterface } from '../../interfaces/bookings'
+import { backendAPICall } from "../../utils/backendAPICall";
 
-interface Booking {
-  id: string;
-  first_name: string;
-  last_name: string;
-  order_date: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  check_in: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  check_out: {
-    date: string;
-    time: string;
-    datetime: string;
-  };
-  room_type: string;
-  status: string;
-}
-
-const data: Booking[] = bookingsData as Booking[];
-
-const ReadOneThunk = createAsyncThunk<Booking | null, string>(
-  "booking/readOneThunk",
-  async (id) => {
-    try {
-      const response = await delayedRequest(
-        data.find((booking) => booking.id === id) || null,
-        500
-      );
-      return response;
-    } catch (error) {
-      return null;
-    }
-  }
-);
-
-const ReadAllThunk = createAsyncThunk<Booking[], void>(
+const readAllThunk = createAsyncThunk<{ bookings: BookingInterface[] }, void>(
   "booking/readAllThunk",
   async () => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return response;
-    } catch (error) {
-      return [];
-    }
+    const data = await backendAPICall('booking');
+    return data;
   }
 );
 
-const CreateOneThunk = createAsyncThunk<Booking | null, Booking>(
+const readOneThunk = createAsyncThunk<BookingInterface, string>(
+  "booking/readOneThunk",
+  async (id) => {
+    return await backendAPICall(`booking/${id}`);
+  }
+);
+
+const createOneThunk = createAsyncThunk<BookingInterface, BookingFormInterface>(
   "booking/createOneThunk",
-  async (newBooking) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return newBooking;
-    } catch (error) {
-      return null;
-    }
+  async (newBooking: BookingFormInterface) => {
+    return await backendAPICall(`booking/create`, 'POST', newBooking);
   }
 );
 
-const DeleteOneThunk = createAsyncThunk<number | null, number>(
+const deleteOneThunk = createAsyncThunk<string, string>(
   "booking/deleteOneThunk",
   async (id) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return id;
-    } catch (error) {
-      return null;
-    }
+    return await backendAPICall(`booking/${id}`, 'DELETE');
   }
 );
 
-export { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk };
+const updateOneThunk = createAsyncThunk<BookingInterface, { id: string, booking: Partial<BookingInterface> }>(
+  "booking/updateOneThunk",
+  async ({ id, booking }) => {
+    return await backendAPICall(`booking/${id}`, 'PUT', booking);
+  }
+);
+
+export { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk };

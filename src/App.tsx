@@ -1,52 +1,44 @@
 import { Routes, Route } from 'react-router-dom';
-import { DashBoard } from './components/DashBoard';
-import { Bookings } from './components/Bookings';
-import { BookingDetails } from './components/BookingDetails';
-import { Reviews } from './components/Reviews';
-import { Rooms } from './components/Rooms';
-import { Users } from './components/Users';
-import { Login } from './components/Login';
-import { Layout } from './components/Layout';
+import { DashBoard } from './pages/DashBoard';
+import { Bookings } from './pages/bookings/Bookings';
+import { BookingForm } from './pages/bookings/BookingsForm';
+import { BookingView } from './pages/bookings/BookingsView';
+import { Reviews } from './pages/reviews/Reviews';
+import { Rooms } from './pages/rooms/Rooms';
+import { RoomForm } from './pages/rooms/RoomsForm';
+import { RoomsView } from './pages/rooms/RoomsView';
+import { Users } from './pages/users/Users';
+import { UserForm } from './pages/users/UsersForm';
+import { UsersView } from './pages/users/UsersView';
+import { Login } from './pages/Login';
+import { Layout } from './pages/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import './App.css'
 import { theme } from './styles/theme';
-import { EditTableElement } from './components/EditTableElement';
-import React from 'react';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: ${props => props.theme.fontFamily};
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  #root {
-    width: 100%;
-    height: 100vh;
-  }
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-`;
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
       <AuthProvider>
         <Routes>
           <Route path="/" element={<PrivateRoute><Layout/></PrivateRoute>}>
             <Route index element={<DashBoard />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="bookings/:id" element={<BookingDetails />} />
-            <Route path="bookings/:id/edit" element={<EditTableElement />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="bookings/:id/update" element={<BookingForm />} />
+            <Route path="bookings/create" element={<BookingForm />} />
+            <Route path="bookings/:id" element={<BookingView />} />
             <Route path="rooms" element={<Rooms />} />
-            <Route path="users" element={<Users />} />
+            <Route path="rooms/:id/update" element={<RoomForm />} />
+            <Route path="rooms/create" element={<RoomForm />} />
+            <Route path="rooms/:id" element={<RoomsView />} />
+            <Route path="employees" element={<Users />} />
+            <Route path="employees/:id/update" element={<UserForm />} />
+            <Route path="employees/create" element={<UserForm />} />
+            <Route path="employees/:id" element={<UsersView />} />
           </Route>
           <Route path="/login" element={<Login/>} />
         </Routes>

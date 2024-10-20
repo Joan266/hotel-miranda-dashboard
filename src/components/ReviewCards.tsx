@@ -1,79 +1,73 @@
 import { SmallText, Text } from "../styles/common";
-import clientDefault from '../assets/img/client_default.webp';
 import { ProfileImgContainer } from "../styles/table";
-import styled from 'styled-components';
-import React from "react";
+import { CardsContainer, ReviewCard, BottomContainer, InfoContainer, ProfileContainer } from "../styles/reviewcards";
+import clientDefault from '../assets/img/client_default.webp';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store';
+import { ReviewInterface } from "../interfaces/review";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as faStarSolid, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import { useEffect } from "react";
+import ReviewActions from '../pages/reviews/ReviewActions';
+import { readAllThunk as readAllReviewsThunk } from '../slices/ReviewSlice/reviewThunks';
+import { LoaderComponent } from './Loader';
+export const ReviewCards = () => {
+  const { items, status, error } = useSelector((state: RootState) => state.review);
+  const dispatch = useDispatch<AppDispatch>();
 
-interface Review {
-  id: number;
-  customer_name: string;
-  review_date: { text: string };
-  comment: string;
-  img: string | null;
-}
+  const renderStars = (rate: number) => {
+    const fullStars = Math.floor(rate);
+    const hasHalfStar = rate % 1 !== 0;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
-interface ReviewCardsProps {
-  data: Review[];
-}
+    return (
+      <>
+        {Array.from({ length: fullStars }).map((_, idx) => (
+          <FontAwesomeIcon key={idx} icon={faStarSolid} color='#FFD43B' />
+        ))}
+        {hasHalfStar && <FontAwesomeIcon icon={faStarHalfStroke} color='#FFD43B' />}
+        {Array.from({ length: emptyStars }).map((_, idx) => (
+          <FontAwesomeIcon key={idx} icon={faStarRegular} color='#FFD43B' />
+        ))}
+      </>
+    );
+  };
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(readAllReviewsThunk());
+    }
+    console.log(items, status, error);
+  }, [status, dispatch]);
 
-const CardsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 1.5em;
-  align-items: center;
-  margin-bottom: 2em;
-  position: relative;
-  height: 100%;
-  padding-bottom: 0.5em;
-`;
+  if (status === 'loading') return <LoaderComponent/>;
 
-const ReviewCard = styled.div`
-  position: relative;
-  background-color: ${(props) => props.theme.colors.white};
-  padding: 1em;
-  border-radius: 0.4em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-height: 11em;
-  height: 100%;
-  min-width: 19em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const BottomContainer = styled.div`
-  margin-top: 2em;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const ReviewCards: React.FC<ReviewCardsProps> = ({ data }) => {
   return (
+    
     <CardsContainer>
-      {data.map((review) => (
-        <ReviewCard key={"card"+review.id}>
-          <Text maxwidth={"350px"}>{review.comment}</Text>
+      {items?.map((item: ReviewInterface) => (
+        <ReviewCard key={`card-${item._id}`}>
+          <Text $maxwidth={"350px"}>{item.comment}</Text>
+          <Text>
+            {renderStars(item.rate)}
+          </Text>
           <BottomContainer>
-            <ProfileImgContainer>
-              <img 
-                src={review.img ? review.img : clientDefault} 
-                alt="review profile customer" 
-              />
-            </ProfileImgContainer>
-            <div>
-              <Text><strong>{review.customer_name}</strong></Text>
-              <SmallText>{review.review_date.text}</SmallText>
-            </div>
-            <div>
-              <button>+</button>
-              <button>-</button>
-            </div>
+            <ProfileContainer>
+              <ProfileImgContainer>
+                <img
+                  src={clientDefault}
+                  alt={`${item.firstname || 'User'} profile image`}
+                />
+              </ProfileImgContainer>
+              <InfoContainer>
+                <Text><strong>{item.firstname}</strong></Text>
+                <Text><strong>{item.lastname}</strong></Text>
+                <SmallText>{new Date(item.reviewdate).toDateString()}</SmallText>
+              </InfoContainer>
+            </ProfileContainer>
+            <ReviewActions reviewId={item._id} />
           </BottomContainer>
-        </ReviewCard> 
+        </ReviewCard>
       ))}
     </CardsContainer>
   );

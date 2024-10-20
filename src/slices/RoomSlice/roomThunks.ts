@@ -1,68 +1,41 @@
-import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import roomData from '../../data/rooms.json';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { RoomInterface, RoomFormInterface } from '../../interfaces/rooms'
+import { backendAPICall } from "../../utils/backendAPICall";
 
-import { delayedRequest } from "../../utils/delayRequest";
-
-interface Room {
-  id: string;
-  room_type: string;
-  bed_type: string;
-  floor_room: string;
-  facilities: string[];
-  rate: number;
-  status: "available" | "booked";
-}
-
-const data: Room[] = roomData as Room[];
-
-const ReadOneThunk = createAsyncThunk<Room | null, string>(
-  "room/readOneThunk",
-  async (id) => {
-    try {
-      const response = await delayedRequest(
-        data.find(room => room.id === id) || null,
-        500
-      );
-      return response;
-    } catch (error) {
-      return null;
-    }
-  }
-);
-
-const ReadAllThunk = createAsyncThunk<Room[], void>(
+const readAllThunk = createAsyncThunk<{ rooms: RoomInterface[] }, void>(
   "room/readAllThunk",
   async () => {
-    try {
-      return delayedRequest(data, 500);
-    } catch (error) {
-      return [];
-    }
+    const data = await backendAPICall('room');
+    return data;
   }
 );
 
-const CreateOneThunk = createAsyncThunk<Room | null, Room>(
-  "room/createOneThunk",
-  async (newRoom) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return newRoom;
-    } catch (error) {
-      return null;
-    }
+const readOneThunk = createAsyncThunk<RoomInterface, string>(
+  "room/readOneThunk",
+  async (id) => {
+    return await backendAPICall(`room/${id}`);
   }
 );
 
-const DeleteOneThunk = createAsyncThunk<string | null, string>(
+const createOneThunk = createAsyncThunk<RoomInterface, RoomFormInterface>(
+  "user/createOneThunk",
+  async (newRoom: RoomFormInterface) => {
+    return await backendAPICall(`room/create`, 'POST', newRoom);
+  }
+);
+
+const deleteOneThunk = createAsyncThunk<string, string>(
   "room/deleteOneThunk",
   async (id) => {
-    try {
-      const response = await delayedRequest(data, 500);
-      return id;
-    } catch (error) {
-      return null; 
-    }
+    return await backendAPICall(`room/${id}`, 'DELETE');
   }
 );
 
-export { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk };
+const updateOneThunk = createAsyncThunk<RoomInterface, { id: string, room: Partial<RoomInterface> }>(
+  "room/updateOneThunk",
+  async ({ id, room }) => {
+    return await backendAPICall(`room/${id}`, 'PUT', room);
+  }
+);
+
+export { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk };

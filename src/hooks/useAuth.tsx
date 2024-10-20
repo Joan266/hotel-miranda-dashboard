@@ -1,11 +1,10 @@
-import React, { createContext, useContext, useMemo, ReactNode } from "react";
+import React, { createContext, useContext, useMemo, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { User } from "../interfaces/user";
+import { AuthInterface } from "../interfaces/auth";
 import { authenticateUser } from "../utils/authenticateUser";
 interface AuthContextType {
-  user: User | null;
-  token: string | null;
+  user: AuthInterface | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -18,31 +17,39 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
-  const [token, setToken] = useLocalStorage("token", null);
+  const [isFirstVisit, setIsFirstVisit] = useState(true);
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const { user, token } = await authenticateUser(email, password);
+    const user = await authenticateUser(email, password);
     setUser(user);
-    setToken(token);
     navigate("/");
   };
 
   const logout = () => {
     setUser(null);
-    setToken(null);
     navigate("/login", { replace: true });
   };
 
   const value = useMemo(
     () => ({
       user,
-      token,
       login,
       logout,
     }),
-    [token, user]
+    [user]
   );
+  useEffect(() => {
+    if (isFirstVisit) {
+      if (!user) {
+        const demoEmail = "admin@example.com";
+        const demoPassword = "securepassword?5A!@";
+        login(demoEmail, demoPassword);
+      }
+      setIsFirstVisit(false);
+    }
+  }, [user, login, isFirstVisit]);
+  
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

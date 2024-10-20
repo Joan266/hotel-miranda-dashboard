@@ -1,16 +1,20 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-
-interface PrivateRouteProps {
-  children: React.ReactNode;
-}
+import { PrivateRouteProps } from "../interfaces/privateroute";
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { user, token } = useAuth();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  if (!user || !token) {
-    return <Navigate to="/login" />;
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { replace: true });
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null; 
   }
 
   return <>{children}</>;

@@ -1,24 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './reviewThunks';
-
-interface Review {
-  id: string;
-  order_id: string;
-  review_date: {
-    text: string;
-    date: string;
-  };
-  comment: string;
-  rating: number;
-  customer_name: string;
-}
-
+import { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk } from './reviewThunks';
+import { ReviewInterface } from "../../interfaces/review";
 interface ReviewState {
   status: 'idle' | 'loading' | 'fulfilled' | 'error';
-  items: Review[];
-  single: Review | null;
+  items: ReviewInterface[];
+  single: ReviewInterface | null;
   error: string | null;
 }
+
 
 const initialState: ReviewState = {
   status: "idle",
@@ -28,61 +17,75 @@ const initialState: ReviewState = {
 };
 
 const ReviewSlice = createSlice({
-  name: 'review',
+  name: 'Review',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(ReadOneThunk.pending, (state) => {
+      .addCase(readOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadOneThunk.fulfilled, (state, action: PayloadAction<Review | null>) => {
+      .addCase(readOneThunk.fulfilled, (state, action: PayloadAction<ReviewInterface>) => {
         state.status = 'fulfilled';
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(ReadOneThunk.rejected, (state, action: PayloadAction<string>) => {
+      .addCase(readOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.payload ?? "Unknown error";
+        state.error = action.error.message || 'Failed to fetch review';
       })
-      .addCase(ReadAllThunk.pending, (state) => {
+      .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<Review[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<{ reviews: ReviewInterface[] }>) => {
         state.status = 'fulfilled';
-        state.items = action.payload;
+        state.items = action.payload.reviews;
         state.error = null;
       })
-      .addCase(ReadAllThunk.rejected, (state, action: PayloadAction<string>) => {
+      .addCase(readAllThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.payload ?? "Unknown error";
+        state.error = action.error.message || "Failed to fetch reviews";
       })
-      .addCase(CreateOneThunk.pending, (state) => {
+      .addCase(createOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(CreateOneThunk.fulfilled, (state, action: PayloadAction<Review>) => {
+      .addCase(createOneThunk.fulfilled, (state, action: PayloadAction<ReviewInterface>) => {
         state.status = 'fulfilled';
         state.items.push(action.payload);
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(CreateOneThunk.rejected, (state, action: PayloadAction<string>) => {
+      .addCase(createOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.payload ?? "Unknown error";
+        state.error = action.error.message || "Failed to create review";
       })
-      .addCase(DeleteOneThunk.pending, (state) => {
+      .addCase(deleteOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(DeleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(deleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
         state.status = 'fulfilled';
-        state.items = state.items.filter(item => item.id !== action.payload);
+        state.items = state.items.filter(item => item._id !== action.payload);
         state.error = null;
       })
-      .addCase(DeleteOneThunk.rejected, (state, action: PayloadAction<string>) => {
+      .addCase(deleteOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.payload ?? "Unknown error";
+        state.error = action.error.message || "Failed to delete review";
+      })
+      .addCase(updateOneThunk.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateOneThunk.fulfilled, (state, action: PayloadAction<ReviewInterface>) => {
+        state.status = 'fulfilled';
+        state.items = state.items.map(review => review._id === action.payload._id ? action.payload : review);
+        state.single = action.payload;
+        state.error = null;
+      })
+      .addCase(updateOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message || 'Failed to update review';
       });
   }
 });
 
-export const ReviewSliceReducer = ReviewSlice.reducer;
+
+export const { reducer: ReviewSliceReducer } = ReviewSlice;

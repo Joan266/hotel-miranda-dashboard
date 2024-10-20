@@ -1,22 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ReadOneThunk, ReadAllThunk, CreateOneThunk, DeleteOneThunk } from './roomThunks';
-
-interface Room {
-  id: string;
-  room_type: string;
-  bed_type: string;
-  floor_room: string;
-  facilities: string[];
-  rate: number;
-  status: "available" | "booked" ;
-}
-
+import { readOneThunk, readAllThunk, createOneThunk, deleteOneThunk, updateOneThunk } from './roomThunks';
+import { RoomInterface } from "../../interfaces/rooms";
 interface RoomState {
-  status: "idle" | "loading" | "fulfilled" | "error";
-  items: Room[];
-  single: Room | null;
+  status: 'idle' | 'loading' | 'fulfilled' | 'error';
+  items: RoomInterface[];
+  single: RoomInterface | null;
   error: string | null;
 }
+
 
 const initialState: RoomState = {
   status: "idle",
@@ -26,70 +17,75 @@ const initialState: RoomState = {
 };
 
 const RoomSlice = createSlice({
-  name: 'room',
+  name: 'Room',
   initialState,
-  reducers: {
-    clearRoomState(state) {
-      state.status = 'idle';
-      state.items = [];
-      state.single = null;
-      state.error = null;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(ReadOneThunk.pending, (state) => {
+      .addCase(readOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadOneThunk.fulfilled, (state, action: PayloadAction<Room | null>) => {
+      .addCase(readOneThunk.fulfilled, (state, action: PayloadAction<RoomInterface>) => {
         state.status = 'fulfilled';
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(ReadOneThunk.rejected, (state, action) => {
+      .addCase(readOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message ?? "Failed to fetch room";
+        state.error = action.error.message || 'Failed to fetch room';
       })
-      .addCase(ReadAllThunk.pending, (state) => {
+      .addCase(readAllThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(ReadAllThunk.fulfilled, (state, action: PayloadAction<Room[]>) => {
+      .addCase(readAllThunk.fulfilled, (state, action: PayloadAction<{ rooms: RoomInterface[] }>) => {
         state.status = 'fulfilled';
-        state.items = action.payload;
+        state.items = action.payload.rooms;
         state.error = null;
       })
-      .addCase(ReadAllThunk.rejected, (state, action) => {
+      .addCase(readAllThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message ?? "Failed to fetch rooms";
+        state.error = action.error.message || "Failed to fetch rooms";
       })
-      .addCase(CreateOneThunk.pending, (state) => {
+      .addCase(createOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(CreateOneThunk.fulfilled, (state, action: PayloadAction<Room>) => {
+      .addCase(createOneThunk.fulfilled, (state, action: PayloadAction<RoomInterface>) => {
         state.status = 'fulfilled';
         state.items.push(action.payload);
         state.single = action.payload;
         state.error = null;
       })
-      .addCase(CreateOneThunk.rejected, (state, action) => {
+      .addCase(createOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message ?? "Failed to create room";
+        state.error = action.error.message || "Failed to create room";
       })
-      .addCase(DeleteOneThunk.pending, (state) => {
+      .addCase(deleteOneThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(DeleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(deleteOneThunk.fulfilled, (state, action: PayloadAction<string>) => {
         state.status = 'fulfilled';
-        state.items = state.items.filter(item => item.id !== action.payload);
+        state.items = state.items.filter(item => item._id !== action.payload);
         state.error = null;
       })
-      .addCase(DeleteOneThunk.rejected, (state, action) => {
+      .addCase(deleteOneThunk.rejected, (state, action) => {
         state.status = 'error';
-        state.error = action.error.message ?? "Failed to delete room";
+        state.error = action.error.message || "Failed to delete room";
+      })
+      .addCase(updateOneThunk.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateOneThunk.fulfilled, (state, action: PayloadAction<RoomInterface>) => {
+        state.status = 'fulfilled';
+        state.items = state.items.map(room => room._id === action.payload._id ? action.payload : room);
+        state.single = action.payload;
+        state.error = null;
+      })
+      .addCase(updateOneThunk.rejected, (state, action) => {
+        state.status = 'error';
+        state.error = action.error.message || 'Failed to update room';
       });
   }
 });
 
-export const { clearRoomState } = RoomSlice.actions;
 
-export const RoomSliceReducer = RoomSlice.reducer;
+export const { reducer: RoomSliceReducer } = RoomSlice;
